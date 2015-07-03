@@ -64,5 +64,17 @@ public class DataAdapter {
         }
     }
 
+    public Cursor getHealthCenters() {
+
+        String sql = "SELECT * FROM tbl_health_centers";
+
+        Cursor c = getBetterDb.rawQuery(sql, null);
+        if(c != null) {
+            c.moveToNext();
+        }
+
+        return c;
+    }
+
 
 }
