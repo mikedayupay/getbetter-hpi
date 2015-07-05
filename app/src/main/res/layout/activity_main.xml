@@ -43,6 +43,7 @@
             android:height="40dp"
             android:width="400dp"
             android:layout_marginLeft="30dp"
+            android:inputType="textEmailAddress"
             />
 
     </LinearLayout>
@@ -72,6 +73,7 @@
             android:height="40dp"
             android:width="400dp"
             android:layout_marginLeft="30dp"
+            android:inputType="textPassword"
             />
 
     </LinearLayout>
@@ -92,8 +94,9 @@
 
         <Spinner
             android:id="@+id/health_center_login"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"></Spinner>
+            android:layout_width="400dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"></Spinner>
 
 
     </LinearLayout>

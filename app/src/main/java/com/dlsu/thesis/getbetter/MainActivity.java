@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.dlsu.thesis.getbetter.database.DataAdapter;
@@ -22,6 +23,10 @@ public class MainActivity extends Activity implements AdapterView.OnItemSelected
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        EditText usernameInput = (EditText)findViewById(R.id.userNameInput);
+        EditText passwordInput = (EditText)findViewById(R.id.passWordInput);
+
 
         DataAdapter getBetterDb = new DataAdapter(this);
 
@@ -45,6 +50,7 @@ public class MainActivity extends Activity implements AdapterView.OnItemSelected
 
         for(int i = 0; i < cHealthCenters.getCount(); i++) {
             healthCenter[i] = cHealthCenters.getString(cHealthCenters.getColumnIndexOrThrow("health_center_name"));
+            cHealthCenters.moveToNext();
 
         }
 
