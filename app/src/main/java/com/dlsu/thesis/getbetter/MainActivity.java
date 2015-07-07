@@ -26,6 +26,7 @@ public class MainActivity extends Activity implements AdapterView.OnItemSelected
     private Button loginButton;
     private Spinner hcSpinner;
     private String[] healthCenter;
+    private String healthCenterSelected;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +46,7 @@ public class MainActivity extends Activity implements AdapterView.OnItemSelected
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         hcSpinner.setAdapter(adapter);
 
+        hcSpinner.setOnItemSelectedListener(this);
         loginButton.setOnClickListener(this);
 
     }
@@ -104,6 +106,7 @@ public class MainActivity extends Activity implements AdapterView.OnItemSelected
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
+        healthCenterSelected = (parent.getItemAtPosition(position)).toString();
     }
 
     @Override
@@ -117,7 +120,7 @@ public class MainActivity extends Activity implements AdapterView.OnItemSelected
 
         String username = usernameInput.getText().toString();
         String password = passwordInput.getText().toString();
-        String text = username + password;
+        String text = username + password + healthCenterSelected;
         Toast toast = Toast.makeText(this, text, Toast.LENGTH_LONG);
         toast.show();
 
