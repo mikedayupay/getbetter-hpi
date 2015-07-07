@@ -1,7 +1,6 @@
 package com.dlsu.thesis.getbetter;
 
 import android.app.Activity;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -11,55 +10,72 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.dlsu.thesis.getbetter.database.DataAdapter;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 
-public class MainActivity extends Activity implements AdapterView.OnItemSelectedListener{
+public class MainActivity extends Activity implements AdapterView.OnItemSelectedListener, View.OnClickListener {
+
+    private DataAdapter getBetterDb;
+    private EditText usernameInput;
+    private EditText passwordInput;
+    private Button loginButton;
+    private Spinner hcSpinner;
+    private String[] healthCenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        EditText usernameInput = (EditText)findViewById(R.id.userNameInput);
-        EditText passwordInput = (EditText)findViewById(R.id.passWordInput);
+        usernameInput = (EditText)findViewById(R.id.userNameInput);
+        passwordInput = (EditText)findViewById(R.id.passWordInput);
 
+        initializeDatabase();
+        initializeHealthCenterList();
 
-        DataAdapter getBetterDb = new DataAdapter(this);
-
-        try {
-            getBetterDb.createDatabase();
-        }catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        try {
-            getBetterDb.openDatabase();
-        }catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        Cursor cHealthCenters = getBetterDb.getHealthCenters();
-
-        cHealthCenters.moveToFirst();
-
-        String[] healthCenter = new String[cHealthCenters.getCount()];
-
-        for(int i = 0; i < cHealthCenters.getCount(); i++) {
-            healthCenter[i] = cHealthCenters.getString(cHealthCenters.getColumnIndexOrThrow("health_center_name"));
-            cHealthCenters.moveToNext();
-
-        }
-
-        Spinner hcSpinner = (Spinner)findViewById(R.id.health_center_login);
-        Button loginButton = (Button)findViewById(R.id.loginButton);
+        hcSpinner = (Spinner) findViewById(R.id.health_center_login);
+        loginButton = (Button) findViewById(R.id.loginButton);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, healthCenter);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         hcSpinner.setAdapter(adapter);
+
+        loginButton.setOnClickListener(this);
+
+    }
+
+    private void initializeDatabase () {
+
+        getBetterDb = new DataAdapter(this);
+
+        try {
+            getBetterDb.createDatabase();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private void initializeHealthCenterList () {
+
+        try {
+            getBetterDb.openDatabase();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        ArrayList<String> hc = getBetterDb.getHealthCenters();
+        healthCenter = new String[hc.size()];
+        for (int i = 0; i < hc.size(); i++) {
+            healthCenter[i] = hc.get(i);
+        }
+
+        getBetterDb.closeDatabase();
 
     }
 
@@ -95,4 +111,15 @@ public class MainActivity extends Activity implements AdapterView.OnItemSelected
 
     }
 
+
+    @Override
+    public void onClick(View v) {
+
+        String username = usernameInput.getText().toString();
+        String password = passwordInput.getText().toString();
+        String text = username + password;
+        Toast toast = Toast.makeText(this, text, Toast.LENGTH_LONG);
+        toast.show();
+
+    }
 }

@@ -7,6 +7,7 @@ import android.util.Log;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 /**
  * Created by daps on 7/3/15.
@@ -64,16 +65,18 @@ public class DataAdapter {
         }
     }
 
-    public Cursor getHealthCenters() {
+    public ArrayList<String> getHealthCenters() {
 
         String sql = "SELECT * FROM tbl_health_centers";
 
         Cursor c = getBetterDb.rawQuery(sql, null);
-        if(c != null) {
-            c.moveToNext();
+        ArrayList<String> healthCenter = new ArrayList<>();
+
+        while (c.moveToNext()) {
+            healthCenter.add(c.getString(c.getColumnIndexOrThrow("health_center_name")));
         }
 
-        return c;
+        return healthCenter;
     }
 
 
