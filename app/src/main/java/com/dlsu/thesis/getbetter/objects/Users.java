@@ -13,6 +13,7 @@ public class Users {
     private String birthdate;
     private String gender;
     private String civilStatus;
+    private String bloodType;
 
 
     public Users (String firstName, String middleName, String lastName, String email,
@@ -27,6 +28,16 @@ public class Users {
         this.gender = gender;
         this.civilStatus = civilStatus;
 
+    }
+
+    public Users (String firstName, String middleName, String lastName, String birthdate, String gender, String civilStatus, String bloodType) {
+        this.firstName = firstName;
+        this.middleName = middleName;
+        this.lastName = lastName;
+        this.birthdate = birthdate;
+        this.gender = gender;
+        this.civilStatus = civilStatus;
+        this.bloodType = bloodType;
     }
 
 
