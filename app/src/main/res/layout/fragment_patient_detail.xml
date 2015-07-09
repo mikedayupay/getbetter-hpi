@@ -1,5 +1,25 @@
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:id="@+id/patient_detail"
-    style="?android:attr/textAppearanceLarge" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:padding="16dp" android:textIsSelectable="true"
-    tools:context="com.dlsu.thesis.getbetter.PatientDetailFragment" />
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    tools:context="com.dlsu.thesis.getbetter.PatientDetailFragment"
+    >
+
+    <TextView  android:id="@+id/patient_detail"
+        style="?android:attr/textAppearanceLarge" android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:padding="16dp" android:textIsSelectable="true"
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/holo_blue_bright"
+        android:minHeight="1dp"
+        android:layout_below="@id/patient_detail"
+        />
+
+
+
+
+</RelativeLayout>
+

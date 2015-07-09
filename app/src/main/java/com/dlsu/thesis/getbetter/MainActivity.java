@@ -1,6 +1,7 @@
 package com.dlsu.thesis.getbetter;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -10,7 +11,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import com.dlsu.thesis.getbetter.database.DataAdapter;
 
@@ -19,6 +19,8 @@ import java.util.ArrayList;
 
 
 public class MainActivity extends Activity implements AdapterView.OnItemSelectedListener, View.OnClickListener {
+
+    public final static String EXTRA_MESSAGE = "com.dlsu.thesis.getbetter.TITLE";
 
     private DataAdapter getBetterDb;
     private EditText usernameInput;
@@ -38,6 +40,7 @@ public class MainActivity extends Activity implements AdapterView.OnItemSelected
 
         initializeDatabase();
         initializeHealthCenterList();
+
 
         hcSpinner = (Spinner) findViewById(R.id.health_center_login);
         loginButton = (Button) findViewById(R.id.loginButton);
@@ -121,8 +124,13 @@ public class MainActivity extends Activity implements AdapterView.OnItemSelected
         String username = usernameInput.getText().toString();
         String password = passwordInput.getText().toString();
         String text = username + password + healthCenterSelected;
-        Toast toast = Toast.makeText(this, text, Toast.LENGTH_LONG);
-        toast.show();
+        //Toast toast = Toast.makeText(this, text, Toast.LENGTH_LONG);
+        //toast.show();
+
+        Intent intent = new Intent(this, PatientListActivity.class);
+        intent.putExtra(EXTRA_MESSAGE, healthCenterSelected);
+        startActivity(intent);
+
 
     }
 }

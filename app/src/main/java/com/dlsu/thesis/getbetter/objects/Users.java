@@ -14,6 +14,8 @@ public class Users {
     private String gender;
     private String civilStatus;
     private String bloodType;
+    private String homeAddress;
+    private String officeAddress;
 
 
     public Users (String firstName, String middleName, String lastName, String email,
@@ -103,6 +105,30 @@ public class Users {
 
     public void setCivilStatus(String civilStatus) {
         this.civilStatus = civilStatus;
+    }
+
+    public String getBloodType() {
+        return bloodType;
+    }
+
+    public void setBloodType(String bloodType) {
+        this.bloodType = bloodType;
+    }
+
+    public String getHomeAddress() {
+        return homeAddress;
+    }
+
+    public void setHomeAddress(String street, String barangay, String city) {
+        this.homeAddress = street + " " + barangay + " " + city;
+    }
+
+    public String getOfficeAddress() {
+        return officeAddress;
+    }
+
+    public void setOfficeAddress(String street, String barangay, String city) {
+        this.homeAddress = street + " " + barangay + " " + city;
     }
 
 }

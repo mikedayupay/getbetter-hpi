@@ -35,6 +35,11 @@ public class PatientListActivity extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_patient_list);
 
+        Intent intent = getIntent();
+        String title = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
+
+        getActionBar().setTitle(title);
+
         if (findViewById(R.id.patient_detail_container) != null) {
             // The detail container view will be present only in the
             // large-screen layouts (res/values-large and
