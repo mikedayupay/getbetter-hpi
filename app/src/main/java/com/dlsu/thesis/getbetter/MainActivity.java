@@ -35,15 +35,15 @@ public class MainActivity extends Activity implements AdapterView.OnItemSelected
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        usernameInput = (EditText)findViewById(R.id.userNameInput);
-        passwordInput = (EditText)findViewById(R.id.passWordInput);
+        usernameInput = (EditText)findViewById(R.id.username_input);
+        passwordInput = (EditText)findViewById(R.id.password_input);
 
         initializeDatabase();
         initializeHealthCenterList();
 
 
         hcSpinner = (Spinner) findViewById(R.id.health_center_login);
-        loginButton = (Button) findViewById(R.id.loginButton);
+        loginButton = (Button) findViewById(R.id.login_button);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, healthCenter);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

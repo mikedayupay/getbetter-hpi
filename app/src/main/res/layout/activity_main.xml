@@ -11,9 +11,9 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="70dp"
+        android:textSize="70sp"
         android:text="GetBetter"
-        android:id="@+id/loginTitle"
+        android:id="@+id/login_title"
         android:layout_alignParentTop="true"
         android:layout_marginTop="46dp"
         android:textColor="#000"
@@ -29,8 +29,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/userNameLabel"
-            android:textSize="30dp"
+            android:id="@+id/username_label"
+            android:textSize="30sp"
             android:text="Username"
             android:textColor="#000"
             />
@@ -38,11 +38,12 @@
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/userNameInput"
+            android:id="@+id/username_input"
             android:hint="Enter username"
             android:height="40dp"
             android:width="400dp"
             android:layout_marginLeft="30dp"
+            android:layout_marginStart="30dp"
             android:inputType="textEmailAddress"
             />
 
@@ -58,21 +59,22 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/passWordLabel"
-            android:textSize="30dp"
+            android:id="@+id/password_label"
+            android:textSize="30sp"
             android:text="Password"
             android:textColor="#000"
-            android:layout_below="@id/loginTitle"
+            android:layout_below="@id/login_title"
             />
 
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/passWordInput"
+            android:id="@+id/password_input"
             android:hint="Enter Password"
             android:height="40dp"
             android:width="400dp"
             android:layout_marginLeft="30dp"
+            android:layout_marginStart="30dp"
             android:inputType="textPassword"
             />
 
@@ -89,14 +91,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Health Center"
-            android:textSize="30dp"
+            android:textSize="25sp"
             android:textColor="#000"/>
 
         <Spinner
             android:id="@+id/health_center_login"
             android:layout_width="400dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"></Spinner>
+            android:layout_marginLeft="30dp"
+            android:layout_marginStart="30dp"></Spinner>
 
 
     </LinearLayout>
@@ -106,8 +109,8 @@
         android:layout_height="wrap_content"
         android:width="550dp"
         android:text="Login"
-        android:textSize="25dp"
-        android:id="@+id/loginButton"
+        android:textSize="25sp"
+        android:id="@+id/login_button"
         android:layout_gravity="center_horizontal" />
 
 
