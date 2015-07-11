@@ -3,4 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools" tools:context=".MainActivity">
     <item android:id="@+id/action_settings" android:title="@string/action_settings"
         android:orderInCategory="100" android:showAsAction="never" />
+    <item android:id="@+id/action_add_patient"
+        android:title="New Patient"
+        android:showAsAction="always"
+        android:icon="@drawable/ic_action_add_patient"/>
+    <item android:id="@+id/action_search"
+        android:title="Search Patient"
+        android:showAsAction="always"
+        android:icon="@drawable/ic_action_search"/>
 </menu>
