@@ -6,6 +6,10 @@ import android.app.Activity;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.dlsu.thesis.getbetter.database.DataAdapter;
+
+import java.sql.SQLException;
+
 
 /**
  * An activity representing a list of Patients. This activity
@@ -31,6 +35,8 @@ public class PatientListActivity extends Activity
      * device.
      */
     private boolean mTwoPane;
+
+    private DataAdapter getBetterDb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,6 +92,27 @@ public class PatientListActivity extends Activity
         }
     }
 
+    private void initializeDatabase () {
+
+        getBetterDb = new DataAdapter(this);
+
+        try {
+            getBetterDb.createDatabase();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private void getPatientList (String healthCenterId) {
+
+        try {
+            getBetterDb.openDatabase();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -104,6 +131,8 @@ public class PatientListActivity extends Activity
         if (id == R.id.action_settings) {
             return true;
         } else if(id == R.id.action_add_patient) {
+            Intent intent = new Intent(this, NewPatientActivity.class);
+            startActivity(intent);
             return true;
         } else if(id == R.id.action_search) {
             return true;

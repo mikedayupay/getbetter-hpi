@@ -110,5 +110,10 @@ public class DataAdapter {
 
     }
 
+    public void newPatient (Users user) {
+
+
+    }
+
 
 }

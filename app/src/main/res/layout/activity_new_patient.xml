@@ -1,0 +1,74 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="com.dlsu.thesis.getbetter.NewPatientActivity">
+
+    <TextView
+        android:id="@+id/patient_record_title"
+        android:text="Patient Record"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="40sp"
+        android:padding="5dp"
+        />
+
+    <View
+        android:id="@+id/title_divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"
+        android:minHeight="1dp"
+        android:layout_below="@id/patient_record_title"
+        android:padding="5dp"
+        />
+
+    <TextView
+        android:id="@+id/first_name_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="First Name: "
+        android:textSize="30sp"
+        android:padding="5dp"
+        android:layout_below="@id/title_divider"
+        android:layout_marginTop="10dp"/>
+
+    <EditText
+        android:id="@+id/first_name_input"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/first_name_label"
+        android:layout_alignLeft="@id/middle_name_input"
+        android:layout_alignStart="@id/middle_name_input"
+        android:layout_toRightOf="@id/first_name_label"
+        android:layout_toEndOf="@id/first_name_label"
+        android:hint="Enter first name here"
+        android:padding="5dp"
+        android:capitalize="words"
+        android:ems="15"/>
+
+    <TextView
+        android:id="@+id/middle_name_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Middle Name: "
+        android:textSize="30sp"
+        android:padding="5dp"
+        android:layout_below="@id/first_name_label"
+        android:layout_marginTop="10dp"/>
+
+    <EditText
+        android:id="@+id/middle_name_input"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/middle_name_label"
+        android:layout_toRightOf="@id/middle_name_label"
+        android:layout_toEndOf="@id/middle_name_label"
+        android:hint="Enter middle name here"
+        android:padding="5dp"
+        android:capitalize="words"
+        android:ems="15"/>
+
+</RelativeLayout>
