@@ -40,14 +40,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@id/first_name_label"
-        android:layout_alignLeft="@id/middle_name_input"
-        android:layout_alignStart="@id/middle_name_input"
         android:layout_toRightOf="@id/first_name_label"
         android:layout_toEndOf="@id/first_name_label"
         android:hint="Enter first name here"
         android:padding="5dp"
         android:capitalize="words"
-        android:ems="15"/>
+        android:ems="15"
+        android:layout_marginLeft="35dp"
+        android:layout_marginStart="35dp"/>
 
     <TextView
         android:id="@+id/middle_name_label"
@@ -66,9 +66,178 @@
         android:layout_alignBottom="@id/middle_name_label"
         android:layout_toRightOf="@id/middle_name_label"
         android:layout_toEndOf="@id/middle_name_label"
+        android:layout_alignLeft="@id/first_name_input"
+        android:layout_alignStart="@id/first_name_input"
         android:hint="Enter middle name here"
         android:padding="5dp"
         android:capitalize="words"
         android:ems="15"/>
+
+    <TextView
+        android:id="@+id/last_name_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Last Name: "
+        android:textSize="30sp"
+        android:padding="5dp"
+        android:layout_below="@id/middle_name_label"
+        android:layout_marginTop="10dp"/>
+
+    <EditText
+        android:id="@+id/last_name_input"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/last_name_label"
+        android:layout_toRightOf="@id/last_name_label"
+        android:layout_toEndOf="@id/last_name_label"
+        android:layout_alignLeft="@id/middle_name_input"
+        android:layout_alignStart="@id/middle_name_input"
+        android:hint="Enter last name here"
+        android:padding="5dp"
+        android:capitalize="words"
+        android:ems="15"/>
+
+    <TextView
+        android:id="@+id/birthdate_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Birthdate: "
+        android:textSize="30sp"
+        android:padding="5dp"
+        android:layout_below="@id/last_name_label"
+        android:layout_marginTop="10dp"/>
+
+    <TextView
+        android:id="@+id/birthdate_display"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:padding="5dp"
+        android:layout_alignBottom="@id/birthdate_label"
+        android:layout_toRightOf="@id/birthdate_label"
+        android:layout_toEndOf="@id/birthdate_label"
+        android:layout_alignLeft="@id/middle_name_input"
+        android:layout_alignStart="@id/middle_name_input"
+        />
+
+    <Button
+        android:id="@+id/set_date_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Set Date"
+        android:layout_alignBottom="@id/birthdate_label"
+        android:layout_toEndOf="@id/birthdate_display"
+        android:layout_toRightOf="@id/birthdate_display"/>
+
+    <TextView
+        android:id="@+id/gender_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Gender: "
+        android:textSize="30sp"
+        android:padding="5dp"
+        android:layout_below="@id/birthdate_label"
+        android:layout_marginTop="10dp"/>
+
+    <Spinner
+        android:id="@+id/gender_spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/gender_label"
+        android:layout_toRightOf="@id/gender_label"
+        android:layout_toEndOf="@id/gender_label"
+        android:layout_alignLeft="@id/first_name_input"
+        android:layout_alignStart="@id/first_name_input"/>
+
+    <TextView
+        android:id="@+id/blood_type_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Blood Type: "
+        android:textSize="30sp"
+        android:padding="5dp"
+        android:layout_below="@id/gender_label"
+        android:layout_marginTop="10dp"/>
+
+    <Spinner
+        android:id="@+id/blood_type_spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/blood_type_label"
+        android:layout_toRightOf="@id/blood_type_label"
+        android:layout_toEndOf="@id/blood_type_label"
+        android:layout_alignLeft="@id/first_name_input"
+        android:layout_alignStart="@id/first_name_input"/>
+
+    <TextView
+        android:id="@+id/home_address_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Home Address"
+        android:textSize="30sp"
+        android:layout_below="@id/blood_type_label"
+        android:layout_marginTop="10dp"/>
+
+    <TextView
+        android:id="@+id/street_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Street: "
+        android:textSize="20sp"
+        android:padding="5dp"
+        android:layout_below="@id/home_address_label"
+        android:layout_marginTop="5dp"/>
+
+    <EditText
+        android:id="@+id/street_input"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/street_label"
+        android:layout_toEndOf="@id/street_label"
+        android:layout_alignBottom="@id/street_label"
+        android:padding="5dp"
+        android:hint="Enter street here"
+        android:ems="15"/>
+
+    <TextView
+        android:id="@+id/barangay_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Barangay: "
+        android:layout_toRightOf="@id/street_input"
+        android:layout_toEndOf="@id/street_input"
+        android:layout_alignBottom="@id/street_input"
+        android:textSize="20sp"
+        android:padding="5dp"/>
+
+    <Spinner
+        android:id="@+id/barangay_spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/barangay_label"
+        android:layout_toEndOf="@id/barangay_label"
+        android:layout_alignBottom="@id/barangay_label"/>
+
+    <TextView
+        android:id="@+id/city_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="City: "
+        android:textSize="20sp"
+        android:padding="5dp"
+        android:layout_toEndOf="@id/barangay_spinner"
+        android:layout_toRightOf="@id/barangay_spinner"
+        android:layout_alignBottom="@id/barangay_label"/>
+
+    <Spinner
+        android:id="@+id/city_spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/city_label"
+        android:layout_toEndOf="@id/city_label"
+        android:layout_alignBottom="@id/city_label"/>
+
+
+
 
 </RelativeLayout>

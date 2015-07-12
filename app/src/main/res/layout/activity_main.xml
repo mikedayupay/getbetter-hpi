@@ -99,7 +99,7 @@
             android:layout_width="400dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"
-            android:layout_marginStart="30dp"></Spinner>
+            android:layout_marginStart="30dp"/>
 
 
     </LinearLayout>

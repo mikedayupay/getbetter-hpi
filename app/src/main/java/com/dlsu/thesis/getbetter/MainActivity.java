@@ -91,6 +91,7 @@ public class MainActivity extends Activity implements AdapterView.OnItemSelected
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
+        healthCenterSelected = (parent.getSelectedItem()).toString();
     }
 
 

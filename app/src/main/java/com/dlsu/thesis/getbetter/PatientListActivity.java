@@ -1,8 +1,8 @@
 package com.dlsu.thesis.getbetter;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.app.Activity;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -45,6 +45,7 @@ public class PatientListActivity extends Activity
 
         Intent intent = getIntent();
         String title = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
+
 
         getActionBar().setTitle(title);
 
