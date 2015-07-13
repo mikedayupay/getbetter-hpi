@@ -6,4 +6,25 @@
     <string name="title_patient_list">Patients</string>
     <string name="title_patient_detail">Patient Detail</string>
     <string name="title_activity_new_patient">NewPatientActivity</string>
+    <string-array name="genders">
+        <item>Male</item>
+        <item>Female</item>
+    </string-array>
+    <string-array name="blood_types">
+        <item>-</item>
+        <item>O+</item>
+        <item>O-</item>
+        <item>A+</item>
+        <item>A-</item>
+        <item>B+</item>
+        <item>B-</item>
+        <item>AB+</item>
+        <item>AB-</item>
+    </string-array>
+    <string-array name="civil_statuses">
+        <item>Single</item>
+        <item>Married</item>
+        <item>Separated</item>
+        <item>Widowed</item>
+    </string-array>
 </resources>
