@@ -82,6 +82,19 @@ public class DataAdapter {
         return healthCenter;
     }
 
+    public int getHealthCenterId(String healthCenter) {
+
+        int result;
+        String sql = "SELECT _id FROM tbl_health_centers WHERE health_center_name = " + healthCenter;
+
+        Cursor c = getBetterDb.rawQuery(sql, null);
+
+        c.moveToFirst();
+        result = c.getInt(c.getColumnIndex("_id"));
+
+        return result;
+    }
+
     public ArrayList<Users> getPatients (int healthCenterId) {
 
         ArrayList<Users> results = new ArrayList<Users>();
@@ -110,8 +123,58 @@ public class DataAdapter {
 
     }
 
+    public ArrayList<String> getBarangays () {
+
+        ArrayList<String> results = new ArrayList<>();
+        String sql = "SELECT * FROM tbl_barangays ORDER BY barangay_name";
+
+        Cursor c = getBetterDb.rawQuery(sql, null);
+
+        while (c.moveToNext()) {
+            results.add(c.getString(c.getColumnIndexOrThrow("barangay_name")));
+        }
+
+        return results;
+    }
+
+    public ArrayList<String> getCities () {
+
+        ArrayList<String> results = new ArrayList<>();
+        String sql = "SELECT * FROM tbl_cities ORDER BY city_name";
+
+        Cursor c = getBetterDb.rawQuery(sql, null);
+
+        while (c.moveToNext()) {
+            results.add(c.getString(c.getColumnIndexOrThrow("city_name")));
+        }
+
+        return results;
+    }
+
     public void newPatient (Users user) {
 
+        int genderId;
+        int civilId;
+        String genderSql = "SELECT _id FROM tbl_genders WHERE gender_name = " + user.getGender();
+
+        Cursor cGender = getBetterDb.rawQuery(genderSql, null);
+        cGender.moveToFirst();
+        genderId = cGender.getInt(cGender.getColumnIndex("_id"));
+
+        String civilSql = "SELECT _id FROM tbl_civil_statuses WHERE civil_status_name = " + user.getCivilStatus();
+
+        Cursor cCivil = getBetterDb.rawQuery(civilSql, null);
+        cCivil.moveToFirst();
+        civilId = cCivil.getInt(cCivil.getColumnIndex("_id"));
+
+
+        String sql = "INSERT INTO tbl_users_upload (first_name, middle_name, " +
+                "last_name, birthdate, gender_id, civil_status_id, role_id, blood_type)" +
+                " VALUES(" + user.getFirstName() + ", " + user.getMiddleName() + ", " +
+                user.getLastName() + ", " + user.getBirthdate() + ", " + genderId + ", " +
+                civilId + ", " + 6 + ", " + user.getBloodType() + ")";
+
+        getBetterDb.execSQL(sql);
 
     }
 
