@@ -37,6 +37,8 @@ public class PatientListActivity extends Activity
     private boolean mTwoPane;
 
     private DataAdapter getBetterDb;
+    private int healthCenterId;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,13 +107,15 @@ public class PatientListActivity extends Activity
 
     }
 
-    private void getPatientList (String healthCenterId) {
+    private void getPatientList (String healthCenter) {
 
         try {
             getBetterDb.openDatabase();
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+        healthCenterId = getBetterDb.getHealthCenterId(healthCenter);
     }
 
     @Override

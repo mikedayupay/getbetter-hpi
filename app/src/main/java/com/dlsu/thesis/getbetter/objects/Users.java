@@ -32,7 +32,8 @@ public class Users {
 
     }
 
-    public Users (String firstName, String middleName, String lastName, String birthdate, String gender, String civilStatus, String bloodType) {
+    public Users (String firstName, String middleName, String lastName, String birthdate,
+                  String gender, String civilStatus, String bloodType) {
         this.firstName = firstName;
         this.middleName = middleName;
         this.lastName = lastName;
