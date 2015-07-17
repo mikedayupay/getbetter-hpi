@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.dlsu.thesis.getbetter.database.DataAdapter;
 
@@ -28,10 +29,14 @@ public class MainActivity extends Activity implements AdapterView.OnItemSelected
     private String[] healthCenter;
     private String healthCenterSelected;
 
+    UserSessionManager session;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        session = new UserSessionManager(getApplicationContext());
 
         usernameInput = (EditText)findViewById(R.id.username_input);
         passwordInput = (EditText)findViewById(R.id.password_input);
@@ -82,6 +87,17 @@ public class MainActivity extends Activity implements AdapterView.OnItemSelected
 
     }
 
+    private boolean checkLogin (String username, String password) {
+
+        try {
+            getBetterDb.openDatabase();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return getBetterDb.checkLogin(username, password);
+    }
+
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
@@ -100,14 +116,37 @@ public class MainActivity extends Activity implements AdapterView.OnItemSelected
 
         String username = usernameInput.getText().toString();
         String password = passwordInput.getText().toString();
-        String text = username + password + healthCenterSelected;
+        //String text = username + password + healthCenterSelected;
         //Toast toast = Toast.makeText(this, text, Toast.LENGTH_LONG);
         //toast.show();
 
-        Intent intent = new Intent(this, PatientListActivity.class);
-        intent.putExtra(EXTRA_MESSAGE, healthCenterSelected);
-        startActivity(intent);
+        if(username.trim().length() > 0 && password.trim().length() > 0) {
 
+            if(checkLogin(username, password)) {
 
+                session.createUserLoginSession(username, healthCenterSelected);
+
+                Intent intent = new Intent(this, PatientListActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+
+                finish();
+
+            } else {
+                Toast.makeText(getApplicationContext(),
+                        "Username/Password is incorrect",
+                        Toast.LENGTH_LONG).show();
+            }
+        }else {
+
+            Toast.makeText(getApplicationContext(),
+                    "Please enter username and password",
+                    Toast.LENGTH_LONG).show();
+        }
+
+//        Intent intent = new Intent(this, PatientListActivity.class);
+//        intent.putExtra(EXTRA_MESSAGE, healthCenterSelected);
+//        startActivity(intent);
     }
 }
