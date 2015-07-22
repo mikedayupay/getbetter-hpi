@@ -5,7 +5,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-import com.dlsu.thesis.getbetter.objects.Users;
+import com.dlsu.thesis.getbetter.objects.PatientContent;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -38,12 +38,25 @@ public class DataAdapter {
         return this;
     }
 
-    public DataAdapter openDatabase() throws SQLException {
+    public DataAdapter openDatabaseForRead() throws SQLException {
 
         try {
             getBetterDatabaseHelper.openDatabase();
             getBetterDatabaseHelper.close();
             getBetterDb = getBetterDatabaseHelper.getReadableDatabase();
+        }catch (SQLException sqle) {
+            Log.e(TAG, "open >>" +sqle.toString());
+            throw sqle;
+        }
+        return this;
+    }
+
+    public DataAdapter openDatabaseForWrite() throws SQLException {
+
+        try {
+            getBetterDatabaseHelper.openDatabase();
+            getBetterDatabaseHelper.close();
+            getBetterDb = getBetterDatabaseHelper.getWritableDatabase();
         }catch (SQLException sqle) {
             Log.e(TAG, "open >>" +sqle.toString());
             throw sqle;
@@ -57,7 +70,7 @@ public class DataAdapter {
 
     public boolean checkLogin (String username, String password) {
 
-        String sql = "SELECT * FROM tbl_users WHERE email = " + username + " AND password = " + password;
+        String sql = "SELECT * FROM tbl_users WHERE email = '" + username + "' AND pass = '" + password + "'";
 
         Cursor c = getBetterDb.rawQuery(sql, null);
         if(c.getCount() > 0) {
@@ -85,7 +98,7 @@ public class DataAdapter {
     public int getHealthCenterId(String healthCenter) {
 
         int result;
-        String sql = "SELECT _id FROM tbl_health_centers WHERE health_center_name = " + healthCenter;
+        String sql = "SELECT _id FROM tbl_health_centers WHERE health_center_name = '" + healthCenter + "'";
 
         Cursor c = getBetterDb.rawQuery(sql, null);
 
@@ -95,20 +108,21 @@ public class DataAdapter {
         return result;
     }
 
-    public ArrayList<Users> getPatients (int healthCenterId) {
+    public ArrayList<PatientContent.Patient> getPatients (int healthCenterId) {
 
-        ArrayList<Users> results = new ArrayList<Users>();
-        String sql = "Select u.first_name AS first_name, u.middle_name AS middle_name, " +
+        ArrayList<PatientContent.Patient> results = new ArrayList<PatientContent.Patient>();
+        String sql = "SELECT u._id AS id, u.first_name AS first_name, u.middle_name AS middle_name, " +
                 "u.last_name AS last_name, u.birthdate AS birthdate, g.gender_name AS gender, " +
                 "c.civil_status_name AS civil_status, u.blood_type AS blood_type " +
-                "FROM tbl_users AS u, tbl_genders AS g, tbl_civil_statuses AS c" +
+                "FROM tbl_users AS u, tbl_genders AS g, tbl_civil_statuses AS c " +
                 "WHERE u.gender_id = g._id AND u.civil_status_id = c._id AND " +
                 "role_id = 6 AND default_health_center = " + healthCenterId;
 
         Cursor c = getBetterDb.rawQuery(sql, null);
 
         while (c.moveToNext()) {
-            Users user = new Users(c.getString(c.getColumnIndex("first_name")),
+             PatientContent.Patient patient = new PatientContent.Patient(c.getInt(c.getColumnIndex("id")),
+                     c.getString(c.getColumnIndex("first_name")),
                     c.getString(c.getColumnIndex("middle_name")),
                     c.getString(c.getColumnIndex("last_name")),
                     c.getString(c.getColumnIndex("birthdate")),
@@ -116,12 +130,29 @@ public class DataAdapter {
                     c.getString(c.getColumnIndex("civil_status")),
                     c.getString(c.getColumnIndex("blood_type")));
 
-            results.add(user);
+            results.add(patient);
         }
 
         return results;
 
     }
+
+//    public Users getPatient (final long id) {
+//
+//        String sql = "SELECT * FROM tbl_users WHERE _id = " + id;
+//
+//        Cursor c = getBetterDb.rawQuery(sql, null);
+//        c.moveToFirst();
+//        Users result = new Users(c.getString(c.getColumnIndex("first_name")),
+//                c.getString(c.getColumnIndex("middle_name")),
+//                c.getString(c.getColumnIndex("last_name")),
+//                c.getString(c.getColumnIndex("birthdate")),
+//                c.getString(c.getColumnIndex("gender")),
+//                c.getString(c.getColumnIndex("civil_status")),
+//                c.getString(c.getColumnIndex("blood_type")));
+//
+//        return result;
+//    }
 
     public ArrayList<String> getBarangays () {
 
@@ -151,30 +182,39 @@ public class DataAdapter {
         return results;
     }
 
-    public void newPatient (Users user) {
+    public void newPatient (PatientContent.Patient patient) {
 
         int genderId;
         int civilId;
-        String genderSql = "SELECT _id FROM tbl_genders WHERE gender_name = " + user.getGender();
+        String genderSql = "SELECT _id FROM tbl_genders WHERE gender_name = '" + patient.getGender() + "'";
 
         Cursor cGender = getBetterDb.rawQuery(genderSql, null);
         cGender.moveToFirst();
         genderId = cGender.getInt(cGender.getColumnIndex("_id"));
 
-        String civilSql = "SELECT _id FROM tbl_civil_statuses WHERE civil_status_name = " + user.getCivilStatus();
+        String civilSql = "SELECT _id FROM tbl_civil_statuses WHERE civil_status_name = '" + patient.getCivilStatus() + "'";
 
         Cursor cCivil = getBetterDb.rawQuery(civilSql, null);
         cCivil.moveToFirst();
         civilId = cCivil.getInt(cCivil.getColumnIndex("_id"));
 
 
+
         String sql = "INSERT INTO tbl_users_upload (first_name, middle_name, " +
                 "last_name, birthdate, gender_id, civil_status_id, role_id, blood_type)" +
-                " VALUES(" + user.getFirstName() + ", " + user.getMiddleName() + ", " +
-                user.getLastName() + ", " + user.getBirthdate() + ", " + genderId + ", " +
-                civilId + ", " + 6 + ", " + user.getBloodType() + ")";
+                " VALUES('" + patient.getFirstName() + "', '" + patient.getMiddleName() + "', '" +
+                patient.getLastName() + "', '" + patient.getBirthdate() + "', " + genderId + ", " +
+                civilId + ", " + 6 + ", '" + patient.getBloodType() + "')";
 
         getBetterDb.execSQL(sql);
+
+        String sql2 = "INSERT INTO tbl_users (first_name, middle_name, " +
+                "last_name, birthdate, gender_id, civil_status_id, role_id, blood_type)" +
+                " VALUES('" + patient.getFirstName() + "', '" + patient.getMiddleName() + "', '" +
+                patient.getLastName() + "', '" + patient.getBirthdate() + "', " + genderId + ", " +
+                civilId + ", " + 6 + ", '" + patient.getBloodType() + "')";
+
+        getBetterDb.execSQL(sql2);
 
     }
 

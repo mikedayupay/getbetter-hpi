@@ -16,11 +16,12 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.dlsu.thesis.getbetter.database.DataAdapter;
-import com.dlsu.thesis.getbetter.objects.Users;
+import com.dlsu.thesis.getbetter.objects.PatientContent;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 
 
 public class NewPatientActivity extends Activity implements View.OnClickListener, AdapterView.OnItemSelectedListener{
@@ -44,13 +45,25 @@ public class NewPatientActivity extends Activity implements View.OnClickListener
     private String barangaySelected;
     private String citySelected;
     private String birthDate;
-    private Users patient;
+    private PatientContent.Patient patient;
 
+    UserSessionManager session;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_patient);
+
+        session = new UserSessionManager(getApplicationContext());
+
+        if(session.checkLogin())
+            finish();
+
+        HashMap<String, String> user = session.getUserDetails();
+
+        String title = user.get(UserSessionManager.KEY_HEALTH_CENTER);
+
+        getActionBar().setTitle(title);
 
         firstNameInput = (EditText)findViewById(R.id.first_name_input);
         middleNameInput = (EditText)findViewById(R.id.middle_name_input);
@@ -127,7 +140,7 @@ public class NewPatientActivity extends Activity implements View.OnClickListener
             initializeDatabase();
 
             try {
-                getBetterDb.openDatabase();
+                getBetterDb.openDatabaseForWrite();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -137,7 +150,7 @@ public class NewPatientActivity extends Activity implements View.OnClickListener
             String lastName = lastNameInput.getText().toString();
             String street = streetInput.getText().toString();
 
-            patient = new Users(firstName, middleName, lastName, birthDate, genderSelected,
+            patient = new PatientContent.Patient(0, firstName, middleName, lastName, birthDate, genderSelected,
                     civilStatusSelected, bloodTypeSelected);
             patient.setHomeAddress(street, barangaySelected, citySelected);
 
@@ -185,7 +198,7 @@ public class NewPatientActivity extends Activity implements View.OnClickListener
     private void initializeData () {
 
         try {
-            getBetterDb.openDatabase();
+            getBetterDb.openDatabaseForRead();
         } catch (SQLException e) {
             e.printStackTrace();
         }

@@ -72,7 +72,7 @@ public class MainActivity extends Activity implements AdapterView.OnItemSelected
     private void initializeHealthCenterList () {
 
         try {
-            getBetterDb.openDatabase();
+            getBetterDb.openDatabaseForRead();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -90,7 +90,7 @@ public class MainActivity extends Activity implements AdapterView.OnItemSelected
     private boolean checkLogin (String username, String password) {
 
         try {
-            getBetterDb.openDatabase();
+            getBetterDb.openDatabaseForRead();
         } catch (SQLException e) {
             e.printStackTrace();
         }
