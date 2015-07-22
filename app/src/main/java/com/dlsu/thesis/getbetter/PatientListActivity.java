@@ -5,10 +5,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
-import com.dlsu.thesis.getbetter.database.DataAdapter;
-
-import java.sql.SQLException;
+import java.util.HashMap;
 
 
 /**
@@ -36,18 +35,25 @@ public class PatientListActivity extends Activity
      */
     private boolean mTwoPane;
 
-    private DataAdapter getBetterDb;
-    private int healthCenterId;
-
+    UserSessionManager session;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_patient_list);
 
-        Intent intent = getIntent();
-        String title = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
+        session = new UserSessionManager(getApplicationContext());
 
+        Toast.makeText(getApplicationContext(),
+                "User Login Status: " + session.isUserLoggedIn(),
+                Toast.LENGTH_LONG).show();
+
+        if(session.checkLogin())
+            finish();
+
+        HashMap<String, String> user = session.getUserDetails();
+
+        String title = user.get(UserSessionManager.KEY_HEALTH_CENTER);
 
         getActionBar().setTitle(title);
 
@@ -73,13 +79,13 @@ public class PatientListActivity extends Activity
      * indicating that the item with the given ID was selected.
      */
     @Override
-    public void onItemSelected(String id) {
+    public void onItemSelected(long id) {
         if (mTwoPane) {
             // In two-pane mode, show the detail view in this activity by
             // adding or replacing the detail fragment using a
             // fragment transaction.
             Bundle arguments = new Bundle();
-            arguments.putString(PatientDetailFragment.ARG_ITEM_ID, id);
+            arguments.putLong(PatientDetailFragment.ARG_ITEM_ID, id);
             PatientDetailFragment fragment = new PatientDetailFragment();
             fragment.setArguments(arguments);
             getFragmentManager().beginTransaction()
@@ -93,29 +99,6 @@ public class PatientListActivity extends Activity
             detailIntent.putExtra(PatientDetailFragment.ARG_ITEM_ID, id);
             startActivity(detailIntent);
         }
-    }
-
-    private void initializeDatabase () {
-
-        getBetterDb = new DataAdapter(this);
-
-        try {
-            getBetterDb.createDatabase();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-    }
-
-    private void getPatientList (String healthCenter) {
-
-        try {
-            getBetterDb.openDatabase();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        healthCenterId = getBetterDb.getHealthCenterId(healthCenter);
     }
 
     @Override
