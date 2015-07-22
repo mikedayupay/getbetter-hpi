@@ -5,6 +5,7 @@ package com.dlsu.thesis.getbetter.objects;
  */
 public class Users {
 
+    private long id;
     private String firstName;
     private String middleName;
     private String lastName;
@@ -13,14 +14,16 @@ public class Users {
     private String birthdate;
     private String gender;
     private String civilStatus;
-    private String bloodType;
     private String homeAddress;
     private String officeAddress;
 
 
-    public Users (String firstName, String middleName, String lastName, String email,
+    public Users () {}
+
+    public Users (long id, String firstName, String middleName, String lastName, String email,
                   String password, String birthdate, String gender, String civilStatus) {
 
+        this.id = id;
         this.firstName = firstName;
         this.middleName = middleName;
         this.lastName = lastName;
@@ -32,17 +35,25 @@ public class Users {
 
     }
 
-    public Users (String firstName, String middleName, String lastName, String birthdate,
-                  String gender, String civilStatus, String bloodType) {
+    public Users (long id, String firstName, String middleName, String lastName, String birthdate,
+                  String gender, String civilStatus) {
+
+        this.id = id;
         this.firstName = firstName;
         this.middleName = middleName;
         this.lastName = lastName;
         this.birthdate = birthdate;
         this.gender = gender;
         this.civilStatus = civilStatus;
-        this.bloodType = bloodType;
     }
 
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public String getFirstName() {
         return firstName;
@@ -108,13 +119,6 @@ public class Users {
         this.civilStatus = civilStatus;
     }
 
-    public String getBloodType() {
-        return bloodType;
-    }
-
-    public void setBloodType(String bloodType) {
-        this.bloodType = bloodType;
-    }
 
     public String getHomeAddress() {
         return homeAddress;

@@ -13,7 +13,7 @@ public class PatientContent {
 
     public static List<Patient> PATIENTS = new ArrayList<Patient>();
 
-    public static Map<Integer, Patient> PATIENT_MAP = new HashMap<Integer, Patient>();
+    public static Map<Long, Patient> PATIENT_MAP = new HashMap<Long, Patient>();
 
     public static void addPatient (Patient patient) {
         PATIENTS.add(patient);
@@ -24,7 +24,7 @@ public class PatientContent {
 
         private String bloodType;
 
-        public Patient (int id, String firstName, String middleName, String lastName, String birthdate,
+        public Patient (long id, String firstName, String middleName, String lastName, String birthdate,
                         String gender, String civilStatus, String bloodType) {
 
             super(id, firstName, middleName, lastName, birthdate, gender, civilStatus);
