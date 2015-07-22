@@ -6,6 +6,7 @@
     >
 
     <TextView  android:id="@+id/patient_detail"
+        android:text="Patient Information"
         style="?android:attr/textAppearanceLarge" android:layout_width="match_parent"
         android:layout_height="wrap_content" android:padding="16dp" android:textIsSelectable="true"
         />
@@ -37,15 +38,15 @@
         android:layout_height="wrap_content"
         android:textSize="20sp"
         android:padding="5dp"
+        android:singleLine="true"
         android:layout_toRightOf="@id/name_label"
-        android:layout_toEndOf="@id/name_label"
         android:layout_alignBottom="@id/name_label"/>
 
     <TextView
         android:id="@+id/age_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Age: "
+        android:text="Birthdate: "
         android:textSize="20sp"
         android:padding="5dp"
         android:layout_below="@id/name_label"
@@ -140,6 +141,26 @@
         android:layout_alignLeft="@id/blood_type_label"
         android:layout_alignStart="@id/blood_type_label"
         android:layout_marginTop="10dp"/>
+
+    <TextView
+        android:id="@+id/patient_address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:padding="5dp"
+        android:layout_toRightOf="@id/address_label"
+        android:layout_toEndOf="@id/address_label"
+        android:layout_alignBottom="@id/address_label"/>
+
+    <ImageView
+        android:id="@+id/patient_display_picture"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/profilepic"
+        android:contentDescription="Profile Picture"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/title_divider"/>
 
 
 
