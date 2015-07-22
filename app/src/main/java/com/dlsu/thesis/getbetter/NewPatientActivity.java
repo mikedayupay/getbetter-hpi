@@ -3,6 +3,7 @@ package com.dlsu.thesis.getbetter;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -14,6 +15,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.dlsu.thesis.getbetter.database.DataAdapter;
 import com.dlsu.thesis.getbetter.objects.PatientContent;
@@ -48,6 +50,7 @@ public class NewPatientActivity extends Activity implements View.OnClickListener
     private PatientContent.Patient patient;
 
     UserSessionManager session;
+    private int healthCenterId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,6 +95,13 @@ public class NewPatientActivity extends Activity implements View.OnClickListener
 
         initializeDatabase();
         initializeData();
+
+        try {
+            getBetterDb.openDatabaseForRead();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        healthCenterId = getBetterDb.getHealthCenterId(title);
 
         ArrayAdapter<CharSequence> genderAdapter = ArrayAdapter.createFromResource(this,
                 R.array.genders, android.R.layout.simple_spinner_item);
@@ -154,7 +164,18 @@ public class NewPatientActivity extends Activity implements View.OnClickListener
                     civilStatusSelected, bloodTypeSelected);
             patient.setHomeAddress(street, barangaySelected, citySelected);
 
-            getBetterDb.newPatient(patient);
+            getBetterDb.newPatient(patient, healthCenterId);
+
+            Toast.makeText(getApplicationContext(),
+                    "New Patient Record Created!",
+                    Toast.LENGTH_LONG).show();
+
+            Intent intent = new Intent(this, PatientListActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+
+            finish();
         }
     }
 

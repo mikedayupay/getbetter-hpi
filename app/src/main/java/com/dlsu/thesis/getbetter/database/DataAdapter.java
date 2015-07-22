@@ -182,7 +182,7 @@ public class DataAdapter {
         return results;
     }
 
-    public void newPatient (PatientContent.Patient patient) {
+    public void newPatient (PatientContent.Patient patient, int healthCenterId) {
 
         int genderId;
         int civilId;
@@ -201,18 +201,18 @@ public class DataAdapter {
 
 
         String sql = "INSERT INTO tbl_users_upload (first_name, middle_name, " +
-                "last_name, birthdate, gender_id, civil_status_id, role_id, blood_type)" +
+                "last_name, birthdate, gender_id, civil_status_id, role_id, blood_type, default_health_center)" +
                 " VALUES('" + patient.getFirstName() + "', '" + patient.getMiddleName() + "', '" +
                 patient.getLastName() + "', '" + patient.getBirthdate() + "', " + genderId + ", " +
-                civilId + ", " + 6 + ", '" + patient.getBloodType() + "')";
+                civilId + ", " + 6 + ", '" + patient.getBloodType() + "', " + healthCenterId + ")";
 
         getBetterDb.execSQL(sql);
 
         String sql2 = "INSERT INTO tbl_users (first_name, middle_name, " +
-                "last_name, birthdate, gender_id, civil_status_id, role_id, blood_type)" +
+                "last_name, birthdate, gender_id, civil_status_id, role_id, blood_type, default_health_center)" +
                 " VALUES('" + patient.getFirstName() + "', '" + patient.getMiddleName() + "', '" +
                 patient.getLastName() + "', '" + patient.getBirthdate() + "', " + genderId + ", " +
-                civilId + ", " + 6 + ", '" + patient.getBloodType() + "')";
+                civilId + ", " + 6 + ", '" + patient.getBloodType() + "', " + healthCenterId + ")";
 
         getBetterDb.execSQL(sql2);
 
