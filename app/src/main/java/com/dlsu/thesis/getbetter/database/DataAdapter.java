@@ -218,5 +218,20 @@ public class DataAdapter {
 
     }
 
+    public ArrayList<String> getImpressions (int selectedSymptomId) {
+
+        ArrayList<String> results = new ArrayList<>();
+        String sql = "SELECT medical_term FROM case_impression_table AS i, symptoms_of_impression_table AS s " +
+        "WHERE i.impression_id = s.impression_id AND s.symptom_id = " + selectedSymptomId;
+
+        Cursor c = getBetterDb.rawQuery(sql, null);
+
+        while(c.moveToNext()) {
+            results.add(c.getString(c.getColumnIndexOrThrow("medical_term")));
+        }
+
+        return results;
+    }
+
 
 }

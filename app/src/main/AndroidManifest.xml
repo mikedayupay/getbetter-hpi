@@ -40,6 +40,30 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.dlsu.thesis.getbetter.PatientListActivity" />
         </activity>
+        <activity
+            android:name=".CaseListActivity"
+            android:label="@string/title_case_list"
+            android:parentActivityName=".PatientListActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.dlsu.thesis.getbetter.PatientListActivity" />
+        </activity>
+        <activity
+            android:name=".CaseDetailActivity"
+            android:label="@string/title_case_detail"
+            android:parentActivityName=".CaseListActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.dlsu.thesis.getbetter.CaseListActivity" />
+        </activity>
+        <activity
+            android:name=".ChiefComplaintActivity"
+            android:label="@string/title_activity_chief_complaint"
+            android:parentActivityName=".PatientListActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.dlsu.thesis.getbetter.PatientListActivity" />
+        </activity>
     </application>
 
 </manifest>

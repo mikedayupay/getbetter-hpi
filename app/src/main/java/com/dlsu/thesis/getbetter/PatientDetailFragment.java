@@ -1,10 +1,12 @@
 package com.dlsu.thesis.getbetter;
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.dlsu.thesis.getbetter.database.DataAdapter;
@@ -20,7 +22,7 @@ import java.util.HashMap;
  * in two-pane mode (on tablets) or a {@link PatientDetailActivity}
  * on handsets.
  */
-public class PatientDetailFragment extends Fragment {
+public class PatientDetailFragment extends Fragment implements View.OnClickListener{
     /**
      * The fragment argument representing the item ID that this fragment
      * represents.
@@ -38,6 +40,9 @@ public class PatientDetailFragment extends Fragment {
     private TextView patientCivilStatus;
     private TextView patientBloodType;
     private TextView patientAddress;
+
+    private Button newCaseButton;
+    private Button viewCaseButton;
 
     private DataAdapter getBetterDb;
     UserSessionManager session;
@@ -87,6 +92,11 @@ public class PatientDetailFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_patient_detail, container, false);
 
+        viewCaseButton = (Button)rootView.findViewById(R.id.view_record_button);
+        viewCaseButton.setOnClickListener(this);
+        newCaseButton = (Button)rootView.findViewById(R.id.new_record_button);
+        newCaseButton.setOnClickListener(this);
+
         String name = mItem.getFirstName() + " " + mItem.getMiddleName() + " " + mItem.getLastName();
 
         // Show the dummy content as text in a TextView.
@@ -125,4 +135,20 @@ public class PatientDetailFragment extends Fragment {
     }
 
 
+    @Override
+    public void onClick(View v) {
+
+        int id = v.getId();
+
+        if(id == R.id.view_record_button) {
+
+            Intent caseListIntent = new Intent(getActivity(), CaseListActivity.class);
+            startActivity(caseListIntent);
+        } else if (id == R.id.new_record_button) {
+
+            Intent newCaseIntent = new Intent(getActivity(), ChiefComplaintActivity.class);
+            startActivity(newCaseIntent);
+        }
+
+    }
 }

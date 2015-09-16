@@ -6,7 +6,111 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="com.dlsu.thesis.getbetter.ChiefComplaintActivity">
 
-    <TextView android:text="@string/hello_world" android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <RelativeLayout
+        android:layout_width="600dp"
+        android:layout_height="600dp"
+        android:background="@drawable/rectangle"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/view" >
+
+    <TextView android:text="Reason for Visit" android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/chiefComplaintTitle"
+        android:layout_marginTop="40dp"
+        android:textSize="40dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/chiefComplaintTitle"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="30dp"
+            android:id="@+id/radioGroup">
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Fever"
+                android:textSize="20dp"
+                android:padding="5dp"/>
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Cough"
+                android:textSize="20dp"
+                android:padding="5dp"/>
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tummy Pain"
+                android:textSize="20dp"
+                android:padding="5dp"/>
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Diarrhea"
+                android:textSize="20dp"
+                android:padding="5dp"/>
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ear Problem"
+                android:textSize="20dp"
+                android:padding="5dp"/>
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Skin Problem"
+                android:textSize="20dp"
+                android:padding="5dp"/>
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Eye Problem"
+                android:textSize="20dp"
+                android:padding="5dp"/>
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Headache"
+                android:textSize="20dp"
+                android:padding="5dp"/>
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Body Pain"
+                android:textSize="20dp"
+                android:padding="5dp"/>
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Fatigue"
+                android:textSize="20dp"
+                android:padding="5dp"/>
+
+        </RadioGroup>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Next"
+            android:background="@android:color/holo_green_dark"
+            android:layout_below="@+id/radioGroup"
+            android:layout_toRightOf="@+id/chiefComplaintTitle"
+            android:layout_toEndOf="@+id/chiefComplaintTitle" />
+
+    </RelativeLayout>
 
 </RelativeLayout>
