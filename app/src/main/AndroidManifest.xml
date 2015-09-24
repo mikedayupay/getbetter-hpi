@@ -64,6 +64,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.dlsu.thesis.getbetter.PatientListActivity" />
         </activity>
+        <activity
+            android:name=".ExpertSystemActivity"
+            android:label="@string/title_activity_expert_system"
+            android:parentActivityName=".PatientListActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.dlsu.thesis.getbetter.PatientListActivity" />
+        </activity>
     </application>
 
 </manifest>

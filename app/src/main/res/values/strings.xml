@@ -30,4 +30,5 @@
     <string name="title_case_list">Cases</string>
     <string name="title_case_detail">Case Detail</string>
     <string name="title_activity_chief_complaint">ChiefComplaintActivity</string>
+    <string name="title_activity_expert_system">ExpertSystemActivity</string>
 </resources>

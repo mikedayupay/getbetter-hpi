@@ -22,87 +22,83 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 
-        <RadioGroup
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:orientation="vertical"
             android:layout_below="@+id/chiefComplaintTitle"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="30dp"
             android:id="@+id/radioGroup">
 
-            <RadioButton
+            <CheckBox
+                android:id="@+id/check_fever"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Fever"
                 android:textSize="20dp"
-                android:padding="5dp"/>
+                android:padding="5dp"
+                android:onClick="onCheckBoxClicked"/>
 
-            <RadioButton
+            <CheckBox
+                android:id="@+id/check_pain"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Cough"
+                android:text="Pain"
                 android:textSize="20dp"
-                android:padding="5dp"/>
+                android:padding="5dp"
+                android:onClick="onCheckBoxClicked"/>
 
-            <RadioButton
+            <CheckBox
+                android:id="@+id/check_injury_wound"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Tummy Pain"
+                android:text="Injury/Wound"
                 android:textSize="20dp"
-                android:padding="5dp"/>
+                android:padding="5dp"
+                android:onClick="onCheckBoxClicked"/>
 
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Diarrhea"
-                android:textSize="20dp"
-                android:padding="5dp"/>
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Ear Problem"
-                android:textSize="20dp"
-                android:padding="5dp"/>
-
-            <RadioButton
+            <CheckBox
+                android:id="@+id/check_skin_problem"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Skin Problem"
                 android:textSize="20dp"
-                android:padding="5dp"/>
+                android:padding="5dp"
+                android:onClick="onCheckBoxClicked"/>
 
-            <RadioButton
+            <CheckBox
+                android:id="@+id/check_respiratory"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Eye Problem"
+                android:text="Breathing/Respiratory Issues"
                 android:textSize="20dp"
-                android:padding="5dp"/>
+                android:padding="5dp"
+                android:onClick="onCheckBoxClicked"/>
 
-            <RadioButton
+            <CheckBox
+                android:id="@+id/check_bowel_vomiting"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Headache"
+                android:text="Bowel movement/Vomiting"
                 android:textSize="20dp"
-                android:padding="5dp"/>
+                android:padding="5dp"
+                android:onClick="onCheckBoxClicked"/>
 
-            <RadioButton
+            <CheckBox
+                android:id="@+id/check_general_unwellness"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Body Pain"
+                android:text="General Unwellness"
                 android:textSize="20dp"
-                android:padding="5dp"/>
+                android:padding="5dp"
+                android:onClick="onCheckBoxClicked"/>
 
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Fatigue"
-                android:textSize="20dp"
-                android:padding="5dp"/>
 
-        </RadioGroup>
+        </LinearLayout>
 
         <Button
+            android:id="@+id/next_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Next"
