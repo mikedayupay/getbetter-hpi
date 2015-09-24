@@ -23,7 +23,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static String DB_NAME = "get_better";
 
-    private static int DB_VERSION = 3;
+    private static int DB_VERSION = 1;
 
     private static String TAG = "DatabaseHelper";
 

@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.dlsu.thesis.getbetter.objects.PatientContent;
+import com.dlsu.thesis.getbetter.objects.Question;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -218,11 +219,11 @@ public class DataAdapter {
 
     }
 
-    public ArrayList<String> getImpressions (int selectedSymptomId) {
+    public ArrayList<String> getImpressions (int complaintId) {
 
         ArrayList<String> results = new ArrayList<>();
-        String sql = "SELECT medical_term FROM case_impression_table AS i, symptoms_of_impression_table AS s " +
-        "WHERE i.impression_id = s.impression_id AND s.symptom_id = " + selectedSymptomId;
+        String sql = "SELECT medical_term FROM tbl_case_impression AS i, tbl_impressions_of_complaints AS s " +
+        "WHERE i._id = s.impression_id AND s.complaint_id = " + complaintId;
 
         Cursor c = getBetterDb.rawQuery(sql, null);
 
@@ -233,5 +234,51 @@ public class DataAdapter {
         return results;
     }
 
+    public ArrayList<Question> getQuestions (int symptomId) {
 
+        ArrayList<Question> results = new ArrayList<>();
+        String sql = "SELECT * FROM questions_table WHERE symptom_id = " + symptomId;
+
+        Cursor c = getBetterDb.rawQuery(sql, null);
+
+        while (c.moveToNext()) {
+            Question question = new Question(c.getInt(c.getColumnIndexOrThrow("question_id")),
+                    c.getString(c.getColumnIndexOrThrow("english_question")),
+                    c.getString(c.getColumnIndexOrThrow("tagalog_question")),
+                    c.getString(c.getColumnIndexOrThrow("responses")),
+                    c.getString(c.getColumnIndexOrThrow("action_needed")));
+
+            results.add(question);
+        }
+
+        return results;
+    }
+
+    public int getImpressionId(String impression) {
+
+        int impressionId;
+        String sql = "SELECT _id FROM tbl_case_impression WHERE medical_term = '" + impression + "'";
+
+        Cursor c = getBetterDb.rawQuery(sql, null);
+        c.moveToFirst();
+        impressionId = c.getInt(c.getColumnIndexOrThrow("_id"));
+
+        return impressionId;
+    }
+
+    public ArrayList<String> getSymptoms(int impressionId) {
+
+        ArrayList<String> results = new ArrayList<>();
+        String sql = "SELECT symptom_name_english " +
+                "FROM tbl_symptom_list AS s, tbl_symptom_of_impression AS i " +
+                "WHERE i.impression_id = " + impressionId + " AND s._id = i.symptom_id";
+
+        Cursor c = getBetterDb.rawQuery(sql, null);
+        while(c.moveToNext()) {
+            results.add(c.getString(c.getColumnIndexOrThrow("symptom_name_english")));
+        }
+
+        return results;
+
+    }
 }
