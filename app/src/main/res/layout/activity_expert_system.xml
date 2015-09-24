@@ -1,12 +1,241 @@
+<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="com.dlsu.thesis.getbetter.ExpertSystemActivity">
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-    <TextView android:text="@string/hello_world" android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/question1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:text="1. The fever and pain came on suddenly?"/>
 
+    <RadioGroup
+        android:id="@+id/answers1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="50dp"
+        android:layout_toRightOf="@id/question1"
+        android:layout_toEndOf="@id/question1"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Yes"/>
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No"/>
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="N/A"/>
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/question2"
+        android:layout_below="@id/question1"
+        android:padding="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="2. Is the patient's eyes painful?"/>
+
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/answers1"
+        android:layout_toRightOf="@id/question2"
+        android:layout_toEndOf="@id/question2"
+        android:layout_below="@id/question1"
+        android:orientation="horizontal"
+        android:id="@+id/radioGroup2">
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Yes"/>
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No"/>
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="N/A"/>
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/question3"
+        android:layout_below="@id/question2"
+        android:padding="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="3. Is the patient's back painful?"/>
+
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/answers1"
+        android:layout_toRightOf="@id/question3"
+        android:layout_toEndOf="@id/question3"
+        android:layout_below="@id/question2"
+        android:orientation="horizontal"
+        android:id="@+id/radioGroup4">
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Yes"/>
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No"/>
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="N/A"/>
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/question4"
+        android:layout_below="@id/question3"
+        android:padding="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="4. Does the patient have petichial or fleeting rash?"/>
+
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/answers1"
+        android:layout_toRightOf="@id/question4"
+        android:layout_toEndOf="@id/question4"
+        android:layout_below="@id/question3"
+        android:orientation="horizontal"
+        android:id="@+id/radioGroup3">
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Yes"/>
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No"/>
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="N/A"/>
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/probing_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Currently Probing"
+        android:textSize="30sp"
+        android:textColor="@android:color/holo_red_dark"
+        android:layout_marginRight="70dp"
+        android:layout_marginEnd="70dp"
+        android:layout_above="@id/radioGroup2"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:id="@+id/probing_impression"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Impression"
+        android:textSize="20sp"
+        android:layout_above="@id/radioGroup4"
+        android:layout_alignLeft="@id/probing_title"
+        android:layout_alignStart="@id/probing_title" />
+
+    <TextView
+        android:id="@+id/symptoms_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Symptoms"
+        android:textSize="30sp"
+        android:textColor="@android:color/holo_red_dark"
+        android:layout_below="@id/radioGroup4"
+        android:layout_alignLeft="@id/probing_impression"
+        android:layout_alignStart="@id/probing_impression" />
+
+    <TextView
+        android:id="@+id/symptoms_list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textSize="15sp"
+        android:layout_below="@+id/question4"
+        android:layout_alignLeft="@id/symptoms_title"
+        android:layout_alignStart="@id/symptoms_title" />
+
+    <TextView
+        android:id="@+id/impressions_list_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Possible Impressions"
+        android:textSize="30sp"
+        android:textColor="@android:color/holo_red_dark"
+        android:layout_below="@id/symptoms_list"
+        android:layout_alignLeft="@id/symptoms_title"
+        android:layout_alignStart="@id/symptoms_title" />
+
+    <TextView
+        android:id="@+id/impressions_list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textSize="15sp"
+        android:layout_below="@id/impressions_list_title"
+        android:layout_alignLeft="@id/symptoms_title"
+        android:layout_alignStart="@id/symptoms_title" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <Button
+            android:id="@+id/prev_button2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Prev"
+            android:background="@android:color/holo_red_dark"
+            android:textSize="30sp"
+            android:onClick="goPrevious"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+        <Button
+            android:id="@+id/next_button2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Next"
+            android:background="@android:color/holo_green_dark"
+            android:textSize="30sp"
+            android:onClick="goNext"
+            android:layout_above="@+id/prev_button2"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+    </LinearLayout>
 </RelativeLayout>
