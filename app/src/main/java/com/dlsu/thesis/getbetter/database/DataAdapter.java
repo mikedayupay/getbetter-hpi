@@ -234,10 +234,11 @@ public class DataAdapter {
         return results;
     }
 
-    public ArrayList<Question> getQuestions (int symptomId) {
+    public ArrayList<Question> getQuestions (String symptomName) {
 
         ArrayList<Question> results = new ArrayList<>();
-        String sql = "SELECT * FROM questions_table WHERE symptom_id = " + symptomId;
+        String sql = "SELECT * FROM tbl_symptom_questions WHERE symptom_id = (SELECT _id " +
+                "FROM tbl_symptom_list WHERE symptom_name_english = '" + symptomName + "')";
 
         Cursor c = getBetterDb.rawQuery(sql, null);
 
