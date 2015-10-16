@@ -1,141 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    >
 
-    <TextView
-        android:id="@+id/question1"
+    <LinearLayout
+        android:id="@+id/layout_questions_outer_container"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:text="1. The fever and pain came on suddenly?"/>
+        android:orientation="vertical"
+        >
 
-    <RadioGroup
-        android:id="@+id/answers1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="50dp"
-        android:layout_toRightOf="@id/question1"
-        android:layout_toEndOf="@id/question1"
-        android:orientation="horizontal">
-
-        <RadioButton
+        <TextView
+            android:id="@+id/question_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Yes"/>
+            android:text="QUESTION TITLE"
+            android:textSize="30sp"
+            android:padding="20dp"/>
 
-        <RadioButton
+        <View
+            android:id="@+id/title_divider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray"
+            android:minHeight="1dp"
+            android:layout_below="@id/question_title"
+            />
+
+        <LinearLayout
+            android:id="@+id/layout_questions_inner_container"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="No"/>
+            android:orientation="vertical">
 
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="N/A"/>
-    </RadioGroup>
+            <TextView
+                android:id="@+id/question_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="QUESTION 1"
+                android:textSize="20sp"
+                android:padding="20dp"/>
 
-    <TextView
-        android:id="@+id/question2"
-        android:layout_below="@id/question1"
-        android:padding="10dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="2. Is the patient's eyes painful?"/>
+            <RadioGroup
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:onClick="onRadioButtonClicked">
 
-    <RadioGroup
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@id/answers1"
-        android:layout_toRightOf="@id/question2"
-        android:layout_toEndOf="@id/question2"
-        android:layout_below="@id/question1"
-        android:orientation="horizontal"
-        android:id="@+id/radioGroup2">
+                <RadioButton
+                    android:id="@+id/radio_yes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="YES"
+                    android:onClick="onRadioButtonClicked"/>
 
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Yes"/>
+                <RadioButton
+                    android:id="@+id/radio_no"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="NO"/>
 
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="No"/>
+            </RadioGroup>
 
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="N/A"/>
-    </RadioGroup>
+        </LinearLayout>
 
-    <TextView
-        android:id="@+id/question3"
-        android:layout_below="@id/question2"
-        android:padding="10dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="3. Is the patient's back painful?"/>
-
-    <RadioGroup
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@id/answers1"
-        android:layout_toRightOf="@id/question3"
-        android:layout_toEndOf="@id/question3"
-        android:layout_below="@id/question2"
-        android:orientation="horizontal"
-        android:id="@+id/radioGroup4">
-
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Yes"/>
-
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="No"/>
-
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="N/A"/>
-    </RadioGroup>
-
-    <TextView
-        android:id="@+id/question4"
-        android:layout_below="@id/question3"
-        android:padding="10dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="4. Does the patient have petichial or fleeting rash?"/>
-
-    <RadioGroup
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@id/answers1"
-        android:layout_toRightOf="@id/question4"
-        android:layout_toEndOf="@id/question4"
-        android:layout_below="@id/question3"
-        android:orientation="horizontal"
-        android:id="@+id/radioGroup3">
-
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Yes"/>
-
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="No"/>
-
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="N/A"/>
-    </RadioGroup>
+    </LinearLayout>
 
     <TextView
         android:id="@+id/probing_title"
@@ -146,7 +76,6 @@
         android:textColor="@android:color/holo_red_dark"
         android:layout_marginRight="70dp"
         android:layout_marginEnd="70dp"
-        android:layout_above="@id/radioGroup2"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
 
@@ -156,9 +85,9 @@
         android:layout_height="wrap_content"
         android:text="Impression"
         android:textSize="20sp"
-        android:layout_above="@id/radioGroup4"
-        android:layout_alignLeft="@id/probing_title"
-        android:layout_alignStart="@id/probing_title" />
+        android:layout_below="@+id/probing_title"
+        android:layout_alignLeft="@+id/probing_title"
+        android:layout_alignStart="@+id/probing_title" />
 
     <TextView
         android:id="@+id/symptoms_title"
@@ -167,17 +96,17 @@
         android:text="Symptoms"
         android:textSize="30sp"
         android:textColor="@android:color/holo_red_dark"
-        android:layout_below="@id/radioGroup4"
-        android:layout_alignLeft="@id/probing_impression"
-        android:layout_alignStart="@id/probing_impression" />
+        android:layout_below="@id/probing_impression"
+        android:layout_alignLeft="@+id/probing_title"
+        android:layout_alignStart="@+id/probing_title" />
 
     <TextView
         android:id="@+id/symptoms_list"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text=""
+        android:text="dsds"
         android:textSize="15sp"
-        android:layout_below="@+id/question4"
+        android:layout_below="@id/symptoms_title"
         android:layout_alignLeft="@id/symptoms_title"
         android:layout_alignStart="@id/symptoms_title" />
 
@@ -189,8 +118,8 @@
         android:textSize="30sp"
         android:textColor="@android:color/holo_red_dark"
         android:layout_below="@id/symptoms_list"
-        android:layout_alignLeft="@id/symptoms_title"
-        android:layout_alignStart="@id/symptoms_title" />
+        android:layout_alignLeft="@id/symptoms_list"
+        android:layout_alignStart="@id/symptoms_list"/>
 
     <TextView
         android:id="@+id/impressions_list"
@@ -201,6 +130,47 @@
         android:layout_below="@id/impressions_list_title"
         android:layout_alignLeft="@id/symptoms_title"
         android:layout_alignStart="@id/symptoms_title" />
+
+    <TextView
+        android:id="@+id/ruled_out_impressions_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ruled Out Impressions"
+        android:textColor="@android:color/holo_red_dark"
+        android:textSize="30sp"
+        android:layout_below="@id/impressions_list"
+        android:layout_alignLeft="@id/impressions_list_title"
+        android:layout_alignStart="@id/impressions_list_title"/>
+
+    <TextView
+        android:id="@+id/ruled_out_impressions_list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="15sp"
+        android:text=""
+        android:layout_below="@id/ruled_out_impressions_title"
+        android:layout_alignLeft="@id/ruled_out_impressions_title"
+        android:layout_alignStart="@id/ruled_out_impressions_title"/>
+
+    <TextView
+        android:id="@+id/positive_symptom_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Positive Symptoms"
+        android:textSize="30sp"
+        android:textColor="@android:color/holo_red_dark"
+        android:layout_below="@id/ruled_out_impressions_list"
+        android:layout_alignLeft="@id/ruled_out_impressions_list"
+        android:layout_alignStart="@id/ruled_out_impressions_list"/>
+
+    <TextView
+        android:id="@+id/positive_symptom_list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:layout_below="@id/positive_symptom_title"
+        android:layout_alignLeft="@id/positive_symptom_title"
+        android:layout_alignStart="@id/positive_symptom_title"/>
 
 
     <LinearLayout

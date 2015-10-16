@@ -1,14 +1,16 @@
 package com.dlsu.thesis.getbetter.objects;
 
+import java.util.ArrayList;
+
 /**
  * GetBetter. Created by Mike Dayupay on 9/21/15.
  */
 public class Impressions {
 
     private String impression;
-    private String[] symptoms;
+    private ArrayList<String> symptoms;
 
-    public Impressions(String impression, String[] symptoms) {
+    public Impressions(String impression, ArrayList<String> symptoms) {
         this.impression = impression;
         this.symptoms = symptoms;
     }
@@ -21,11 +23,11 @@ public class Impressions {
         this.impression = impression;
     }
 
-    public String[] getSymptoms() {
+    public ArrayList<String> getSymptoms() {
         return symptoms;
     }
 
-    public void setSymptoms(String[] symptoms) {
+    public void setSymptoms(ArrayList<String> symptoms) {
         this.symptoms = symptoms;
     }
 }

@@ -255,6 +255,26 @@ public class DataAdapter {
         return results;
     }
 
+    public Question getQuestion (String symptomName) {
+
+        String sql = "SELECT * FROM tbl_symptom_questions WHERE symptom_id = (SELECT _id " +
+                "FROM tbl_symptom_list WHERE symptom_name_english = '" + symptomName + "')";
+
+        Cursor c = getBetterDb.rawQuery(sql, null);
+
+
+        c.moveToFirst();
+        Question question = new Question(c.getInt(c.getColumnIndexOrThrow("_id")),
+                c.getString(c.getColumnIndexOrThrow("english_question")),
+                c.getString(c.getColumnIndexOrThrow("tagalog_question")),
+                c.getString(c.getColumnIndexOrThrow("responses")),
+                c.getString(c.getColumnIndexOrThrow("action_needed")));
+
+
+
+        return question;
+    }
+
     public int getImpressionId(String impression) {
 
         int impressionId;

@@ -8,10 +8,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.dlsu.thesis.getbetter.database.DataAdapter;
 import com.dlsu.thesis.getbetter.objects.Impressions;
+import com.dlsu.thesis.getbetter.objects.Question;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -19,18 +21,26 @@ import java.util.LinkedHashSet;
 
 public class ExpertSystemActivity extends Activity {
 
-    private ArrayList<Integer> chiefComplaintId;
     private TextView probingTitle;
     private TextView probingImpression;
     private TextView symptomsList;
     private TextView impressionList;
+    private TextView ruledOutImpressions;
+    private TextView displayQuestion;
+    private TextView positiveSymptomsList;
+//    private ViewGroup layout_questions_inner_container;
 
     private DataAdapter getBetterDb;
     private String[] impressions;
     private String[] symptoms;
     private ArrayList<Impressions> impressionsSymptoms;
     private int currentImpressionIndex;
-
+    private int currentSymptomIndex;
+    private Question question;
+    private ArrayList<String> ruledOutImpressionList;
+    private ArrayList<String> positiveSymptoms;
+    private ArrayList<String> ruledOutSymptomList;
+    private ArrayList<Integer> chiefComplaintId;
 
 
     @Override
@@ -40,6 +50,10 @@ public class ExpertSystemActivity extends Activity {
         setContentView(R.layout.activity_expert_system);
 
         Bundle extras = getIntent().getExtras();
+
+        ruledOutSymptomList = new ArrayList<>();
+        ruledOutImpressionList = new ArrayList<>();
+        positiveSymptoms = new ArrayList<>();
 
         chiefComplaintId = new ArrayList<>();
         if(extras != null) {
@@ -71,11 +85,7 @@ public class ExpertSystemActivity extends Activity {
 
             impressionId = getBetterDb.getImpressionId(impressions[i]);
 
-            ArrayList<String> hc = getBetterDb.getSymptoms(impressionId);
-            symptoms = new String[hc.size()];
-            for (int j = 0; j < hc.size(); j++) {
-                symptoms[j] = hc.get(j);
-            }
+            ArrayList<String> symptoms = getBetterDb.getSymptoms(impressionId);
 
             getBetterDb.closeDatabase();
 
@@ -86,6 +96,7 @@ public class ExpertSystemActivity extends Activity {
 
 
         currentImpressionIndex = 0;
+        currentSymptomIndex = 0;
         reloadExpertSystem();
 
 
@@ -129,19 +140,47 @@ public class ExpertSystemActivity extends Activity {
     public void reloadExpertSystem() {
 
         StringBuilder symptomList = new StringBuilder();
+        StringBuilder positiveSympList = new StringBuilder();
+        String symptom = "";
+
+        if(positiveSymptoms.contains(impressionsSymptoms.get(currentImpressionIndex).
+                getSymptoms().get(currentSymptomIndex).toString()) || ruledOutSymptomList.
+                contains(impressionsSymptoms.get(currentImpressionIndex).
+                        getSymptoms().get(currentSymptomIndex).toString())) {
+
+            impressionsSymptoms.get(currentImpressionIndex).getSymptoms().remove(currentSymptomIndex);
+            impressionsSymptoms.get(currentImpressionIndex).getSymptoms().trimToSize();
+
+        } else {
+
+            symptom = impressionsSymptoms.get(currentImpressionIndex).getSymptoms().get(currentSymptomIndex).toString();
+            getQuestions(symptom);
+        }
 
         probingTitle = (TextView)findViewById(R.id.probing_title);
         probingImpression = (TextView)findViewById(R.id.probing_impression);
         symptomsList = (TextView)findViewById(R.id.symptoms_list);
+        displayQuestion = (TextView)findViewById(R.id.question_label);
+        positiveSymptomsList = (TextView)findViewById(R.id.positive_symptom_list);
 
+        displayQuestion.setText(question.getEnglishQuestion());
         probingImpression.setText(impressionsSymptoms.get(currentImpressionIndex).getImpression());
-        for(int i = 0; i < impressionsSymptoms.get(currentImpressionIndex).getSymptoms().length;i++)
-            symptomList.append(impressionsSymptoms.get(currentImpressionIndex).getSymptoms()[i].toString() + "\n");
+        for(int i = 0; i < impressionsSymptoms.get(currentImpressionIndex).getSymptoms().size();i++)
+            symptomList.append(impressionsSymptoms.get(currentImpressionIndex).getSymptoms().get(i).toString() + "\n");
+
+        for (int i = 0; i < positiveSymptoms.size(); i++) {
+            positiveSympList.append(positiveSymptoms.get(i).toString() + "\n");
+        }
 
         symptomsList.setText(symptomList.toString());
+        positiveSymptomsList.setText(positiveSympList.toString());
 
     }
 
+    public void checkForRuledOutImpressions() {
+
+
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -166,29 +205,90 @@ public class ExpertSystemActivity extends Activity {
     }
 
     public void goNext(View view) {
-        currentImpressionIndex++;
+        currentSymptomIndex++;
 
-        if(currentImpressionIndex >= impressionsSymptoms.size()) {
-            currentImpressionIndex = impressionsSymptoms.size() - 1;
 
-            exitExpertSystem();
+        if(currentSymptomIndex >= impressionsSymptoms.get(currentImpressionIndex).getSymptoms().size()) {
+            currentSymptomIndex = 0;
+            currentImpressionIndex++;
+
+            if(currentImpressionIndex >= impressionsSymptoms.size()) {
+                currentImpressionIndex = impressionsSymptoms.size() - 1;
+
+                exitExpertSystem();
+            } else {
+
+                reloadExpertSystem();
+            }
+
         } else {
-
             reloadExpertSystem();
         }
 
     }
 
     public void goPrevious(View view) {
-        currentImpressionIndex--;
+        currentSymptomIndex--;
 
-        if(currentImpressionIndex < 0) {
-            currentImpressionIndex = 0;
+        if(currentSymptomIndex < 0) {
+            currentSymptomIndex = 0;
+            currentImpressionIndex--;
+
+            if(currentImpressionIndex < 0) {
+                currentImpressionIndex = 0;
+            } else {
+                reloadExpertSystem();
+            }
+
         } else {
             reloadExpertSystem();
         }
 
     }
+
+    public void onRadioButtonClicked (View view) {
+
+        boolean checked = ((RadioButton) view).isChecked();
+
+        switch (view.getId()) {
+            case R.id.radio_yes:
+                if(checked) {
+                    positiveSymptoms.add(impressionsSymptoms.get(currentImpressionIndex).
+                            getSymptoms().get(currentSymptomIndex).toString());
+                }
+
+                break;
+
+            case R.id.radio_no:
+                if(checked) {
+                    ruledOutSymptomList.add(impressionsSymptoms.get(currentImpressionIndex).
+                            getSymptoms().get(currentSymptomIndex).toString());
+                }
+
+                break;
+        }
+
+    }
+
+    public void getQuestions (String symptom) {
+
+        try {
+            getBetterDb.openDatabaseForRead();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        question = getBetterDb.getQuestion(symptom);
+        getBetterDb.closeDatabase();
+    }
+
+//    public void displayQuestions() {
+//
+//        layout_questions_inner_container = (ViewGroup)findViewById(R.id.layout_questions_inner_container);
+//
+//
+//
+//    }
 
     public void exitExpertSystem() {
 
