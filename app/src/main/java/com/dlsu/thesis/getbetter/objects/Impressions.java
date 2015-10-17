@@ -8,9 +8,9 @@ import java.util.ArrayList;
 public class Impressions {
 
     private String impression;
-    private ArrayList<String> symptoms;
+    private ArrayList<Symptom> symptoms;
 
-    public Impressions(String impression, ArrayList<String> symptoms) {
+    public Impressions(String impression, ArrayList<Symptom> symptoms) {
         this.impression = impression;
         this.symptoms = symptoms;
     }
@@ -23,11 +23,11 @@ public class Impressions {
         this.impression = impression;
     }
 
-    public ArrayList<String> getSymptoms() {
+    public ArrayList<Symptom> getSymptoms() {
         return symptoms;
     }
 
-    public void setSymptoms(ArrayList<String> symptoms) {
+    public void setSymptoms(ArrayList<Symptom> symptoms) {
         this.symptoms = symptoms;
     }
 }
