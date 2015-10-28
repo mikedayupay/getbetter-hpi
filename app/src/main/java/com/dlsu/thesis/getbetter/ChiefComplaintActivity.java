@@ -36,42 +36,64 @@ public class ChiefComplaintActivity extends Activity implements View.OnClickList
             case R.id.check_fever:
                 if(checked) {
                     chiefComplaintId.add(1);
+                } else {
+                    if(chiefComplaintId.contains(1))
+                        chiefComplaintId.remove(chiefComplaintId.get(chiefComplaintId.indexOf(1)));
                 }
                 break;
 
             case R.id.check_pain:
                 if(checked) {
                     chiefComplaintId.add(2);
+                } else {
+                    if(chiefComplaintId.contains(2))
+                        chiefComplaintId.remove(chiefComplaintId.get(chiefComplaintId.indexOf(2)));
                 }
                 break;
 
             case R.id.check_injury_wound:
                 if(checked) {
                     chiefComplaintId.add(3);
+                } else {
+                    if(chiefComplaintId.contains(3))
+                        chiefComplaintId.remove(chiefComplaintId.get(chiefComplaintId.indexOf(3)));
+
                 }
                 break;
 
             case R.id.check_skin_problem:
                 if(checked) {
                     chiefComplaintId.add(4);
+                } else {
+                    if(chiefComplaintId.contains(4))
+                        chiefComplaintId.remove(chiefComplaintId.get(chiefComplaintId.indexOf(4)));
                 }
                 break;
 
             case R.id.check_respiratory:
                 if(checked) {
                     chiefComplaintId.add(5);
+                } else {
+                    if(chiefComplaintId.contains(5))
+                        chiefComplaintId.remove(chiefComplaintId.get(chiefComplaintId.indexOf(5)));
                 }
                 break;
 
             case R.id.check_bowel_vomiting:
                 if(checked) {
                     chiefComplaintId.add(6);
+                } else {
+                    if(chiefComplaintId.contains(6))
+                        chiefComplaintId.remove(chiefComplaintId.get(chiefComplaintId.indexOf(6)));
                 }
                 break;
 
             case R.id.check_general_unwellness:
                 if(checked) {
                     chiefComplaintId.add(7);
+                } else {
+                    if(chiefComplaintId.contains(7))
+                        chiefComplaintId.remove(chiefComplaintId.get(chiefComplaintId.indexOf(7)));
                 }
                 break;
 
