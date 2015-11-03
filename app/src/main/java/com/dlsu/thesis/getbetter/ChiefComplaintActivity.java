@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -125,9 +126,15 @@ public class ChiefComplaintActivity extends Activity implements View.OnClickList
     @Override
     public void onClick(View v) {
 
-        Intent intent = new Intent(this, ExpertSystemActivity.class);
-        intent.putIntegerArrayListExtra("chiefComplaintId", chiefComplaintId);
-        startActivity(intent);
-        finish();
+        if(chiefComplaintId.isEmpty()) {
+            Toast toast = Toast.makeText(this, "Please check at least one box", Toast.LENGTH_LONG);
+            toast.show();
+        } else {
+            Intent intent = new Intent(this, ExpertSystemActivity.class);
+            intent.putIntegerArrayListExtra("chiefComplaintId", chiefComplaintId);
+            startActivity(intent);
+            finish();
+        }
+
     }
 }
