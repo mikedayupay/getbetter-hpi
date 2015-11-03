@@ -5,8 +5,11 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import com.dlsu.thesis.getbetter.objects.Impressions;
 import com.dlsu.thesis.getbetter.objects.PatientContent;
 import com.dlsu.thesis.getbetter.objects.Question;
+import com.dlsu.thesis.getbetter.objects.Symptom;
+import com.dlsu.thesis.getbetter.objects.SymptomFamily;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -79,6 +82,7 @@ public class DataAdapter {
         } else {
             return false;
         }
+
     }
 
     public ArrayList<String> getHealthCenters() {
@@ -219,16 +223,23 @@ public class DataAdapter {
 
     }
 
-    public ArrayList<String> getImpressions (int complaintId) {
+    public ArrayList<Impressions> getImpressions (int complaintId) {
 
-        ArrayList<String> results = new ArrayList<>();
-        String sql = "SELECT medical_term FROM tbl_case_impression AS i, tbl_impressions_of_complaints AS s " +
+        ArrayList<Impressions> results = new ArrayList<>();
+        String sql = "SELECT * FROM tbl_case_impression AS i, tbl_impressions_of_complaints AS s " +
         "WHERE i._id = s.impression_id AND s.complaint_id = " + complaintId;
 
         Cursor c = getBetterDb.rawQuery(sql, null);
 
         while(c.moveToNext()) {
-            results.add(c.getString(c.getColumnIndexOrThrow("medical_term")));
+            Impressions impressions = new Impressions(c.getInt(c.getColumnIndexOrThrow("_id")),
+                    c.getString(c.getColumnIndexOrThrow("medical_term")),
+                    c.getString(c.getColumnIndexOrThrow("scientific_name")),
+                    c.getString(c.getColumnIndexOrThrow("local_name")),
+                    c.getString(c.getColumnIndexOrThrow("treatment_protocol")),
+                    c.getString(c.getColumnIndexOrThrow("remarks")));
+
+            results.add(impressions);
         }
 
         return results;
@@ -257,7 +268,7 @@ public class DataAdapter {
 
     public Question getQuestion (String symptomName) {
 
-        String sql = "SELECT * FROM tbl_symptom_questions WHERE symptom_id = (SELECT _id " +
+        String sql = "SELECT * FROM tbl_symptom_questions WHERE _id = (SELECT _id " +
                 "FROM tbl_symptom_list WHERE symptom_name_english = '" + symptomName + "')";
 
         Cursor c = getBetterDb.rawQuery(sql, null);
@@ -287,19 +298,110 @@ public class DataAdapter {
         return impressionId;
     }
 
-    public ArrayList<String> getSymptoms(int impressionId) {
+//    public ArrayList<String> getSymptoms(int impressionId) {
+//
+//        ArrayList<String> results = new ArrayList<>();
+//        String sql = "SELECT symptom_name_english " +
+//                "FROM tbl_symptom_list AS s, tbl_symptom_of_impression AS i " +
+//                "WHERE i.impression_id = " + impressionId + " AND s._id = i.symptom_id";
+//
+//        Cursor c = getBetterDb.rawQuery(sql, null);
+//        while(c.moveToNext()) {
+//            results.add(c.getString(c.getColumnIndexOrThrow("symptom_name_english")));
+//        }
+//
+//        return results;
+//
+//    }
 
-        ArrayList<String> results = new ArrayList<>();
-        String sql = "SELECT symptom_name_english " +
-                "FROM tbl_symptom_list AS s, tbl_symptom_of_impression AS i " +
+    public ArrayList<Symptom> getSymptoms(int impressionId) {
+
+        ArrayList<Symptom> results = new ArrayList<>();
+        String sql = "SELECT * FROM tbl_symptom_list AS s, tbl_symptom_of_impression AS i " +
                 "WHERE i.impression_id = " + impressionId + " AND s._id = i.symptom_id";
 
         Cursor c = getBetterDb.rawQuery(sql, null);
+        while(c.moveToNext()) {
+            Symptom symptom = new Symptom(c.getInt(c.getColumnIndexOrThrow("_id")),
+                    c.getString(c.getColumnIndexOrThrow("symptom_name_english")),
+                    c.getString(c.getColumnIndexOrThrow("symptom_name_tagalog")),
+                    c.getString(c.getColumnIndexOrThrow("question_english")),
+                    c.getString(c.getColumnIndexOrThrow("question_tagalog")),
+                    c.getString(c.getColumnIndexOrThrow("responses_english")),
+                    c.getString(c.getColumnIndexOrThrow("responses_tagalog")),
+                    c.getInt(c.getColumnIndexOrThrow("symptom_family_id")),
+                    false);
+
+            results.add(symptom);
+        }
+
+        return results;
+    }
+
+    public SymptomFamily getGeneralQuestion (int symptomFamilyId) {
+
+        String sql = "SELECT * FROM tbl_symptom_family WHERE _id = " + symptomFamilyId;
+
+        Cursor c = getBetterDb.rawQuery(sql, null);
+        c.moveToFirst();
+        SymptomFamily generalQuestion = new SymptomFamily(c.getInt(c.getColumnIndexOrThrow("_id")),
+                c.getString(c.getColumnIndexOrThrow("symptom_family_name_english")),
+                c.getString(c.getColumnIndexOrThrow("symptom_family_name_tagalog")),
+                c.getString(c.getColumnIndexOrThrow("general_question_english")),
+                c.getString(c.getColumnIndexOrThrow("responses_english")));
+
+        return generalQuestion;
+    }
+
+    public boolean symptomFamilyIsAnswered (int symptomFamilyId) {
+
+        String sql = "SELECT answered_flag FROM tbl_symptom_family WHERE _id = " + symptomFamilyId;
+
+        Cursor c = getBetterDb.rawQuery(sql, null);
+        c.moveToFirst();
+
+        return ((c.getInt(c.getColumnIndexOrThrow("answered_flag"))) == 1);
+    }
+
+    public boolean symptomFamilyAnswer (int symptomFamilyId) {
+
+        String sql = "SELECT answer_status FROM tbl_symptom_family WHERE _id = " + symptomFamilyId;
+
+        Cursor c = getBetterDb.rawQuery(sql, null);
+        c.moveToFirst();
+
+        return ((c.getInt(c.getColumnIndexOrThrow("answer_status"))) == 1);
+    }
+
+    public void updateAnsweredStatusSymptomFamily(int chiefComplaintId) {
+
+        String sql = "UPDATE tbl_symptom_family SET answered_flag = 1, answer_status = 1" +
+                " WHERE related_chief_complaint_id = " + chiefComplaintId;
+
+        getBetterDb.execSQL(sql);
+    }
+
+    public void updateAnsweredStatusSymptomFamily(int symptomFamilyId, int answer) {
+
+        String sql = "UPDATE tbl_symptom_family SET answered_flag = 1, answer_status = " + answer +
+                " WHERE _id = " + symptomFamilyId;
+
+        getBetterDb.execSQL(sql);
+    }
+
+    public ArrayList<String> getHardSymptoms (int impressionId) {
+
+        ArrayList<String> results = new ArrayList<>();
+
+        String sql = "SELECT s.symptom_name_english AS symptom_name_english FROM tbl_symptom_list AS s, " +
+                "tbl_symptom_of_impression AS i WHERE i.impression_id = " + impressionId +
+                " AND i.hard_symptom = 1 AND i.symptom_id = s._id";
+        Cursor c = getBetterDb.rawQuery(sql, null);
+
         while(c.moveToNext()) {
             results.add(c.getString(c.getColumnIndexOrThrow("symptom_name_english")));
         }
 
         return results;
-
     }
 }
