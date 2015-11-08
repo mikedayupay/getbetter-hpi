@@ -46,15 +46,13 @@
                 android:id="@+id/radio_group_responses"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:onClick="onRadioButtonClicked">
+                android:orientation="horizontal">
 
                 <RadioButton
                     android:id="@+id/radio_yes"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="YES"
-                    android:onClick="onRadioButtonClicked"/>
+                    android:text="YES" />
 
                 <RadioButton
                     android:id="@+id/radio_no"
@@ -105,7 +103,7 @@
         android:id="@+id/symptoms_list"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="dsds"
+        android:text=""
         android:textSize="15sp"
         android:layout_below="@id/symptoms_title"
         android:layout_alignLeft="@id/symptoms_title"
@@ -139,9 +137,10 @@
         android:text="Ruled Out Impressions"
         android:textColor="@android:color/holo_red_dark"
         android:textSize="30sp"
-        android:layout_below="@id/impressions_list"
-        android:layout_alignLeft="@id/impressions_list_title"
-        android:layout_alignStart="@id/impressions_list_title"/>
+        android:layout_alignParentTop="true"
+        android:layout_marginRight="50dp"
+        android:layout_toLeftOf="@+id/probing_title"
+        android:layout_toStartOf="@+id/probing_title" />
 
     <TextView
         android:id="@+id/ruled_out_impressions_list"
