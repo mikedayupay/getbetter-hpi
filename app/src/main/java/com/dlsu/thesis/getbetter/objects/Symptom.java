@@ -13,11 +13,10 @@ public class Symptom {
     private String responsesEnglish;
     private String responsesTagalog;
     private int symptomFamilyId;
-    private boolean answeredFlag;
 
     public Symptom(int symptomId, String symptomNameEnglish, String symptomNameTagalog,
                    String questionEnglish, String questionTagalog, String responsesEnglish,
-                   String responsesTagalog, int symptomFamilyId, boolean answeredFlag) {
+                   String responsesTagalog, int symptomFamilyId) {
 
         this.symptomId = symptomId;
         this.symptomNameEnglish = symptomNameEnglish;
@@ -27,7 +26,6 @@ public class Symptom {
         this.responsesEnglish = responsesEnglish;
         this.responsesTagalog = responsesTagalog;
         this.symptomFamilyId = symptomFamilyId;
-        this.answeredFlag = answeredFlag;
     }
 
     public int getSymptomId() {
@@ -84,14 +82,6 @@ public class Symptom {
 
     public void setResponsesTagalog(String responsesTagalog) {
         this.responsesTagalog = responsesTagalog;
-    }
-
-    public boolean isAnsweredFlag() {
-        return answeredFlag;
-    }
-
-    public void setAnsweredFlag(boolean answeredFlag) {
-        this.answeredFlag = answeredFlag;
     }
 
     public int getSymptomFamilyId() {

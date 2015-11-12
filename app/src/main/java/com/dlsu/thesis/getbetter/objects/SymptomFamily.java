@@ -10,16 +10,21 @@ public class SymptomFamily {
     private String symptomFamilyNameTagalog;
     private String generalQuestionEnglish;
     private String responsesEnglish;
+    private boolean isAnswered;
+    private boolean answerStatus;
+    private int chiefComplaintId;
+
 
     public SymptomFamily(int symptomFamilyId, String symptomFamilyNameEnglish,
                          String symptomFamilyNameTagalog, String generalQuestionEnglish,
-                         String responsesEnglish) {
+                         String responsesEnglish, int chiefComplaintId) {
 
         this.symptomFamilyId = symptomFamilyId;
         this.symptomFamilyNameEnglish = symptomFamilyNameEnglish;
         this.symptomFamilyNameTagalog = symptomFamilyNameTagalog;
         this.generalQuestionEnglish = generalQuestionEnglish;
         this.responsesEnglish = responsesEnglish;
+        this.chiefComplaintId = chiefComplaintId;
     }
 
     public int getSymptomFamilyId() {
@@ -60,5 +65,25 @@ public class SymptomFamily {
 
     public void setResponsesEnglish(String responsesEnglish) {
         this.responsesEnglish = responsesEnglish;
+    }
+
+    public boolean isAnswered() {
+        return isAnswered;
+    }
+
+    public void setIsAnswered(boolean isAnswered) {
+        this.isAnswered = isAnswered;
+    }
+
+    public boolean isAnswerStatus() {
+        return answerStatus;
+    }
+
+    public void setAnswerStatus(boolean answerStatus) {
+        this.answerStatus = answerStatus;
+    }
+
+    public int getChiefComplaintId() {
+        return chiefComplaintId;
     }
 }

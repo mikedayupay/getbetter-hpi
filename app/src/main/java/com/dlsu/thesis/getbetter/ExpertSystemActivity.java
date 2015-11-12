@@ -9,10 +9,10 @@ import android.view.View;
 import android.view.Window;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.dlsu.thesis.getbetter.database.DataAdapter;
 import com.dlsu.thesis.getbetter.objects.Impressions;
-import com.dlsu.thesis.getbetter.objects.Question;
 import com.dlsu.thesis.getbetter.objects.Symptom;
 import com.dlsu.thesis.getbetter.objects.SymptomFamily;
 
@@ -24,16 +24,19 @@ public class ExpertSystemActivity extends Activity {
 
     private RadioGroup radioGroupResponses;
 
-    private DataAdapter getBetterDb;
-    private ArrayList<Impressions> impressionsSymptoms;
     private int currentImpressionIndex;
     private int currentSymptomIndex;
-    private Question question;
-    private SymptomFamily generalQuestion;
-    private ArrayList<String> ruledOutImpressionList, possibleImpressionList;
-    private ArrayList<Symptom> positiveSymptoms, ruledOutSymptomList;
-    private ArrayList<Integer> positiveSymptomsIds, chiefComplaintId, ruledOutSymptomIds;
+    private int symptomFamilyId;
+    private boolean flag;
+
     private Symptom positiveSymptom, ruledOutSymptom;
+    private SymptomFamily generalQuestion;
+    private DataAdapter getBetterDb;
+
+    private ArrayList<Impressions> impressionsSymptoms;
+    private ArrayList<String> ruledOutImpressionList;
+    private ArrayList<Symptom> positiveSymptomList, ruledOutSymptomList, questions;
+    private ArrayList<Integer> chiefComplaintId;
 
 
     @Override
@@ -46,10 +49,8 @@ public class ExpertSystemActivity extends Activity {
 
         ruledOutSymptomList = new ArrayList<>();
         ruledOutImpressionList = new ArrayList<>();
-        possibleImpressionList = new ArrayList<>();
-        positiveSymptoms = new ArrayList<>();
-        ruledOutSymptomIds = new ArrayList<>();
-        positiveSymptomsIds = new ArrayList<>();
+        positiveSymptomList = new ArrayList<>();
+        questions = new ArrayList<>();
         radioGroupResponses = (RadioGroup)findViewById(R.id.radio_group_responses);
 
 
@@ -59,11 +60,17 @@ public class ExpertSystemActivity extends Activity {
         }
 
         initializeDatabase();
+        resetDatabaseValues();
         initializeImpressionList();
         updateAnsweredStatusSymptomFamily();
 
+
         currentImpressionIndex = 0;
         currentSymptomIndex = 0;
+        getQuestions(impressionsSymptoms.get(currentImpressionIndex).getImpressionId());
+        Log.d("questions size", questions.size() + "");
+        Log.d("current symptom", questions.get(currentSymptomIndex).getSymptomNameEnglish());
+        Log.d("impression size", impressionsSymptoms.size() + "");
         reloadExpertSystem();
     }
 
@@ -97,14 +104,9 @@ public class ExpertSystemActivity extends Activity {
 
             ArrayList<Symptom> symptoms = getBetterDb.getSymptoms(impressionsSymptoms.get(i).getImpressionId());
             impressionsSymptoms.get(i).setSymptoms(symptoms);
-            possibleImpressionList.add(impressionsSymptoms.get(i).getImpression());
         }
 
         getBetterDb.closeDatabase();
-    }
-
-    public void initializeQuestions() {
-
     }
 
     public void reloadExpertSystem() {
@@ -118,16 +120,16 @@ public class ExpertSystemActivity extends Activity {
         TextView impressionList = (TextView)findViewById(R.id.impressions_list);
         TextView ruledOutImpressions = (TextView)findViewById(R.id.ruled_out_impressions_list);
 
-        if (isSymptomFamilyQuestionAnswered()) {
-            questionAsked = impressionsSymptoms.get(currentImpressionIndex).getSymptoms().
-                    get(currentSymptomIndex).getQuestionEnglish();
+        //Log.d("symptom family id", questions.get(currentSymptomIndex).getSymptomFamilyId() + "");
+        if(isSymptomFamilyQuestionAnswered(questions.get(currentSymptomIndex).getSymptomFamilyId())) {
+            questionAsked = questions.get(currentSymptomIndex).getQuestionEnglish();
+            flag = true;
         } else {
-            getGeneralQuestion(impressionsSymptoms.get(currentImpressionIndex).getSymptoms().
-                    get(currentSymptomIndex).getSymptomFamilyId());
+            getGeneralQuestion(questions.get(currentSymptomIndex).getSymptomFamilyId());
             questionAsked = generalQuestion.getGeneralQuestionEnglish();
-            currentSymptomIndex--;
+            symptomFamilyId = generalQuestion.getSymptomFamilyId();
+            flag = false;
         }
-
 
         displayQuestion.setText(questionAsked);
         probingImpression.setText(impressionsSymptoms.get(currentImpressionIndex).getImpression());
@@ -137,8 +139,8 @@ public class ExpertSystemActivity extends Activity {
         symptomsList.setText("");
         positiveSymptomsList.setText("");
 
-        for(String impressions: possibleImpressionList) {
-            impressionList.append(impressions + "\n");
+        for(int i = 0; i < impressionsSymptoms.size(); i++) {
+            impressionList.append(impressionsSymptoms.get(i).getImpression() + "\n");
         }
 
         for (String impressions :
@@ -146,19 +148,43 @@ public class ExpertSystemActivity extends Activity {
             ruledOutImpressions.append(impressions + "\n");
         }
 
-        for(int i = 0; i < positiveSymptoms.size(); i++)
-            Log.d("positiveSymptom", positiveSymptoms.get(i).getSymptomNameEnglish());
+        for(int i = 0; i < positiveSymptomList.size(); i++)
+            Log.d("positiveSymptom", positiveSymptomList.get(i).getSymptomNameEnglish());
 
-
-        for(int i = 0; i < impressionsSymptoms.get(currentImpressionIndex).getSymptoms().size();i++)
-            symptomsList.append(impressionsSymptoms.get(currentImpressionIndex).getSymptoms().get(i).
-                    getSymptomNameEnglish() + "\n");
-
-
-        for (int i = 0; i < positiveSymptoms.size(); i++) {
-            positiveSymptomsList.append(positiveSymptoms.get(i).getSymptomNameEnglish() + "\n");
+        for(int i = 0; i < impressionsSymptoms.get(currentImpressionIndex).getSymptoms().size(); i++) {
+            symptomsList.append(impressionsSymptoms.get(currentImpressionIndex).getSymptoms().
+                    get(i).getSymptomNameEnglish() + "\n");
         }
 
+        for (int i = 0; i < positiveSymptomList.size(); i++) {
+            positiveSymptomsList.append(positiveSymptomList.get(i).getSymptomNameEnglish() + "\n");
+        }
+    }
+
+    public void getQuestions(int impressionId) {
+
+        try {
+            getBetterDb.openDatabaseForRead();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        questions.clear();
+        questions.addAll(getBetterDb.getQuestions(impressionId));
+        Log.d("questions size", questions.size() + "");
+        getBetterDb.closeDatabase();
+    }
+
+    public void getGeneralQuestion (int symptomFamilyId) {
+
+        try {
+            getBetterDb.openDatabaseForRead();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        generalQuestion = getBetterDb.getGeneralQuestion(symptomFamilyId);
+        getBetterDb.closeDatabase();
     }
 
     public void checkForRuledOutImpression(int impressionId) {
@@ -171,75 +197,104 @@ public class ExpertSystemActivity extends Activity {
 
         ArrayList<String> hardSymptoms = getBetterDb.getHardSymptoms(impressionId);
 
-        if(!(positiveSymptoms.containsAll(hardSymptoms))) {
+        if(!(positiveSymptomList.containsAll(hardSymptoms))) {
             ruledOutImpressionList.add(impressionsSymptoms.get(currentImpressionIndex).getImpression());
-            possibleImpressionList.remove(impressionsSymptoms.get(currentImpressionIndex).getImpression());
+            Toast.makeText(this, "ruled out impression: " + impressionsSymptoms.
+                    get(currentImpressionIndex).getImpression(), Toast.LENGTH_LONG).show();
         }
 
         getBetterDb.closeDatabase();
     }
 
-
-    public void goNext(View view) {
+    public void goNext (View view) {
 
         radioGroupResponses.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 if (checkedId == R.id.radio_yes) {
-                    if(isSymptomFamilyQuestionAnswered()) {
-                        positiveSymptom = impressionsSymptoms.get(currentImpressionIndex).
-                                getSymptoms().get(currentSymptomIndex);
-                        positiveSymptomsIds.add(impressionsSymptoms.get(currentImpressionIndex).
-                                getSymptoms().get(currentSymptomIndex).getSymptomId());
+                    if (flag) {
+                        positiveSymptomList.add(questions.get(currentSymptomIndex));
+                        positiveSymptomList = new ArrayList<>(new LinkedHashSet<>(positiveSymptomList));
+                        updateAnsweredFlagPositive(questions.get(currentSymptomIndex).getSymptomId());
                     } else {
                         updateAnsweredStatusSymptomFamily(1);
                     }
                 } else if (checkedId == R.id.radio_no) {
-                    if(isSymptomFamilyQuestionAnswered()) {
-                        ruledOutSymptom = impressionsSymptoms.get(currentImpressionIndex).
-                                getSymptoms().get(currentSymptomIndex);
-                        ruledOutSymptomIds.add(impressionsSymptoms.get(currentImpressionIndex).
-                                getSymptoms().get(currentSymptomIndex).getSymptomId());
+                    if (flag) {
+                        ruledOutSymptomList.add(questions.get(currentSymptomIndex));
+                        updateAnsweredFlagPositive(questions.get(currentSymptomIndex).getSymptomId());
                     } else {
                         updateAnsweredStatusSymptomFamily(0);
+                        updateAnsweredFlagPositive(questions.get(currentSymptomIndex).getSymptomId());
                     }
                 }
             }
         });
 
         radioGroupResponses.clearCheck();
-        positiveSymptoms.add(positiveSymptom);
-        ruledOutSymptomList.add(ruledOutSymptom);
-        currentSymptomIndex++;
 
-        if(currentSymptomIndex >= impressionsSymptoms.get(currentImpressionIndex).getSymptoms().size()) {
+        if(flag) {
 
-            currentSymptomIndex = 0;
+            currentSymptomIndex++;
 
-            //skip question/symptom if it is already asked
-            if(symptomIsAnswered() || !(symptomFamilyQuestionAnswerStatus())) {
-                currentSymptomIndex++;
-            }
+//            if() {
+//                while ((!isSymptomFamilyPositive(questions.get(currentSymptomIndex).getSymptomFamilyId()))
+//                        || (!(currentSymptomIndex >= questions.size()))) {
+//                    Log.d("current symptom index", currentSymptomIndex + "");
+//                    Log.d("current symptom family id", questions.get(currentSymptomIndex).getSymptomFamilyId() + "");
+//                    currentSymptomIndex++;
+//                }
+//            }
 
-            checkForRuledOutImpression(impressionsSymptoms.get(currentImpressionIndex).getImpressionId());
-            currentImpressionIndex++;
+            if(currentSymptomIndex >= questions.size()) {
 
-            if(currentImpressionIndex >= impressionsSymptoms.size()) {
-                currentImpressionIndex = impressionsSymptoms.size() - 1;
+                checkForRuledOutImpression(impressionsSymptoms.get(currentImpressionIndex).getImpressionId());
+                currentSymptomIndex = 0;
+                currentImpressionIndex++;
 
-                exitExpertSystem();
+
+                if(currentImpressionIndex >= impressionsSymptoms.size()) {
+                    currentImpressionIndex = impressionsSymptoms.size() - 1;
+
+                    exitExpertSystem();
+                } else {
+                    getQuestions(impressionsSymptoms.get(currentImpressionIndex).getImpressionId());
+                    reloadExpertSystem();
+                }
+
             } else {
                 reloadExpertSystem();
             }
 
         } else {
-            if(symptomIsAnswered() || !(symptomFamilyQuestionAnswerStatus())) {
+            if(!isSymptomFamilyPositive(questions.get(currentSymptomIndex).getSymptomFamilyId())){
                 currentSymptomIndex++;
+                if(currentSymptomIndex >= questions.size()) {
+
+                    checkForRuledOutImpression(impressionsSymptoms.get(currentImpressionIndex).getImpressionId());
+                    currentSymptomIndex = 0;
+                    currentImpressionIndex++;
+
+
+                    if(currentImpressionIndex >= impressionsSymptoms.size()) {
+                        currentImpressionIndex = impressionsSymptoms.size() - 1;
+
+                        exitExpertSystem();
+                    } else {
+                        getQuestions(impressionsSymptoms.get(currentImpressionIndex).getImpressionId());
+                        reloadExpertSystem();
+                    }
+
+                } else {
+                    reloadExpertSystem();
+                }
+
+            } else {
+
+                reloadExpertSystem();
             }
 
-            reloadExpertSystem();
         }
-
     }
 
     public void goPrevious(View view) {
@@ -260,69 +315,30 @@ public class ExpertSystemActivity extends Activity {
         } else {
             reloadExpertSystem();
         }
-
     }
 
-    public boolean symptomIsAnswered() {
-
-        return (positiveSymptomsIds.contains(impressionsSymptoms.get(currentImpressionIndex).
-                getSymptoms().get(currentSymptomIndex).getSymptomId()) ||
-                ruledOutSymptomIds.contains(impressionsSymptoms.get(currentImpressionIndex).
-                        getSymptoms().get(currentSymptomIndex).getSymptomId()));
-    }
-
-
-//    public void onRadioButtonClicked (View view) {
-//
-//        boolean checked = ((RadioButton) view).isChecked();
-//
-//
-//        switch (view.getId()) {
-//            case R.id.radio_yes:
-//
-//                if(checked) {
-//                    tempStorage = impressionsSymptoms.get(currentImpressionIndex).
-//                            getSymptoms().get(currentSymptomIndex);
-//
-//                    answerStatus = true;
-//                }
-//
-//                break;
-//
-//            case R.id.radio_no:
-//                if(checked) {
-//
-//                    tempStorage = impressionsSymptoms.get(currentImpressionIndex).
-//                            getSymptoms().get(currentSymptomIndex);
-//
-//                    answerStatus = false;
-//                }
-//                break;
-//        }
-//    }
-
-//    public void getQuestions (String symptom) {
-//
-//        try {
-//            getBetterDb.openDatabaseForRead();
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//
-//        question = getBetterDb.getQuestion(symptom);
-//        getBetterDb.closeDatabase();
-//    }
-
-    public void updateAnsweredStatusSymptomFamily() {
+    public void updateAnsweredFlagPositive(int symptomId) {
 
         try {
-            getBetterDb.openDatabaseForWrite();
+            getBetterDb.openDatabaseForRead();
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        for(int complaintId: chiefComplaintId) {
-            getBetterDb.updateAnsweredStatusSymptomFamily(complaintId);
+        getBetterDb.updateAnsweredFlagPositive(symptomId);
+        getBetterDb.closeDatabase();
+    }
+
+    public void updateAnsweredStatusSymptomFamily() {
+
+        try {
+            getBetterDb.openDatabaseForRead();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        for (int i = 0; i < chiefComplaintId.size(); i++) {
+            getBetterDb.updateAnsweredStatusSymptomFamily(chiefComplaintId.get(i));
         }
 
         getBetterDb.closeDatabase();
@@ -331,19 +347,16 @@ public class ExpertSystemActivity extends Activity {
 
     public void updateAnsweredStatusSymptomFamily(int answer) {
 
-        int id = impressionsSymptoms.get(currentImpressionIndex).getSymptoms().
-                get(currentSymptomIndex + 1).getSymptomFamilyId();
         try {
-            getBetterDb.openDatabaseForWrite();
+            getBetterDb.openDatabaseForRead();
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        getBetterDb.updateAnsweredStatusSymptomFamily(id, answer);
-        getBetterDb.closeDatabase();
+        getBetterDb.updateAnsweredStatusSymptomFamily(generalQuestion.getSymptomFamilyId(), answer);
     }
 
-    public boolean isSymptomFamilyQuestionAnswered() {
+    public boolean isSymptomFamilyQuestionAnswered(int symptomFamilyId) {
 
         try {
             getBetterDb.openDatabaseForRead();
@@ -351,14 +364,12 @@ public class ExpertSystemActivity extends Activity {
             e.printStackTrace();
         }
 
-        boolean isAnswered = getBetterDb.symptomFamilyIsAnswered(impressionsSymptoms.get(currentImpressionIndex).
-                getSymptoms().get(currentSymptomIndex).getSymptomFamilyId());
-
+        boolean value = getBetterDb.symptomFamilyIsAnswered(symptomFamilyId);
         getBetterDb.closeDatabase();
-        return isAnswered;
+        return value;
     }
 
-    public boolean symptomFamilyQuestionAnswerStatus() {
+    public boolean isSymptomFamilyPositive (int symptomFamilyId) {
 
         try {
             getBetterDb.openDatabaseForRead();
@@ -366,32 +377,10 @@ public class ExpertSystemActivity extends Activity {
             e.printStackTrace();
         }
 
-        boolean answerStatus = getBetterDb.symptomFamilyAnswer(impressionsSymptoms.
-                get(currentImpressionIndex).getSymptoms().get(currentSymptomIndex).getSymptomFamilyId());
-
+        boolean value = getBetterDb.symptomFamilyAnswerStatus(symptomFamilyId);
         getBetterDb.closeDatabase();
-        return answerStatus;
+        return value;
     }
-
-    public void getGeneralQuestion(int symptomFamilyId) {
-
-        try {
-            getBetterDb.openDatabaseForRead();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        generalQuestion = getBetterDb.getGeneralQuestion(symptomFamilyId);
-        getBetterDb.closeDatabase();
-    }
-
-//    public void displayQuestions() {
-//
-//        layout_questions_inner_container = (ViewGroup)findViewById(R.id.layout_questions_inner_container);
-//
-//
-//
-//    }
 
     public void exitExpertSystem() {
 
@@ -414,5 +403,18 @@ public class ExpertSystemActivity extends Activity {
         AlertDialog dialog = builder.create();
         dialog.show();
 
+    }
+
+    public void resetDatabaseValues () {
+
+        try {
+            getBetterDb.openDatabaseForRead();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        getBetterDb.resetSymptomAnsweredFlag();
+        getBetterDb.resetSymptomFamilyFlags();
+        getBetterDb.closeDatabase();
     }
 }
