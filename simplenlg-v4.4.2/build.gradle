@@ -1,0 +1,2 @@
+configurations.create("default")
+artifacts.add("default", file('simplenlg-v4.4.2.jar'))
