@@ -3,6 +3,7 @@ package com.dlsu.thesis.getbetter;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,6 +47,7 @@ public class PatientDetailFragment extends Fragment implements View.OnClickListe
 
     private DataAdapter getBetterDb;
     UserSessionManager session;
+    PatientExpertSessionManager expertSession;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -59,6 +61,8 @@ public class PatientDetailFragment extends Fragment implements View.OnClickListe
         super.onCreate(savedInstanceState);
 
         session = new UserSessionManager(getActivity());
+        expertSession = new PatientExpertSessionManager(getActivity());
+
         HashMap<String, String> user = session.getUserDetails();
 
         String healthCenterName = user.get(UserSessionManager.KEY_HEALTH_CENTER);
@@ -134,6 +138,40 @@ public class PatientDetailFragment extends Fragment implements View.OnClickListe
 
     }
 
+    private int generateCaseRecordId(int patientId) {
+
+        ArrayList<Integer> storedIds;
+        int caseRecordId;
+        int a = 25173;
+        int c = 13424;
+        int m = 31252;
+        int generatedRandomId = m / 2;
+
+        generatedRandomId = (a * generatedRandomId + c) % m;
+        caseRecordId = Integer.parseInt(Integer.toString(patientId) + Integer.toString(generatedRandomId));
+
+        try {
+            getBetterDb.openDatabaseForRead();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        storedIds = getBetterDb.getCaseRecordIds();
+        getBetterDb.closeDatabase();
+
+
+        if(storedIds.isEmpty()) {
+            return caseRecordId;
+        } else {
+            while(storedIds.contains(caseRecordId)) {
+                generatedRandomId = (a * generatedRandomId + c) % m;
+                caseRecordId = Integer.parseInt(Integer.toString(patientId) + Integer.toString(generatedRandomId));
+            }
+
+            return caseRecordId;
+        }
+    }
+
 
     @Override
     public void onClick(View v) {
@@ -144,8 +182,13 @@ public class PatientDetailFragment extends Fragment implements View.OnClickListe
 
             Intent caseListIntent = new Intent(getActivity(), CaseListActivity.class);
             startActivity(caseListIntent);
+
         } else if (id == R.id.new_record_button) {
 
+            int caseRecordId = generateCaseRecordId((int)mItem.getId());
+            Log.d("case record id", caseRecordId +"");
+            String name = mItem.getFirstName() + " " + mItem.getLastName();
+            expertSession.createPatientExpertSession(String.valueOf(mItem.getId()), String.valueOf(caseRecordId), name, mItem.getBirthdate(), mItem.getGender());
             Intent newCaseIntent = new Intent(getActivity(), ChiefComplaintActivity.class);
             startActivity(newCaseIntent);
         }
