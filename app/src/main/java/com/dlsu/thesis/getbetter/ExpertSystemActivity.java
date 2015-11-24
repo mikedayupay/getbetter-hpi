@@ -20,6 +20,7 @@ import com.dlsu.thesis.getbetter.objects.SymptomFamily;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashSet;
 
 public class ExpertSystemActivity extends Activity {
@@ -28,8 +29,10 @@ public class ExpertSystemActivity extends Activity {
 
     private int currentImpressionIndex;
     private int currentSymptomIndex;
+    private String caseRecordId;
     private int symptomFamilyId;
     private boolean flag;
+    private boolean clickFlag = true;
 
     private Symptom positiveSymptom, ruledOutSymptom;
     private SymptomFamily generalQuestion;
@@ -42,6 +45,7 @@ public class ExpertSystemActivity extends Activity {
     private ArrayList<Integer> chiefComplaintId;
     private ArrayList<PatientAnswers> answers;
 
+    PatientExpertSessionManager patientSession;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +54,12 @@ public class ExpertSystemActivity extends Activity {
         setContentView(R.layout.activity_expert_system);
 
         Bundle extras = getIntent().getExtras();
+        patientSession = new PatientExpertSessionManager(getApplicationContext());
+
+        HashMap<String, String> patient = patientSession.getPatientDetails();
+        caseRecordId = patient.get(PatientExpertSessionManager.CASE_RECORD_ID);
+
+        Log.d("case record id", caseRecordId + "");
 
         ruledOutSymptomList = new ArrayList<>();
         ruledOutImpressionList = new ArrayList<>();
@@ -221,78 +231,45 @@ public class ExpertSystemActivity extends Activity {
 
     public void goNext (View view) {
 
-        radioGroupResponses.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                if (checkedId == R.id.radio_yes) {
-                    if (flag) {
-                        positiveSymptomList.add(questions.get(currentSymptomIndex).getSymptomNameEnglish());
-                        positiveSymptomList = new ArrayList<>(new LinkedHashSet<>(positiveSymptomList));
-                        updateAnsweredFlagPositive(questions.get(currentSymptomIndex).getSymptomId());
-                        answers.add(new PatientAnswers(1, questions.get(currentSymptomIndex).getSymptomId(), "Yes"));
-                    } else {
-                        updateAnsweredStatusSymptomFamily(1);
-                    }
-                } else if (checkedId == R.id.radio_no) {
-                    if (flag) {
-                        ruledOutSymptomList.add(questions.get(currentSymptomIndex).getSymptomNameEnglish());
-                        ruledOutSymptomList = new ArrayList<>(new LinkedHashSet<>(ruledOutSymptomList));
-                        updateAnsweredFlagPositive(questions.get(currentSymptomIndex).getSymptomId());
-                        answers.add(new PatientAnswers(1, questions.get(currentSymptomIndex).getSymptomId(), "No"));
-                    } else {
-                        updateAnsweredStatusSymptomFamily(0);
-                        updateAnsweredFlagPositive(questions.get(currentSymptomIndex).getSymptomId());
-                        ruledOutSymptomList.add(questions.get(currentSymptomIndex).getSymptomNameEnglish());
-                        ruledOutSymptomList = new ArrayList<>(new LinkedHashSet<>(ruledOutSymptomList));
-                        answers.add(new PatientAnswers(1, questions.get(currentSymptomIndex).getSymptomId(), "No"));
-                    }
-                }
-            }
-        });
-
-
-        radioGroupResponses.clearCheck();
-
-
-        if(flag) {
-
-            currentSymptomIndex++;
-
-            if(currentSymptomIndex >= questions.size()) {
-
-                checkForRuledOutImpression(impressionsSymptoms.get(currentImpressionIndex).getImpressionId());
-                currentSymptomIndex = 0;
-                currentImpressionIndex++;
-
-
-                if(currentImpressionIndex >= impressionsSymptoms.size()) {
-                    currentImpressionIndex = impressionsSymptoms.size() - 1;
-
-                    exitExpertSystem();
-                } else {
-                    getQuestions(impressionsSymptoms.get(currentImpressionIndex).getImpressionId());
-
-                    while (questions.size() == 0) {
-                        currentImpressionIndex++;
-
-                        if(currentImpressionIndex >= impressionsSymptoms.size()) {
-                            currentImpressionIndex = impressionsSymptoms.size() - 1;
-
-                            exitExpertSystem();
+        if(clickFlag) {
+            clickFlag = false;
+            radioGroupResponses.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(RadioGroup group, int checkedId) {
+                    if (checkedId == R.id.radio_yes) {
+                        if (flag) {
+                            positiveSymptomList.add(questions.get(currentSymptomIndex).getSymptomNameEnglish());
+                            positiveSymptomList = new ArrayList<>(new LinkedHashSet<>(positiveSymptomList));
+                            updateAnsweredFlagPositive(questions.get(currentSymptomIndex).getSymptomId());
+                            answers.add(new PatientAnswers(Integer.parseInt(caseRecordId), questions.get(currentSymptomIndex).getSymptomId(), "Yes"));
+                        } else {
+                            updateAnsweredStatusSymptomFamily(1);
                         }
-                        checkForRuledOutImpression(impressionsSymptoms.get(currentImpressionIndex).getImpressionId());
+                    } else if (checkedId == R.id.radio_no) {
+                        if (flag) {
+                            ruledOutSymptomList.add(questions.get(currentSymptomIndex).getSymptomNameEnglish());
+                            ruledOutSymptomList = new ArrayList<>(new LinkedHashSet<>(ruledOutSymptomList));
+                            updateAnsweredFlagPositive(questions.get(currentSymptomIndex).getSymptomId());
+                            answers.add(new PatientAnswers(Integer.parseInt(caseRecordId), questions.get(currentSymptomIndex).getSymptomId(), "No"));
+                        } else {
+                            updateAnsweredStatusSymptomFamily(0);
+                            updateAnsweredFlagPositive(questions.get(currentSymptomIndex).getSymptomId());
+                            ruledOutSymptomList.add(questions.get(currentSymptomIndex).getSymptomNameEnglish());
+                            ruledOutSymptomList = new ArrayList<>(new LinkedHashSet<>(ruledOutSymptomList));
+                            answers.add(new PatientAnswers(Integer.parseInt(caseRecordId), questions.get(currentSymptomIndex).getSymptomId(), "No"));
+                        }
                     }
-
-                    reloadExpertSystem();
                 }
+            });
 
-            } else {
-                reloadExpertSystem();
-            }
 
-        } else {
-            if(!isSymptomFamilyPositive(questions.get(currentSymptomIndex).getSymptomFamilyId())){
+            radioGroupResponses.clearCheck();
+
+
+            if(flag) {
+
                 currentSymptomIndex++;
+
                 if(currentSymptomIndex >= questions.size()) {
 
                     checkForRuledOutImpression(impressionsSymptoms.get(currentImpressionIndex).getImpressionId());
@@ -309,13 +286,13 @@ public class ExpertSystemActivity extends Activity {
 
                         while (questions.size() == 0) {
                             currentImpressionIndex++;
-                            checkForRuledOutImpression(impressionsSymptoms.get(currentImpressionIndex).getImpressionId());
 
                             if(currentImpressionIndex >= impressionsSymptoms.size()) {
                                 currentImpressionIndex = impressionsSymptoms.size() - 1;
 
                                 exitExpertSystem();
                             }
+                            checkForRuledOutImpression(impressionsSymptoms.get(currentImpressionIndex).getImpressionId());
                         }
 
                         reloadExpertSystem();
@@ -326,11 +303,49 @@ public class ExpertSystemActivity extends Activity {
                 }
 
             } else {
+                if(!isSymptomFamilyPositive(questions.get(currentSymptomIndex).getSymptomFamilyId())){
+                    currentSymptomIndex++;
+                    if(currentSymptomIndex >= questions.size()) {
 
-                reloadExpertSystem();
+                        checkForRuledOutImpression(impressionsSymptoms.get(currentImpressionIndex).getImpressionId());
+                        currentSymptomIndex = 0;
+                        currentImpressionIndex++;
+
+
+                        if(currentImpressionIndex >= impressionsSymptoms.size()) {
+                            currentImpressionIndex = impressionsSymptoms.size() - 1;
+
+                            exitExpertSystem();
+                        } else {
+                            getQuestions(impressionsSymptoms.get(currentImpressionIndex).getImpressionId());
+
+                            while (questions.size() == 0) {
+                                currentImpressionIndex++;
+                                checkForRuledOutImpression(impressionsSymptoms.get(currentImpressionIndex).getImpressionId());
+
+                                if(currentImpressionIndex >= impressionsSymptoms.size()) {
+                                    currentImpressionIndex = impressionsSymptoms.size() - 1;
+
+                                    exitExpertSystem();
+                                }
+                            }
+
+                            reloadExpertSystem();
+                        }
+
+                    } else {
+                        reloadExpertSystem();
+                    }
+
+                } else {
+
+                    reloadExpertSystem();
+                }
+
             }
-
+            clickFlag = true;
         }
+
     }
 
     public void goPrevious(View view) {
@@ -430,6 +445,7 @@ public class ExpertSystemActivity extends Activity {
                 Intent intent = new Intent(ExpertSystemActivity.this, ExpertSystemSummaryActivity.class);
                 intent.putStringArrayListExtra("Plausible Impressions", plausibleImpressionList);
                 intent.putStringArrayListExtra("Ruled Out Impressions", ruledOutImpressionList);
+                intent.putIntegerArrayListExtra("Chief Complaints", chiefComplaintId);
                 startActivity(intent);
                 finish();
             }

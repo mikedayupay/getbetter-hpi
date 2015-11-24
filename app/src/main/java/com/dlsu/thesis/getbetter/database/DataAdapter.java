@@ -9,6 +9,7 @@ import android.util.Log;
 import com.dlsu.thesis.getbetter.objects.Impressions;
 import com.dlsu.thesis.getbetter.objects.PatientAnswers;
 import com.dlsu.thesis.getbetter.objects.PatientContent;
+import com.dlsu.thesis.getbetter.objects.PositiveResults;
 import com.dlsu.thesis.getbetter.objects.Symptom;
 import com.dlsu.thesis.getbetter.objects.SymptomFamily;
 
@@ -30,6 +31,7 @@ public class DataAdapter {
     private static final String SYMPTOM_LIST = "tbl_symptom_list";
     private static final String SYMPTOM_FAMILY = "tbl_symptom_family";
     private static final String PATIENT_ANSWERS = "tbl_patient_answers";
+    private static final String CASE_RECORDS_TABLE = "tbl_case_records";
 
     public DataAdapter (Context context) {
         this.myContext = context;
@@ -228,6 +230,20 @@ public class DataAdapter {
 
     }
 
+    public ArrayList<Integer> getCaseRecordIds () {
+
+        ArrayList<Integer> ids = new ArrayList<>();
+
+        String sql = "SELECT _id FROM tbl_case_records";
+        Cursor c = getBetterDb.rawQuery(sql, null);
+
+        while(c.moveToNext()) {
+            ids.add(c.getInt(c.getColumnIndexOrThrow("_id")));
+        }
+
+        return ids;
+    }
+
     public ArrayList<Impressions> getImpressions (int complaintId) {
 
         ArrayList<Impressions> results = new ArrayList<>();
@@ -423,6 +439,7 @@ public class DataAdapter {
                 " AND i.hard_symptom = 1 AND i.symptom_id = s._id";
         Cursor c = getBetterDb.rawQuery(sql, null);
 
+
         while(c.moveToNext()) {
             results.add(c.getString(c.getColumnIndexOrThrow("symptom_name_english")));
         }
@@ -431,6 +448,9 @@ public class DataAdapter {
     }
 
     public void insertAnswersToDatabase (ArrayList<PatientAnswers> answers) {
+
+        for(int i = 0; i < answers.size(); i++)
+            Log.d("answers", answers.get(i).getSymptomId() + "");
 
         long rowId;
         for(int i = 0; i < answers.size(); i++) {
@@ -443,8 +463,39 @@ public class DataAdapter {
             rowId = getBetterDb.insert(PATIENT_ANSWERS, null, values);
             Log.d("row id inserted", rowId + "");
         }
+    }
 
+    public ArrayList<PositiveResults> getPositiveSymptoms (int caseRecordId) {
 
+        ArrayList<PositiveResults> results = new ArrayList<>();
 
+        String sql = "SELECT S.symptom_name_english AS positiveSymptom, S.answer_phrase AS answerPhrase FROM " +
+                "tbl_symptom_list AS S JOIN tbl_patient_answers AS P ON S._id = P.question_id AND " +
+                "P.case_record_id = " + caseRecordId + " AND P.answer = 'Yes'";
+
+        Cursor c = getBetterDb.rawQuery(sql, null);
+
+        while(c.moveToNext()) {
+            PositiveResults positive = new PositiveResults(c.getString(c.getColumnIndexOrThrow("positiveSymptom")),
+                    c.getString(c.getColumnIndexOrThrow("answerPhrase")));
+
+            results.add(positive);
+        }
+
+        return results;
+    }
+
+    public String getChiefComplaints(int chiefComplaintIds) {
+
+        String result = "";
+        String sql = "SELECT chief_complaint_english FROM tbl_chief_complaint WHERE _id = " + chiefComplaintIds;
+        Cursor c = getBetterDb.rawQuery(sql, null);
+
+        c.moveToFirst();
+        result = c.getString(c.getColumnIndexOrThrow("chief_complaint_english"));
+
+        Log.d("result", result);
+
+        return result;
     }
 }
