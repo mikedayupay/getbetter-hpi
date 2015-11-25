@@ -1,7 +1,6 @@
 package com.dlsu.thesis.getbetter;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -103,11 +102,6 @@ public class ExpertSystemSummaryActivity extends Activity {
             @Override
             public void onClick(View v) {
                 patientSession.endExpertSystem();
-                Intent intent = new Intent(getApplicationContext(), PatientListActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
-
                 finish();
             }
         });
@@ -157,6 +151,13 @@ public class ExpertSystemSummaryActivity extends Activity {
         return introductionSentence;
     }
 
+    private String attachComplaints () {
+
+        String complaints = "";
+
+        return complaints;
+    }
+
     public void getChiefComplaints () {
 
         try {
@@ -185,8 +186,6 @@ public class ExpertSystemSummaryActivity extends Activity {
     private String getPhrase () {
 
         String phrase = "";
-
-
 
         return phrase;
     }

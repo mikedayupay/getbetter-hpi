@@ -231,6 +231,7 @@ public class ExpertSystemActivity extends Activity {
 
     public void goNext (View view) {
 
+
         if(clickFlag) {
             clickFlag = false;
             radioGroupResponses.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -241,7 +242,7 @@ public class ExpertSystemActivity extends Activity {
                             positiveSymptomList.add(questions.get(currentSymptomIndex).getSymptomNameEnglish());
                             positiveSymptomList = new ArrayList<>(new LinkedHashSet<>(positiveSymptomList));
                             updateAnsweredFlagPositive(questions.get(currentSymptomIndex).getSymptomId());
-                            answers.add(new PatientAnswers(Integer.parseInt(caseRecordId), questions.get(currentSymptomIndex).getSymptomId(), "Yes"));
+                            addToAnswers(new PatientAnswers(Integer.parseInt(caseRecordId), questions.get(currentSymptomIndex).getSymptomId(), "Yes"));
                         } else {
                             updateAnsweredStatusSymptomFamily(1);
                         }
@@ -250,13 +251,13 @@ public class ExpertSystemActivity extends Activity {
                             ruledOutSymptomList.add(questions.get(currentSymptomIndex).getSymptomNameEnglish());
                             ruledOutSymptomList = new ArrayList<>(new LinkedHashSet<>(ruledOutSymptomList));
                             updateAnsweredFlagPositive(questions.get(currentSymptomIndex).getSymptomId());
-                            answers.add(new PatientAnswers(Integer.parseInt(caseRecordId), questions.get(currentSymptomIndex).getSymptomId(), "No"));
+                            addToAnswers(new PatientAnswers(Integer.parseInt(caseRecordId), questions.get(currentSymptomIndex).getSymptomId(), "No"));
                         } else {
                             updateAnsweredStatusSymptomFamily(0);
                             updateAnsweredFlagPositive(questions.get(currentSymptomIndex).getSymptomId());
                             ruledOutSymptomList.add(questions.get(currentSymptomIndex).getSymptomNameEnglish());
                             ruledOutSymptomList = new ArrayList<>(new LinkedHashSet<>(ruledOutSymptomList));
-                            answers.add(new PatientAnswers(Integer.parseInt(caseRecordId), questions.get(currentSymptomIndex).getSymptomId(), "No"));
+                            addToAnswers(new PatientAnswers(Integer.parseInt(caseRecordId), questions.get(currentSymptomIndex).getSymptomId(), "No"));
                         }
                     }
                 }
@@ -475,6 +476,14 @@ public class ExpertSystemActivity extends Activity {
         getBetterDb.resetSymptomAnsweredFlag();
         getBetterDb.resetSymptomFamilyFlags();
         getBetterDb.closeDatabase();
+    }
+
+    public void addToAnswers(PatientAnswers answer) {
+
+        if(!answers.contains(answer)) {
+            answers.add(answer);
+        }
+
     }
 
     public void saveAnswersToDatabase() {

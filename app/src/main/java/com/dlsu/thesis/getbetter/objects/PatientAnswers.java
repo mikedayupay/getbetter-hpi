@@ -26,4 +26,21 @@ public class PatientAnswers {
     public String getAnswer() {
         return answer;
     }
+
+    public int hashCode() {
+
+        return symptomId;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+
+        boolean similar = false;
+
+        if(object !=null && object instanceof PatientAnswers) {
+            similar = this.symptomId == ((PatientAnswers)object).symptomId;
+        }
+
+        return similar;
+    }
 }

@@ -85,8 +85,11 @@
         android:layout_alignStart="@id/summary_hpi_title"
         android:textSize="15sp"
         android:padding="5dp"
-        android:capitalize="sentences"
-        android:maxWidth="300dp" />
+        android:ellipsize="none"
+        android:maxWidth="350dp"
+        android:scrollHorizontally="false"
+        android:maxLines="100"
+        android:capitalize="sentences" />
 
     <Button
         android:id="@+id/summary_back_patient_button"
