@@ -12,6 +12,7 @@ public class Users {
     private String email;
     private String password;
     private String birthdate;
+    private String age;
     private String gender;
     private String civilStatus;
     private String homeAddress;
@@ -36,7 +37,20 @@ public class Users {
     }
 
     public Users (long id, String firstName, String middleName, String lastName, String birthdate,
-                  String gender, String civilStatus) {
+                  String age, String gender, String civilStatus) {
+
+        this.id = id;
+        this.firstName = firstName;
+        this.middleName = middleName;
+        this.lastName = lastName;
+        this.birthdate = birthdate;
+        this.age = age;
+        this.gender = gender;
+        this.civilStatus = civilStatus;
+    }
+
+    public Users (long id, String firstName, String middleName, String lastName, String birthdate,
+                    String gender, String civilStatus) {
 
         this.id = id;
         this.firstName = firstName;
@@ -101,6 +115,14 @@ public class Users {
 
     public void setBirthdate(String birthdate) {
         this.birthdate = birthdate;
+    }
+
+    public String getAge() {
+        return age;
+    }
+
+    public void setAge(String age) {
+        this.age = age;
     }
 
     public String getGender() {

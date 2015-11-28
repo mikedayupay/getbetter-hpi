@@ -109,7 +109,7 @@ public class PatientDetailFragment extends Fragment implements View.OnClickListe
             patientName.setText(name);
 
             patientAge = ((TextView)rootView.findViewById(R.id.patient_age));
-            patientAge.setText(mItem.getBirthdate());
+            patientAge.setText(mItem.getAge());
 
             patientGender = ((TextView)rootView.findViewById(R.id.patient_gender));
             patientGender.setText(mItem.getGender());
@@ -188,7 +188,7 @@ public class PatientDetailFragment extends Fragment implements View.OnClickListe
             int caseRecordId = generateCaseRecordId((int)mItem.getId());
             Log.d("case record id", caseRecordId +"");
             String name = mItem.getFirstName() + " " + mItem.getLastName();
-            expertSession.createPatientExpertSession(String.valueOf(mItem.getId()), String.valueOf(caseRecordId), name, mItem.getBirthdate(), mItem.getGender());
+            expertSession.createPatientExpertSession(String.valueOf(mItem.getId()), String.valueOf(caseRecordId), name, mItem.getAge(), mItem.getGender());
             Intent newCaseIntent = new Intent(getActivity(), ChiefComplaintActivity.class);
             startActivity(newCaseIntent);
         }

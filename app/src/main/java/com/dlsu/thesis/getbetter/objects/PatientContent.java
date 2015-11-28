@@ -25,7 +25,14 @@ public class PatientContent {
         private String bloodType;
 
         public Patient (long id, String firstName, String middleName, String lastName, String birthdate,
-                        String gender, String civilStatus, String bloodType) {
+                        String age, String gender, String civilStatus, String bloodType) {
+
+            super(id, firstName, middleName, lastName, birthdate, age, gender, civilStatus);
+            this.bloodType = bloodType;
+        }
+
+        public Patient (long id, String firstName, String middleName, String lastName, String birthdate,
+                            String gender, String civilStatus, String bloodType) {
 
             super(id, firstName, middleName, lastName, birthdate, gender, civilStatus);
             this.bloodType = bloodType;

@@ -122,9 +122,10 @@ public class DataAdapter {
 
     public ArrayList<PatientContent.Patient> getPatients (int healthCenterId) {
 
+        String age = "(strftime('%Y', 'now') - strftime('%Y', birthdate)) - (strftime('%m-%d', 'now') < strftime('%m-%d', birthdate))";
         ArrayList<PatientContent.Patient> results = new ArrayList<PatientContent.Patient>();
         String sql = "SELECT u._id AS id, u.first_name AS first_name, u.middle_name AS middle_name, " +
-                "u.last_name AS last_name, u.birthdate AS birthdate, g.gender_name AS gender, " +
+                "u.last_name AS last_name, u.birthdate AS birthdate, " + age + " AS age, g.gender_name AS gender, " +
                 "c.civil_status_name AS civil_status, u.blood_type AS blood_type " +
                 "FROM tbl_users AS u, tbl_genders AS g, tbl_civil_statuses AS c " +
                 "WHERE u.gender_id = g._id AND u.civil_status_id = c._id AND " +
@@ -138,6 +139,7 @@ public class DataAdapter {
                     c.getString(c.getColumnIndex("middle_name")),
                     c.getString(c.getColumnIndex("last_name")),
                     c.getString(c.getColumnIndex("birthdate")),
+                     c.getString(c.getColumnIndexOrThrow("age")),
                     c.getString(c.getColumnIndex("gender")),
                     c.getString(c.getColumnIndex("civil_status")),
                     c.getString(c.getColumnIndex("blood_type")));
@@ -390,7 +392,7 @@ public class DataAdapter {
 
         int count = getBetterDb.update(SYMPTOM_FAMILY, values, "related_chief_complaint_id = " + chiefComplaintId, null);
 
-        Log.d("updated rows symptom family flags", count + "");
+        //Log.d("updated rows symptom family flags", count + "");
     }
 
     public void updateAnsweredStatusSymptomFamily(int symptomFamilyId, int answer) {
@@ -407,7 +409,7 @@ public class DataAdapter {
         values.put("is_answered", 1);
         int count = getBetterDb.update(SYMPTOM_LIST, values, "_id = " + symptomId, null);
 
-        Log.d("update rows flag positive", count + "");
+        //Log.d("update rows flag positive", count + "");
     }
 
     public void resetSymptomAnsweredFlag () {
@@ -416,7 +418,7 @@ public class DataAdapter {
         values.put("is_answered", 0);
         int count = getBetterDb.update(SYMPTOM_LIST, values, null, null);
 
-        Log.d("updated rows reset", count + "");
+        //Log.d("updated rows reset", count + "");
     }
 
     public void resetSymptomFamilyFlags() {
@@ -427,7 +429,7 @@ public class DataAdapter {
 
         int count = getBetterDb.update(SYMPTOM_FAMILY, values, null, null);
 
-        Log.d("updated rows reset", count +"");
+        //Log.d("updated rows reset", count +"");
     }
 
     public ArrayList<String> getHardSymptoms (int impressionId) {
@@ -449,8 +451,8 @@ public class DataAdapter {
 
     public void insertAnswersToDatabase (ArrayList<PatientAnswers> answers) {
 
-        for(int i = 0; i < answers.size(); i++)
-            Log.d("answers", answers.get(i).getSymptomId() + "");
+//        for(int i = 0; i < answers.size(); i++)
+//            Log.d("answers", answers.get(i).getSymptomId() + "");
 
         long rowId;
         for(int i = 0; i < answers.size(); i++) {
@@ -461,7 +463,7 @@ public class DataAdapter {
             values.put("answer", answers.get(i).getAnswer());
 
             rowId = getBetterDb.insert(PATIENT_ANSWERS, null, values);
-            Log.d("row id inserted", rowId + "");
+            //Log.d("row id inserted", rowId + "");
         }
     }
 
@@ -494,7 +496,7 @@ public class DataAdapter {
         c.moveToFirst();
         result = c.getString(c.getColumnIndexOrThrow("chief_complaint_english"));
 
-        Log.d("result", result);
+        //Log.d("result", result);
 
         return result;
     }

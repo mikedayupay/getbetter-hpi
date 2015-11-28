@@ -15,7 +15,7 @@
             android:id="@+id/question_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="QUESTION TITLE"
+            android:text="MEDICAL DIAGNOSIS EXPERT SYSTEM"
             android:textSize="30sp"
             android:padding="20dp"/>
 
@@ -113,7 +113,7 @@
         android:id="@+id/impressions_list_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Possible Impressions"
+        android:text="Impression List"
         android:textSize="30sp"
         android:textColor="@android:color/holo_red_dark"
         android:layout_below="@id/symptoms_list"
