@@ -86,7 +86,7 @@ public class PatientListFragment extends ListFragment {
         int healthCenterId;
         initializeDatabase();
         healthCenterId = getHealthCenterId(healthCenterName);
-        getPatients(healthCenterId);
+            getPatients(healthCenterId);
 
 
         PatientsAdapters adapter = new PatientsAdapters(getActivity(), patients);

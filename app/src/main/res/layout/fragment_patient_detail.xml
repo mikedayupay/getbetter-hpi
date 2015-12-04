@@ -2,8 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
-    tools:context="com.dlsu.thesis.getbetter.PatientDetailFragment"
-    >
+    tools:context="com.dlsu.thesis.getbetter.PatientDetailFragment">
 
     <TextView  android:id="@+id/patient_detail"
         android:text="Patient Information"

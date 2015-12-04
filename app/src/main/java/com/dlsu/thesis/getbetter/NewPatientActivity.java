@@ -5,6 +5,8 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -26,7 +28,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 
 
-public class NewPatientActivity extends Activity implements View.OnClickListener, AdapterView.OnItemSelectedListener{
+public class NewPatientActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener{
 
     private Button setDateButton;
     private Button addPatientButton;
@@ -66,7 +68,7 @@ public class NewPatientActivity extends Activity implements View.OnClickListener
 
         String title = user.get(UserSessionManager.KEY_HEALTH_CENTER);
 
-        getActionBar().setTitle(title);
+        //getActionBar().setTitle(title);
 
         firstNameInput = (EditText)findViewById(R.id.first_name_input);
         middleNameInput = (EditText)findViewById(R.id.middle_name_input);
@@ -89,7 +91,7 @@ public class NewPatientActivity extends Activity implements View.OnClickListener
         month = calendar.get(Calendar.MONTH);
         day = calendar.get(Calendar.DAY_OF_MONTH);
 
-        birthDate = day + "/" + month + "/" + year;
+        birthDate = year + "-" + month + "-" + day;
 
         showDate(year, month, day);
 
@@ -102,6 +104,7 @@ public class NewPatientActivity extends Activity implements View.OnClickListener
             e.printStackTrace();
         }
         healthCenterId = getBetterDb.getHealthCenterId(title);
+        getBetterDb.closeDatabase();
 
         ArrayAdapter<CharSequence> genderAdapter = ArrayAdapter.createFromResource(this,
                 R.array.genders, android.R.layout.simple_spinner_item);
@@ -160,14 +163,19 @@ public class NewPatientActivity extends Activity implements View.OnClickListener
             String lastName = lastNameInput.getText().toString();
             String street = streetInput.getText().toString();
 
+            Log.d("birthdate", birthDate);
+
             patient = new PatientContent.Patient(0, firstName, middleName, lastName, birthDate, genderSelected,
                     civilStatusSelected, bloodTypeSelected);
             patient.setHomeAddress(street, barangaySelected, citySelected);
 
+            Log.d("date", patient.getBirthdate());
+
             getBetterDb.newPatient(patient, healthCenterId);
+            getBetterDb.closeDatabase();
 
             Toast.makeText(getApplicationContext(),
-                    "New Patient Record Created!",
+                    "New Patient Record Registered!",
                     Toast.LENGTH_LONG).show();
 
             Intent intent = new Intent(this, PatientListActivity.class);
@@ -196,12 +204,36 @@ public class NewPatientActivity extends Activity implements View.OnClickListener
             // arg2 = month
             // arg3 = day
             showDate(arg1, arg2+1, arg3);
+            arg2 += 1;
+            String month = arg2 + "";
+            String day = arg3 + "";
+
+            if(arg2 < 10) {
+                month = "0" + arg2;
+            }
+
+            if(arg3 < 10) {
+                day = "0" + arg3;
+            }
+
+            birthDate = arg1 + "-" + month + "-" + day;
         }
     };
 
     private void showDate (int year, int month, int day) {
-        displayDate.setText(new StringBuilder().append(day).append("/")
-                .append(month).append("/").append(year));
+        String sMonth = month + "";
+        String sDay = day + "";
+
+        if(month < 10) {
+            sMonth = "0" + sMonth;
+        }
+
+        if(day < 10) {
+            sDay = "0" + sDay;
+        }
+
+        displayDate.setText(new StringBuilder().append(year).append("-")
+                .append(sMonth).append("-").append(sDay));
     }
 
     private void initializeDatabase () {
