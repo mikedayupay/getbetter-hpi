@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/home"
+            android:checked="false"
+            android:title="Home"/>
+
+        <item
+            android:id="@+id/impressions"
+            android:checked="false"
+            android:title="Impressions"/>
+
+        <item
+            android:id="@+id/symptoms"
+            android:checked="false"
+            android:title="Symptoms"/>
+
+        <item
+            android:id="@+id/add_impression"
+            android:checked="false"
+            android:title="Add Impression"/>
+
+        <item
+            android:id="@+id/add_symptom"
+            android:checked="false"
+            android:title="Add Symptom"/>
+
+        <item
+            android:id="@+id/logout"
+            android:checked="false"
+            android:title="Logout"/>
+    </group>
+
+
+</menu>
