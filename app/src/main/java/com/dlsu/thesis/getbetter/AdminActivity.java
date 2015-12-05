@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.dlsu.thesis.getbetter.AdminNavPages.AddImpressionFragment;
+import com.dlsu.thesis.getbetter.AdminNavPages.AddSymptomFragment;
 import com.dlsu.thesis.getbetter.AdminNavPages.AdminHomeFragment;
 
 
@@ -62,7 +63,7 @@ public class AdminActivity extends AppCompatActivity {
                     case R.id.home:
                         Toast.makeText(getApplicationContext(), "Home selected", Toast.LENGTH_SHORT).show();
                         AdminHomeFragment homeFragment = new AdminHomeFragment();
-                        android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
                         fragmentTransaction.replace(R.id.admin_frame_content, homeFragment);
                         fragmentTransaction.commit();
                         return true;
@@ -70,16 +71,24 @@ public class AdminActivity extends AppCompatActivity {
                     case R.id.impressions:
                         Toast.makeText(getApplicationContext(), "Impressions", Toast.LENGTH_SHORT).show();
                         return true;
+
                     case R.id.symptoms:
                         return true;
+
                     case R.id.add_impression:
                         addImpressionFragment = new AddImpressionFragment();
-                        android.support.v4.app.FragmentTransaction fragmentTransaction1 = getSupportFragmentManager().beginTransaction();
+                        FragmentTransaction fragmentTransaction1 = getSupportFragmentManager().beginTransaction();
                         fragmentTransaction1.replace(R.id.admin_frame_content, addImpressionFragment);
                         fragmentTransaction1.commit();
                         return true;
+
                     case R.id.add_symptom:
+                        AddSymptomFragment addSymptomFragment = new AddSymptomFragment();
+                        FragmentTransaction fragmentTransaction2 = getSupportFragmentManager().beginTransaction();
+                        fragmentTransaction2.replace(R.id.admin_frame_content, addSymptomFragment);
+                        fragmentTransaction2.commit();
                         return true;
+
                     case R.id.logout:
                         return true;
                     default:return true;
