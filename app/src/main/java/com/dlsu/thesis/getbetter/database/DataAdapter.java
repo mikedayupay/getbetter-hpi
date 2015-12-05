@@ -32,6 +32,9 @@ public class DataAdapter {
     private static final String SYMPTOM_FAMILY = "tbl_symptom_family";
     private static final String PATIENT_ANSWERS = "tbl_patient_answers";
     private static final String CASE_RECORDS_TABLE = "tbl_case_records";
+    private static final String IMPRESSION_TABLE = "tbl_case_impression";
+    private static final String IMPRESSION_TO_COMPLAINTS = "tbl_impressions_of_complaints";
+    private static final String SYMPTOM_TO_IMPRESSION = "tbl_symptom_of_impression";
 
     public DataAdapter (Context context) {
         this.myContext = context;
@@ -84,12 +87,29 @@ public class DataAdapter {
         String sql = "SELECT * FROM tbl_users WHERE email = '" + username + "' AND pass = '" + password + "'";
 
         Cursor c = getBetterDb.rawQuery(sql, null);
+
         if(c.getCount() > 0) {
             return true;
         } else {
             return false;
         }
+    }
 
+    public boolean isAdmin (String username, String password) {
+
+        int roleId;
+        String sql = "SELECT role_id FROM tbl_users WHERE email = '" + username + "' AND pass = '" + password + "'";
+
+        Cursor c = getBetterDb.rawQuery(sql, null);
+
+        c.moveToFirst();
+        roleId = c.getInt(c.getColumnIndexOrThrow("role_id"));
+
+        if(roleId == 1) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public ArrayList<String> getHealthCenters() {
@@ -104,6 +124,7 @@ public class DataAdapter {
             healthCenter.add(c.getString(c.getColumnIndexOrThrow("health_center_name")));
         }
 
+        c.close();
         return healthCenter;
     }
 
@@ -117,6 +138,7 @@ public class DataAdapter {
         c.moveToFirst();
         result = c.getInt(c.getColumnIndex("_id"));
 
+        c.close();
         return result;
     }
 
@@ -146,27 +168,10 @@ public class DataAdapter {
 
             results.add(patient);
         }
-
+        c.close();
         return results;
 
     }
-
-//    public Users getPatient (final long id) {
-//
-//        String sql = "SELECT * FROM tbl_users WHERE _id = " + id;
-//
-//        Cursor c = getBetterDb.rawQuery(sql, null);
-//        c.moveToFirst();
-//        Users result = new Users(c.getString(c.getColumnIndex("first_name")),
-//                c.getString(c.getColumnIndex("middle_name")),
-//                c.getString(c.getColumnIndex("last_name")),
-//                c.getString(c.getColumnIndex("birthdate")),
-//                c.getString(c.getColumnIndex("gender")),
-//                c.getString(c.getColumnIndex("civil_status")),
-//                c.getString(c.getColumnIndex("blood_type")));
-//
-//        return result;
-//    }
 
     public ArrayList<String> getBarangays () {
 
@@ -179,6 +184,7 @@ public class DataAdapter {
             results.add(c.getString(c.getColumnIndexOrThrow("barangay_name")));
         }
 
+        c.close();
         return results;
     }
 
@@ -193,6 +199,7 @@ public class DataAdapter {
             results.add(c.getString(c.getColumnIndexOrThrow("city_name")));
         }
 
+        c.close();
         return results;
     }
 
@@ -200,17 +207,18 @@ public class DataAdapter {
 
         int genderId;
         int civilId;
-        String genderSql = "SELECT _id FROM tbl_genders WHERE gender_name = '" + patient.getGender() + "'";
 
+        String genderSql = "SELECT _id FROM tbl_genders WHERE gender_name = '" + patient.getGender() + "'";
         Cursor cGender = getBetterDb.rawQuery(genderSql, null);
         cGender.moveToFirst();
         genderId = cGender.getInt(cGender.getColumnIndex("_id"));
+        cGender.close();
 
         String civilSql = "SELECT _id FROM tbl_civil_statuses WHERE civil_status_name = '" + patient.getCivilStatus() + "'";
-
         Cursor cCivil = getBetterDb.rawQuery(civilSql, null);
         cCivil.moveToFirst();
         civilId = cCivil.getInt(cCivil.getColumnIndex("_id"));
+        cCivil.close();
 
 
 
@@ -243,6 +251,7 @@ public class DataAdapter {
             ids.add(c.getInt(c.getColumnIndexOrThrow("_id")));
         }
 
+        c.close();
         return ids;
     }
 
@@ -265,6 +274,7 @@ public class DataAdapter {
             results.add(impressions);
         }
 
+        c.close();
         return results;
     }
 
@@ -277,7 +287,26 @@ public class DataAdapter {
         c.moveToFirst();
         impressionId = c.getInt(c.getColumnIndexOrThrow("_id"));
 
+        c.close();
         return impressionId;
+    }
+
+    public ArrayList<Symptom> getSymptoms() {
+
+        ArrayList<Symptom> results = new ArrayList<>();
+        String sql = "SELECT _id, symptom_name_english FROM tbl_symptom_list";
+
+        Cursor c = getBetterDb.rawQuery(sql, null);
+
+        while(c.moveToNext()) {
+            Symptom symptom = new Symptom(c.getInt(c.getColumnIndexOrThrow("_id")),
+                    c.getString(c.getColumnIndexOrThrow("symptom_name_english")));
+
+            results.add(symptom);
+        }
+
+        c.close();
+        return results;
     }
 
     public ArrayList<Symptom> getSymptoms(int impressionId) {
@@ -300,6 +329,7 @@ public class DataAdapter {
             results.add(symptom);
         }
 
+        c.close();
         return results;
     }
 
@@ -324,6 +354,7 @@ public class DataAdapter {
             results.add(symptom);
         }
 
+        c.close();
         return results;
     }
 
@@ -342,6 +373,7 @@ public class DataAdapter {
                 c.getString(c.getColumnIndexOrThrow("responses_english")),
                 c.getInt(c.getColumnIndexOrThrow("related_chief_complaint_id")));
 
+        c.close();
         return generalQuestion;
     }
 
@@ -355,11 +387,14 @@ public class DataAdapter {
 
 
         if(c.getCount() == 0) {
+            c.close();
             return true;
         } else {
             if (c.getInt(c.getColumnIndexOrThrow("answered_flag")) == 1) {
+                c.close();
                 return true;
             } else {
+                c.close();
                 return false;
             }
         }
@@ -374,11 +409,14 @@ public class DataAdapter {
         c.moveToFirst();
 
         if(c.getCount() == 0) {
+            c.close();
             return false;
         } else {
             if (c.getInt(c.getColumnIndexOrThrow("answer_status")) == 1) {
+                c.close();
                 return true;
             } else {
+                c.close();
                 return false;
             }
         }
@@ -446,6 +484,7 @@ public class DataAdapter {
             results.add(c.getString(c.getColumnIndexOrThrow("symptom_name_english")));
         }
 
+        c.close();
         return results;
     }
 
@@ -484,6 +523,7 @@ public class DataAdapter {
             results.add(positive);
         }
 
+        c.close();
         return results;
     }
 
@@ -497,7 +537,60 @@ public class DataAdapter {
         result = c.getString(c.getColumnIndexOrThrow("chief_complaint_english"));
 
         //Log.d("result", result);
-
+        c.close();
         return result;
+    }
+
+    public void insertCaseRecord (String plausibleImpressions, String chiefComplaints, int caseRecordId,
+                                  int userId, int healthCenterId, String hpiContent) {
+
+        ContentValues values = new ContentValues();
+        values.put("_id", caseRecordId);
+        values.put("user_id", userId);
+        values.put("health_center_id", healthCenterId);
+        values.put("hpi_content", hpiContent);
+        values.put("complaint", chiefComplaints);
+        values.put("plausible_impressions", plausibleImpressions);
+
+        getBetterDb.insert(CASE_RECORDS_TABLE, "case_id", values);
+
+
+    }
+
+    public int insertImpression (String medicalTerm, String scientificTerm, String localTerm,
+                                  String treatment, String remarks) {
+
+        ContentValues values = new ContentValues();
+        values.put("medical_term", medicalTerm);
+        values.put("scientific_name", scientificTerm);
+        values.put("local_name", localTerm);
+        values.put("treatment_protocol", treatment);
+        values.put("remarks", remarks);
+
+        int row = (int)getBetterDb.insert(IMPRESSION_TABLE, null, values);
+        return row;
+    }
+
+    public void matchImpressionToComplaints (int newImpressionId, ArrayList<Integer> chiefComplaints) {
+
+        for (int i = 0; i < chiefComplaints.size(); i++) {
+            ContentValues values = new ContentValues();
+            values.put("impression_id", newImpressionId);
+            values.put("complaint_id", chiefComplaints.get(i));
+
+            getBetterDb.insert(IMPRESSION_TO_COMPLAINTS, null, values);
+        }
+    }
+
+    public void matchImpressionToSymptoms (int newImpressionId, ArrayList<Integer> symptoms) {
+
+        for(int i = 0; i < symptoms.size(); i++) {
+            ContentValues values = new ContentValues();
+            values.put("impression_id", newImpressionId);
+            values.put("symptom_id", symptoms.get(i));
+            values.put("hard_symptom", 1);
+
+            getBetterDb.insert(SYMPTOM_TO_IMPRESSION, null, values);
+        }
     }
 }

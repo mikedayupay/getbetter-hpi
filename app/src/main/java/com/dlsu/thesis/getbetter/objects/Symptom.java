@@ -28,6 +28,12 @@ public class Symptom {
         this.symptomFamilyId = symptomFamilyId;
     }
 
+    public Symptom(int symptomId, String symptomNameEnglish) {
+
+        this.symptomId = symptomId;
+        this.symptomNameEnglish = symptomNameEnglish;
+    }
+
     public int getSymptomId() {
         return symptomId;
     }
