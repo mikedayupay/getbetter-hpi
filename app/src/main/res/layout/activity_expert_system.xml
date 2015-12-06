@@ -1,211 +1,294 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background"
     >
 
-    <LinearLayout
-        android:id="@+id/layout_questions_outer_container"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        >
-
-        <TextView
-            android:id="@+id/question_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="MEDICAL DIAGNOSIS EXPERT SYSTEM"
-            android:textSize="30sp"
-            android:padding="20dp"/>
-
-        <View
-            android:id="@+id/title_divider"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@android:color/darker_gray"
-            android:minHeight="1dp"
-            android:layout_below="@id/question_title"
-            />
-
-        <LinearLayout
-            android:id="@+id/layout_questions_inner_container"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/question_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="QUESTION 1"
-                android:textSize="20sp"
-                android:padding="20dp"/>
-
-            <RadioGroup
-                android:id="@+id/radio_group_responses"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <RadioButton
-                    android:id="@+id/radio_yes"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="YES" />
-
-                <RadioButton
-                    android:id="@+id/radio_no"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="NO"/>
-
-            </RadioGroup>
-
-        </LinearLayout>
-
-    </LinearLayout>
-
-    <TextView
-        android:id="@+id/probing_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Currently Probing"
-        android:textSize="30sp"
-        android:textColor="@android:color/holo_red_dark"
-        android:layout_marginRight="70dp"
-        android:layout_marginEnd="70dp"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
-
-    <TextView
-        android:id="@+id/probing_impression"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Impression"
-        android:textSize="20sp"
-        android:layout_below="@+id/probing_title"
-        android:layout_alignLeft="@+id/probing_title"
-        android:layout_alignStart="@+id/probing_title" />
-
-    <TextView
-        android:id="@+id/symptoms_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Symptoms"
-        android:textSize="30sp"
-        android:textColor="@android:color/holo_red_dark"
-        android:layout_below="@id/probing_impression"
-        android:layout_alignLeft="@+id/probing_title"
-        android:layout_alignStart="@+id/probing_title" />
-
-    <TextView
-        android:id="@+id/symptoms_list"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text=""
-        android:textSize="15sp"
-        android:layout_below="@id/symptoms_title"
-        android:layout_alignLeft="@id/symptoms_title"
-        android:layout_alignStart="@id/symptoms_title" />
-
-    <TextView
-        android:id="@+id/impressions_list_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Impression List"
-        android:textSize="30sp"
-        android:textColor="@android:color/holo_red_dark"
-        android:layout_below="@id/symptoms_list"
-        android:layout_alignLeft="@id/symptoms_list"
-        android:layout_alignStart="@id/symptoms_list"/>
-
-    <TextView
-        android:id="@+id/impressions_list"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text=""
-        android:textSize="15sp"
-        android:layout_below="@id/impressions_list_title"
-        android:layout_alignLeft="@id/symptoms_title"
-        android:layout_alignStart="@id/symptoms_title" />
-
-    <TextView
-        android:id="@+id/ruled_out_impressions_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Ruled Out Impressions"
-        android:textColor="@android:color/holo_red_dark"
-        android:textSize="30sp"
-        android:layout_alignParentTop="true"
-        android:layout_marginRight="50dp"
-        android:layout_toLeftOf="@+id/probing_title"
-        android:layout_toStartOf="@+id/probing_title" />
-
-    <TextView
-        android:id="@+id/ruled_out_impressions_list"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="15sp"
-        android:text=""
-        android:layout_below="@id/ruled_out_impressions_title"
-        android:layout_alignLeft="@id/ruled_out_impressions_title"
-        android:layout_alignStart="@id/ruled_out_impressions_title"/>
-
-    <TextView
-        android:id="@+id/positive_symptom_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Positive Symptoms"
-        android:textSize="30sp"
-        android:textColor="@android:color/holo_red_dark"
-        android:layout_below="@id/ruled_out_impressions_list"
-        android:layout_alignLeft="@id/ruled_out_impressions_list"
-        android:layout_alignStart="@id/ruled_out_impressions_list"/>
-
-    <TextView
-        android:id="@+id/positive_symptom_list"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text=""
-        android:layout_below="@id/positive_symptom_title"
-        android:layout_alignLeft="@id/positive_symptom_title"
-        android:layout_alignStart="@id/positive_symptom_title"/>
-
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/tool_bar" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="horizontal"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+        android:layout_below="@id/toolbar">
 
-        <Button
-            android:id="@+id/prev_button2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <android.support.v7.widget.CardView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="Prev"
-            android:background="@android:color/holo_red_dark"
-            android:textSize="30sp"
-            android:onClick="goPrevious"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
+            android:layout_margin="16dp">
 
-        <Button
-            android:id="@+id/next_button2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/question_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="MEDICAL DIAGNOSIS EXPERT SYSTEM"
+                        android:textSize="30sp"
+                        android:padding="20dp"/>
+
+                    <View
+                        android:id="@+id/title_divider"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@android:color/darker_gray"
+                        android:minHeight="1dp"
+                        android:layout_below="@id/question_title"
+                        />
+
+                    <TextView
+                        android:id="@+id/probing_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Currently Probing"
+                        android:textStyle="bold"
+                        android:textSize="30sp"
+                        android:textColor="@color/primary_dark"
+                        android:padding="8dp"
+                        />
+
+                    <TextView
+                        android:id="@+id/probing_impression"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Impression"
+                        android:textColor="@color/accent"
+                        android:textSize="32sp"
+                        android:padding="8dp"
+                        />
+
+                    <TextView
+                        android:id="@+id/question_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="QUESTION 1"
+                        android:textSize="42sp"
+                        android:padding="20dp"
+                        android:layout_marginTop="24dp"/>
+
+                    <RadioGroup
+                        android:id="@+id/radio_group_responses"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_gravity="center_horizontal"
+                        android:padding="16dp">
+
+                        <RadioButton
+                            android:id="@+id/radio_yes"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="32sp"
+                            android:layout_marginRight="36dp"
+                            android:text="YES" />
+
+                        <RadioButton
+                            android:id="@+id/radio_no"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="36dp"
+                            android:textSize="32sp"
+                            android:text="NO"/>
+
+                    </RadioGroup>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true">
+
+                    <Button
+                        android:id="@+id/prev_button2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Prev"
+                        android:textColor="#FFF"
+                        android:background="@color/accent"
+                        android:textSize="30sp"
+                        android:onClick="goPrevious" />
+
+                    <Button
+                        android:id="@+id/next_button2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Next"
+                        android:textColor="#FFF"
+                        android:background="@color/greenbtn"
+                        android:textSize="30sp"
+                        android:onClick="goNext" />
+
+                </LinearLayout>
+
+
+            </RelativeLayout>
+
+
+
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="Next"
-            android:background="@android:color/holo_green_dark"
-            android:textSize="30sp"
-            android:onClick="goNext"
-            android:layout_above="@+id/prev_button2"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
+            android:layout_margin="16dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/symptoms_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Symptoms"
+                    android:textSize="30sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/primary_dark"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentLeft="true"
+                    android:padding="8dp"
+                    />
+
+                <TextView
+                    android:id="@+id/symptoms_list"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textSize="15sp"
+                    android:textColor="@color/accent"
+                    android:padding="8dp"
+                    android:layout_below="@id/symptoms_title"
+                    android:layout_alignLeft="@id/symptoms_title"
+                    android:layout_alignStart="@id/symptoms_title" />
+
+                <TextView
+                    android:id="@+id/impressions_list_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Impression List"
+                    android:textSize="30sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/primary_dark"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentRight="true"
+                    android:padding="8dp"
+                    />
+
+                <TextView
+                    android:id="@+id/impressions_list"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textSize="15sp"
+                    android:textColor="@color/accent"
+                    android:padding="8dp"
+                    android:layout_below="@id/impressions_list_title"
+                    android:layout_alignLeft="@id/impressions_list_title"
+                    android:layout_alignStart="@id/impressions_list_title" />
+
+                <TextView
+                    android:id="@+id/plausible_impressions_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Plausible Impressions"
+                    android:textSize="30sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/primary_dark"
+                    android:layout_below="@id/impressions_list"
+                    android:layout_alignLeft="@id/impressions_list_title"
+                    android:padding="8dp"
+                    />
+
+                <TextView
+                    android:id="@+id/plausible_impressions"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textColor="@color/accent"
+                    android:textSize="15sp"
+                    android:padding="8dp"
+                    android:layout_below="@id/plausible_impressions_title"
+                    android:layout_alignLeft="@id/plausible_impressions_title"
+                    android:layout_alignStart="@id/plausible_impressions_title" />
+
+                <TextView
+                    android:id="@+id/ruled_out_impressions_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Ruled Out Impressions"
+                    android:textColor="@color/primary_dark"
+                    android:textSize="30sp"
+                    android:textStyle="bold"
+                    android:layout_below="@id/plausible_impressions"
+                    android:layout_alignLeft="@id/plausible_impressions_title"
+                    android:layout_alignStart="@id/plausible_impressions_title"
+                    android:padding="8dp"/>
+
+                <TextView
+                    android:id="@+id/ruled_out_impressions_list"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="15sp"
+                    android:text=""
+                    android:textColor="@color/accent"
+                    android:padding="8dp"
+                    android:layout_below="@id/ruled_out_impressions_title"
+                    android:layout_alignLeft="@id/ruled_out_impressions_title"
+                    android:layout_alignStart="@id/ruled_out_impressions_title"/>
+
+                <TextView
+                    android:id="@+id/positive_symptom_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Positive Symptoms"
+                    android:textSize="30sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/primary_dark"
+                    android:padding="8dp"
+                    android:layout_below="@id/symptoms_list"
+                    android:layout_alignLeft="@id/symptoms_title"
+                    android:layout_alignStart="@id/symptoms_title"/>
+
+                <TextView
+                    android:id="@+id/positive_symptom_list"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textColor="@color/accent"
+                    android:textSize="15sp"
+                    android:padding="8dp"
+                    android:layout_below="@id/positive_symptom_title"
+                    android:layout_alignLeft="@id/positive_symptom_title"
+                    android:layout_alignStart="@id/positive_symptom_title"/>
+
+
+            </RelativeLayout>
+
+        </android.support.v7.widget.CardView>
 
     </LinearLayout>
+
+
+
+
+
 </RelativeLayout>

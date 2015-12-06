@@ -168,7 +168,7 @@
         android:text="View Case Record/s"
         android:textSize="30sp"
         android:textColor="#FFF"
-        android:background="@android:color/holo_blue_dark"
+        android:background="#1976D2"
         android:layout_alignParentBottom="true"
         android:layout_margin="15dp"/>
 
@@ -180,7 +180,7 @@
         android:text="New Case Record"
         android:textSize="30sp"
         android:textColor="#FFF"
-        android:background="@android:color/holo_green_dark"
+        android:background="@color/primary_dark"
         android:layout_above="@id/view_record_button"
         android:layout_margin="15dp"/>
 

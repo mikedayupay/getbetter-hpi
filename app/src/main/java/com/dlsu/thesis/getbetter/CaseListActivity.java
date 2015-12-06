@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.app.Activity;
 import android.support.v4.app.NavUtils;
+import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
 
@@ -23,7 +24,7 @@ import android.view.MenuItem;
  * {@link CaseListFragment.Callbacks} interface
  * to listen for item selections.
  */
-public class CaseListActivity extends Activity
+public class CaseListActivity extends AppCompatActivity
         implements CaseListFragment.Callbacks {
 
     /**
@@ -37,7 +38,7 @@ public class CaseListActivity extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_case_list);
         // Show the Up button in the action bar.
-        getActionBar().setDisplayHomeAsUpEnabled(true);
+        //getActionBar().setDisplayHomeAsUpEnabled(true);
 
         if (findViewById(R.id.case_detail_container) != null) {
             // The detail container view will be present only in the

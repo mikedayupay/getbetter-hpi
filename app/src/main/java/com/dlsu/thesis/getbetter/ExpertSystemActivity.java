@@ -5,6 +5,9 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -23,7 +26,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
 
-public class ExpertSystemActivity extends Activity {
+public class ExpertSystemActivity extends AppCompatActivity {
 
     private RadioGroup radioGroupResponses;
 
@@ -34,7 +37,6 @@ public class ExpertSystemActivity extends Activity {
     private boolean flag;
     private boolean clickFlag = true;
 
-    private Symptom positiveSymptom, ruledOutSymptom;
     private SymptomFamily generalQuestion;
     private DataAdapter getBetterDb;
 
@@ -50,7 +52,7 @@ public class ExpertSystemActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        //requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_expert_system);
 
         Bundle extras = getIntent().getExtras();
@@ -59,7 +61,14 @@ public class ExpertSystemActivity extends Activity {
         HashMap<String, String> patient = patientSession.getPatientDetails();
         caseRecordId = patient.get(PatientExpertSessionManager.CASE_RECORD_ID);
 
-        Log.d("case record id", caseRecordId + "");
+        String title = patient.get(PatientExpertSessionManager.PATIENT_NAME);
+
+        Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle("Patient: " + title);
+
+       // Log.d("case record id", caseRecordId + "");
 
         ruledOutSymptomList = new ArrayList<>();
         ruledOutImpressionList = new ArrayList<>();
@@ -84,9 +93,9 @@ public class ExpertSystemActivity extends Activity {
         currentImpressionIndex = 0;
         currentSymptomIndex = 0;
         getQuestions(impressionsSymptoms.get(currentImpressionIndex).getImpressionId());
-        Log.d("questions size", questions.size() + "");
-        Log.d("current symptom", questions.get(currentSymptomIndex).getSymptomNameEnglish());
-        Log.d("impression size", impressionsSymptoms.size() + "");
+//        Log.d("questions size", questions.size() + "");
+//        Log.d("current symptom", questions.get(currentSymptomIndex).getSymptomNameEnglish());
+//        Log.d("impression size", impressionsSymptoms.size() + "");
         reloadExpertSystem();
     }
 
@@ -134,6 +143,7 @@ public class ExpertSystemActivity extends Activity {
         TextView positiveSymptomsList = (TextView)findViewById(R.id.positive_symptom_list);
         TextView impressionList = (TextView)findViewById(R.id.impressions_list);
         TextView ruledOutImpressions = (TextView)findViewById(R.id.ruled_out_impressions_list);
+        TextView plausibleImpressions = (TextView)findViewById(R.id.plausible_impressions);
 
         //Log.d("symptom family id", questions.get(currentSymptomIndex).getSymptomFamilyId() + "");
         if(isSymptomFamilyQuestionAnswered(questions.get(currentSymptomIndex).getSymptomFamilyId())) {
@@ -153,6 +163,7 @@ public class ExpertSystemActivity extends Activity {
         ruledOutImpressions.setText("");
         symptomsList.setText("");
         positiveSymptomsList.setText("");
+        plausibleImpressions.setText("");
 
         for(int i = 0; i < impressionsSymptoms.size(); i++) {
             impressionList.append(impressionsSymptoms.get(i).getImpression() + "\n");
@@ -171,6 +182,10 @@ public class ExpertSystemActivity extends Activity {
         for (int i = 0; i < positiveSymptomList.size(); i++) {
             positiveSymptomsList.append(positiveSymptomList.get(i) + "\n");
         }
+
+        for (int i = 0; i < plausibleImpressionList.size(); i++) {
+            plausibleImpressions.append(plausibleImpressionList.get(i) + "\n");
+        }
     }
 
     public void getQuestions(int impressionId) {
@@ -183,7 +198,7 @@ public class ExpertSystemActivity extends Activity {
 
         questions.clear();
         questions.addAll(getBetterDb.getQuestions(impressionId));
-        Log.d("questions size", questions.size() + "");
+        //Log.d("questions size", questions.size() + "");
         getBetterDb.closeDatabase();
     }
 
@@ -206,15 +221,15 @@ public class ExpertSystemActivity extends Activity {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        Log.d("Impression id", impressionId + "");
+        //Log.d("Impression id", impressionId + "");
         ArrayList<String> hardSymptoms = getBetterDb.getHardSymptoms(impressionId);
 
-        for(String hard : hardSymptoms) {
-            Log.d("Hard symptoms: ", hard);
-        }
+//        for(String hard : hardSymptoms) {
+//            Log.d("Hard symptoms: ", hard);
+//        }
 
-        for(int i = 0; i < ruledOutSymptomList.size(); i++)
-            Log.d("ruled out", ruledOutSymptomList.get(i));
+//        for(int i = 0; i < ruledOutSymptomList.size(); i++)
+//            Log.d("ruled out", ruledOutSymptomList.get(i));
 
         if(ruledOutSymptomList.containsAll(hardSymptoms)) {
             ruledOutImpressionList.add(impressionsSymptoms.get(currentImpressionIndex).getImpression());

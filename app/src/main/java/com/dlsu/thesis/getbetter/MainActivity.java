@@ -1,8 +1,8 @@
 package com.dlsu.thesis.getbetter;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -17,9 +17,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 
-public class MainActivity extends Activity implements AdapterView.OnItemSelectedListener, View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener {
 
-    public final static String EXTRA_MESSAGE = "com.dlsu.thesis.getbetter.TITLE";
 
     private DataAdapter getBetterDb;
     private EditText usernameInput;
@@ -98,6 +97,17 @@ public class MainActivity extends Activity implements AdapterView.OnItemSelected
         return getBetterDb.checkLogin(username, password);
     }
 
+    private boolean isAdmin(String username, String password) {
+
+        try {
+            getBetterDb.openDatabaseForRead();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return getBetterDb.isAdmin(username, password);
+    }
+
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
@@ -124,14 +134,26 @@ public class MainActivity extends Activity implements AdapterView.OnItemSelected
 
             if(checkLogin(username, password)) {
 
-                session.createUserLoginSession(username, healthCenterSelected);
+                if(isAdmin(username, password)) {
 
-                Intent intent = new Intent(this, PatientListActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
+                    session.createUserLoginSession(username, healthCenterSelected);
+                    Intent intent = new Intent(this, AdminActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
 
-                finish();
+                    finish();
+                } else {
+
+                    session.createUserLoginSession(username, healthCenterSelected);
+
+                    Intent intent = new Intent(this, PatientListActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+
+                    finish();
+                }
 
             } else {
                 Toast.makeText(getApplicationContext(),

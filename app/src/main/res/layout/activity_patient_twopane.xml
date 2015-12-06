@@ -1,40 +1,49 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:layout_marginLeft="16dp"
-    android:layout_marginRight="16dp" android:baselineAligned="false"
-    android:divider="?android:attr/dividerHorizontal" android:orientation="horizontal"
-    android:showDividers="middle" tools:context="com.dlsu.thesis.getbetter.PatientListActivity">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-    <!--
-    This layout is a two-pane layout for the Patients
-    master/detail flow.
-    See res/values-large/refs.xml and
-    res/values-sw600dp/refs.xml for an example of layout aliases
-    that replace the single-pane version of the layout with
-    this two-pane version.
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/tool_bar" />
 
-    For more on layout aliases, see:
-    http://developer.android.com/training/multiscreen/screensizes.html#TaskUseAliasFilters
-    -->
+    <LinearLayout android:layout_width="match_parent"
+        android:layout_below="@id/toolbar"
+        android:layout_height="match_parent" android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp" android:baselineAligned="false"
+        android:divider="?android:attr/dividerHorizontal" android:orientation="horizontal"
+        android:showDividers="middle" tools:context="com.dlsu.thesis.getbetter.PatientListActivity">
 
-    <fragment android:id="@+id/patient_list"
-        android:name="com.dlsu.thesis.getbetter.PatientListFragment" android:layout_width="0dp"
-        android:layout_height="match_parent" android:layout_weight="1"
-        tools:layout="@android:layout/list_content" />
+        <!--
+        This layout is a two-pane layout for the Patients
+        master/detail flow.
+        See res/values-large/refs.xml and
+        res/values-sw600dp/refs.xml for an example of layout aliases
+        that replace the single-pane version of the layout with
+        this two-pane version.
 
-    <FrameLayout android:id="@+id/patient_detail_container" android:layout_width="0dp"
-        android:layout_height="match_parent" android:layout_weight="3">
+        For more on layout aliases, see:
+        http://developer.android.com/training/multiscreen/screensizes.html#TaskUseAliasFilters
+        -->
 
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end|bottom"
-            android:layout_margin="20dp"
-            android:src="@drawable/ic_action_add_patient" />
+        <fragment android:id="@+id/patient_list"
+            android:name="com.dlsu.thesis.getbetter.PatientListFragment" android:layout_width="0dp"
+            android:layout_height="match_parent" android:layout_weight="1"
+            tools:layout="@android:layout/list_content" />
 
-    </FrameLayout>
+        <FrameLayout android:id="@+id/patient_detail_container" android:layout_width="0dp"
+            android:layout_height="match_parent" android:layout_weight="3">
+
+        </FrameLayout>
 
 
 
-</LinearLayout>
+    </LinearLayout>
+
+
+
+
+
+</RelativeLayout>
+
+

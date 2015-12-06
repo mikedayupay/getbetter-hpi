@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -60,6 +62,11 @@ public class PatientListActivity extends AppCompatActivity
 
         String title = user.get(UserSessionManager.KEY_HEALTH_CENTER);
 
+        Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle(title);
+
         //getSupportActionBar().setTitle(title);
 
 
@@ -78,14 +85,7 @@ public class PatientListActivity extends AppCompatActivity
         }
 
         // TODO: If exposing deep links into your app, handle intents here.
-        FloatingActionButton fab = (FloatingActionButton)findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), NewPatientActivity.class);
-                startActivity(intent);
-            }
-        });
+
     }
 
     /**

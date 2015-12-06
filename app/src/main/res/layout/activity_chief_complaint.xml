@@ -1,112 +1,128 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/background"
     tools:context="com.dlsu.thesis.getbetter.ChiefComplaintActivity">
 
-    <RelativeLayout
-        android:layout_width="600dp"
-        android:layout_height="600dp"
-        android:background="@drawable/rectangle"
-        android:layout_centerVertical="true"
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/tool_bar" />
+
+    <android.support.v7.widget.CardView
+        android:layout_width="500dp"
+        android:layout_height="match_parent"
+        app:cardCornerRadius="20dp"
+        android:layout_below="@id/toolbar"
         android:layout_centerHorizontal="true"
-        android:id="@+id/view" >
+        android:layout_centerVertical="true"
+        android:layout_margin="24dp">
 
-    <TextView android:text="Reason for Visit" android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/chiefComplaintTitle"
-        android:layout_marginTop="40dp"
-        android:textSize="40dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="24dp">
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_below="@+id/chiefComplaintTitle"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="30dp"
-            android:id="@+id/radioGroup">
-
-            <CheckBox
-                android:id="@+id/check_fever"
+            <TextView android:text="Reason for Visit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Fever"
-                android:textSize="20dp"
-                android:padding="5dp"
-                android:onClick="onCheckBoxClicked"/>
+                android:id="@+id/chiefComplaintTitle"
+                android:padding="16dp"
+                android:textSize="46dp"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true" />
 
-            <CheckBox
-                android:id="@+id/check_pain"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Pain"
-                android:textSize="20dp"
-                android:padding="5dp"
-                android:onClick="onCheckBoxClicked"/>
+                android:orientation="vertical"
+                android:layout_below="@+id/chiefComplaintTitle"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="24dp"
+                android:id="@+id/radioGroup">
 
-            <CheckBox
-                android:id="@+id/check_injury_wound"
-                android:layout_width="wrap_content"
+                <CheckBox
+                    android:id="@+id/check_fever"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Fever"
+                    android:textSize="20dp"
+                    android:padding="5dp"
+                    android:onClick="onCheckBoxClicked"/>
+
+                <CheckBox
+                    android:id="@+id/check_pain"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Pain"
+                    android:textSize="20dp"
+                    android:padding="5dp"
+                    android:onClick="onCheckBoxClicked"/>
+
+                <CheckBox
+                    android:id="@+id/check_injury_wound"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Injury/Wound"
+                    android:textSize="20dp"
+                    android:padding="5dp"
+                    android:onClick="onCheckBoxClicked"/>
+
+                <CheckBox
+                    android:id="@+id/check_skin_problem"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Skin Problem"
+                    android:textSize="20dp"
+                    android:padding="5dp"
+                    android:onClick="onCheckBoxClicked"/>
+
+                <CheckBox
+                    android:id="@+id/check_respiratory"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Breathing/Respiratory Issues"
+                    android:textSize="20dp"
+                    android:padding="5dp"
+                    android:onClick="onCheckBoxClicked"/>
+
+                <CheckBox
+                    android:id="@+id/check_bowel_vomiting"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Bowel movement/Vomiting"
+                    android:textSize="20dp"
+                    android:padding="5dp"
+                    android:onClick="onCheckBoxClicked"/>
+
+                <CheckBox
+                    android:id="@+id/check_general_unwellness"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="General Unwellness"
+                    android:textSize="20dp"
+                    android:padding="5dp"
+                    android:onClick="onCheckBoxClicked"/>
+
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/next_button"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Injury/Wound"
-                android:textSize="20dp"
-                android:padding="5dp"
-                android:onClick="onCheckBoxClicked"/>
-
-            <CheckBox
-                android:id="@+id/check_skin_problem"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Skin Problem"
-                android:textSize="20dp"
-                android:padding="5dp"
-                android:onClick="onCheckBoxClicked"/>
-
-            <CheckBox
-                android:id="@+id/check_respiratory"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Breathing/Respiratory Issues"
-                android:textSize="20dp"
-                android:padding="5dp"
-                android:onClick="onCheckBoxClicked"/>
-
-            <CheckBox
-                android:id="@+id/check_bowel_vomiting"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Bowel movement/Vomiting"
-                android:textSize="20dp"
-                android:padding="5dp"
-                android:onClick="onCheckBoxClicked"/>
-
-            <CheckBox
-                android:id="@+id/check_general_unwellness"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="General Unwellness"
-                android:textSize="20dp"
-                android:padding="5dp"
-                android:onClick="onCheckBoxClicked"/>
+                android:text="Next"
+                android:textColor="#FFF"
+                android:background="#388E3C"
+                android:layout_alignParentBottom="true" />
 
 
-        </LinearLayout>
+        </RelativeLayout>
 
-        <Button
-            android:id="@+id/next_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Next"
-            android:background="@android:color/holo_green_dark"
-            android:layout_below="@+id/radioGroup"
-            android:layout_toRightOf="@+id/chiefComplaintTitle"
-            android:layout_toEndOf="@+id/chiefComplaintTitle" />
 
-    </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+
 
 </RelativeLayout>

@@ -3,6 +3,9 @@ package com.dlsu.thesis.getbetter;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -11,19 +14,29 @@ import android.widget.CheckBox;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 
-public class ChiefComplaintActivity extends Activity implements View.OnClickListener{
+public class ChiefComplaintActivity extends AppCompatActivity implements View.OnClickListener{
 
     private ArrayList<Integer> chiefComplaintId = new ArrayList<>();
-    private Button nextButton;
+    PatientExpertSessionManager patientSession;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chief_complaint);
 
-        nextButton = (Button)findViewById(R.id.next_button);
+        patientSession = new PatientExpertSessionManager(getApplicationContext());
+        HashMap<String, String> patient = patientSession.getPatientDetails();
+        String title = patient.get(PatientExpertSessionManager.PATIENT_NAME);
+
+        Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle("Patient: " + title);
+
+        Button nextButton = (Button) findViewById(R.id.next_button);
         nextButton.setOnClickListener(this);
 
     }

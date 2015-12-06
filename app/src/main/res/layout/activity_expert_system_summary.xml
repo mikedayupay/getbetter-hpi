@@ -1,108 +1,187 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/background"
     tools:context="com.dlsu.thesis.getbetter.ExpertSystemSummaryActivity">
 
-    <TextView
-        android:id="@+id/summary_plausible_impression_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Plausible Impressions"
-        android:textSize="30sp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"/>
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/tool_bar" />
 
-    <TextView
-        android:id="@+id/summary_plausible_impression_list"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="15sp"
-        android:padding="5dp"
-        android:layout_below="@id/summary_plausible_impression_title"
-        android:layout_alignLeft="@id/summary_plausible_impression_title"
-        android:layout_alignStart="@id/summary_plausible_impression_title"/>
+    <android.support.v7.widget.CardView
+        android:layout_width="600dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_horizontal"
+        app:cardCornerRadius="20dp"
+        android:layout_margin="24dp"
+        app:cardElevation="20dp"
+        >
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
 
-    <TextView
-        android:id="@+id/summary_ruled_out_impression_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Ruled Out Impressions"
-        android:textSize="30sp"
-        android:layout_below="@id/summary_plausible_impression_list"
-        android:layout_alignLeft="@id/summary_plausible_impression_list"
-        android:layout_alignStart="@id/summary_plausible_impression_list"/>
+            <android.support.v7.widget.CardView
+                android:id="@+id/hpi_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardElevation="@dimen/cardview_default_elevation"
+                app:cardCornerRadius="20dp"
+                android:layout_margin="16dp">
 
-    <TextView
-        android:id="@+id/summary_ruled_out_impression_list"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="15sp"
-        android:padding="5dp"
-        android:layout_below="@+id/summary_ruled_out_impression_title"
-        android:layout_alignLeft="@id/summary_ruled_out_impression_title"
-        android:layout_alignStart="@id/summary_ruled_out_impression_title"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/summary_positive_symptoms_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Positive Symptoms"
-        android:textSize="30sp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"/>
+                    <TextView
+                        android:id="@+id/summary_hpi_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="History of Present Illness"
+                        android:textColor="@color/primary_dark"
+                        android:textSize="30sp"
+                        android:padding="8dp"
+                        android:layout_gravity="center_horizontal"
+                        />
 
-    <TextView
-        android:id="@+id/summary_positive_symptoms_list"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="15sp"
-        android:layout_below="@id/summary_positive_symptoms_title"
-        android:layout_alignLeft="@id/summary_positive_symptoms_title"
-        android:layout_alignStart="@id/summary_positive_symptoms_title"/>
-
-    <TextView
-        android:id="@+id/summary_hpi_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="History of Present Illness"
-        android:textSize="30sp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <TextView
-        android:id="@+id/summary_hpi_content"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/summary_hpi_title"
-        android:layout_alignLeft="@id/summary_hpi_title"
-        android:layout_alignStart="@id/summary_hpi_title"
-        android:textSize="15sp"
-        android:padding="5dp"
-        android:ellipsize="none"
-        android:maxWidth="350dp"
-        android:scrollHorizontally="false"
-        android:maxLines="100"
-        android:capitalize="sentences" />
-
-    <Button
-        android:id="@+id/summary_back_patient_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@android:color/holo_blue_dark"
-        android:text="Back to Patient Dashboard"
-        android:textSize="30sp"
-        android:textColor="@android:color/white"
-        android:layout_alignParentBottom="true"/>
+                    <TextView
+                        android:id="@+id/summary_hpi_content"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textSize="15sp"
+                        android:padding="5dp"
+                        android:ellipsize="none"
+                        android:maxWidth="350dp"
+                        android:scrollHorizontally="false"
+                        android:maxLines="100" />
 
 
+                </LinearLayout>
+
+
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/hpi_container"
+                android:layout_margin="16dp"
+                app:cardElevation="@dimen/cardview_default_elevation"
+                app:cardCornerRadius="20dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_weight="1">
+
+                        <TextView
+                            android:id="@+id/summary_plausible_impression_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Plausible Impressions"
+                            android:textSize="25sp"
+                            android:textColor="@color/primary_dark"
+                            />
+
+                        <TextView
+                            android:id="@+id/summary_plausible_impression_list"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="15sp"
+                            android:padding="5dp"
+                            />
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_weight="1">
+
+                        <TextView
+                            android:id="@+id/summary_ruled_out_impression_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Ruled Out Impressions"
+                            android:textSize="25sp"
+                            android:textColor="@color/primary_dark"
+                            />
+
+                        <TextView
+                            android:id="@+id/summary_ruled_out_impression_list"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="15sp"
+                            android:padding="5dp"
+                            />
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_weight="1">
+
+                        <TextView
+                            android:id="@+id/summary_positive_symptoms_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Positive Symptoms"
+                            android:textSize="25sp"
+                            android:textColor="@color/primary_dark"
+                            />
+
+                        <TextView
+                            android:id="@+id/summary_positive_symptoms_list"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="15sp"
+                            />
+
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+
+            </android.support.v7.widget.CardView>
 
 
 
-</RelativeLayout>
+            <Button
+                android:id="@+id/summary_back_patient_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/holo_blue_dark"
+                android:text="Back to Patient Dashboard"
+                android:textSize="20sp"
+                android:textColor="#FFF"
+                android:layout_alignParentBottom="true"
+                />
+        </RelativeLayout>
+
+
+
+
+    </android.support.v7.widget.CardView>
+
+
+
+</FrameLayout>
