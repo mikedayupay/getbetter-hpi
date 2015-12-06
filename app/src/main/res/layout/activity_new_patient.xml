@@ -1,269 +1,264 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.dlsu.thesis.getbetter.NewPatientActivity">
 
-    <TextView
-        android:id="@+id/patient_record_title"
-        android:text="Patient Record"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="40sp"
-        android:padding="5dp"
-        />
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/tool_bar" />
 
-    <View
-        android:id="@+id/title_divider"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@android:color/darker_gray"
-        android:minHeight="1dp"
-        android:layout_below="@id/patient_record_title"
-        android:padding="5dp"
-        />
+    <android.support.v7.widget.CardView
+        android:layout_below="@id/toolbar"
+        android:layout_width="600dp"
+        android:layout_height="match_parent"
+        android:layout_margin="8dp"
+        app:cardElevation="@dimen/cardview_default_elevation"
+        app:cardCornerRadius="20dp"
+        android:layout_centerHorizontal="true">
 
-    <TextView
-        android:id="@+id/first_name_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="First Name: "
-        android:textSize="30sp"
-        android:padding="5dp"
-        android:layout_below="@id/title_divider"
-        android:layout_marginTop="10dp"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="12dp">
 
-    <EditText
-        android:id="@+id/first_name_input"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/first_name_label"
-        android:layout_toRightOf="@id/first_name_label"
-        android:layout_toEndOf="@id/first_name_label"
-        android:hint="Enter first name here"
-        android:padding="5dp"
-        android:capitalize="words"
-        android:ems="15"
-        android:layout_marginLeft="35dp"
-        android:layout_marginStart="35dp"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/middle_name_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Middle Name: "
-        android:textSize="30sp"
-        android:padding="5dp"
-        android:layout_below="@id/first_name_label"
-        android:layout_marginTop="10dp"/>
+                <TextView
+                    android:id="@+id/patient_record_title"
+                    android:text="Patient Record"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="40sp"
+                    android:padding="5dp"
+                    android:layout_gravity="center_horizontal"
+                    />
 
-    <EditText
-        android:id="@+id/middle_name_input"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/middle_name_label"
-        android:layout_toRightOf="@id/middle_name_label"
-        android:layout_toEndOf="@id/middle_name_label"
-        android:layout_alignLeft="@id/first_name_input"
-        android:layout_alignStart="@id/first_name_input"
-        android:hint="Enter middle name here"
-        android:padding="5dp"
-        android:capitalize="words"
-        android:ems="15"/>
+                <View
+                    android:id="@+id/title_divider"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@android:color/darker_gray"
+                    android:minHeight="1dp"
+                    android:padding="5dp"
+                    />
 
-    <TextView
-        android:id="@+id/last_name_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Last Name: "
-        android:textSize="30sp"
-        android:padding="5dp"
-        android:layout_below="@id/middle_name_label"
-        android:layout_marginTop="10dp"/>
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-    <EditText
-        android:id="@+id/last_name_input"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/last_name_label"
-        android:layout_toRightOf="@id/last_name_label"
-        android:layout_toEndOf="@id/last_name_label"
-        android:layout_alignLeft="@id/middle_name_input"
-        android:layout_alignStart="@id/middle_name_input"
-        android:hint="Enter last name here"
-        android:padding="5dp"
-        android:capitalize="words"
-        android:ems="15"/>
+                    <EditText
+                        android:id="@+id/first_name_input"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="First Name"
+                        android:padding="8dp"
+                        android:inputType="textPersonName" />
 
-    <TextView
-        android:id="@+id/birthdate_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Birthdate: "
-        android:textSize="30sp"
-        android:padding="5dp"
-        android:layout_below="@id/last_name_label"
-        android:layout_marginTop="10dp"/>
 
-    <TextView
-        android:id="@+id/birthdate_display"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:padding="5dp"
-        android:layout_alignBottom="@id/birthdate_label"
-        android:layout_toRightOf="@id/birthdate_label"
-        android:layout_toEndOf="@id/birthdate_label"
-        android:layout_alignLeft="@id/middle_name_input"
-        android:layout_alignStart="@id/middle_name_input"
-        />
+                </android.support.design.widget.TextInputLayout>
 
-    <Button
-        android:id="@+id/set_date_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Set Date"
-        android:layout_alignBottom="@id/birthdate_label"
-        android:layout_toEndOf="@id/birthdate_display"
-        android:layout_toRightOf="@id/birthdate_display"/>
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/gender_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Gender: "
-        android:textSize="30sp"
-        android:padding="5dp"
-        android:layout_below="@id/birthdate_label"
-        android:layout_marginTop="10dp"/>
+                    <EditText
+                        android:id="@+id/middle_name_input"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Middle Name"
+                        android:padding="8dp"
+                        android:inputType="textPersonName"
+                        />
 
-    <Spinner
-        android:id="@+id/gender_spinner"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/gender_label"
-        android:layout_toRightOf="@id/gender_label"
-        android:layout_toEndOf="@id/gender_label"
-        android:layout_alignLeft="@id/first_name_input"
-        android:layout_alignStart="@id/first_name_input"/>
+                </android.support.design.widget.TextInputLayout>
 
-    <TextView
-        android:id="@+id/blood_type_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Blood Type: "
-        android:textSize="30sp"
-        android:padding="5dp"
-        android:layout_below="@id/gender_label"
-        android:layout_marginTop="10dp"/>
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-    <Spinner
-        android:id="@+id/blood_type_spinner"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/blood_type_label"
-        android:layout_toRightOf="@id/blood_type_label"
-        android:layout_toEndOf="@id/blood_type_label"
-        android:layout_alignLeft="@id/first_name_input"
-        android:layout_alignStart="@id/first_name_input"/>
+                    <EditText
+                        android:id="@+id/last_name_input"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Last Name"
+                        android:padding="8dp"
+                        android:inputType="textPersonName"
+                        />
 
-    <TextView
-        android:id="@+id/civil_status_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Civil Status: "
-        android:textSize="30sp"
-        android:layout_below="@id/blood_type_label"
-        android:layout_marginTop="10dp"/>
+                </android.support.design.widget.TextInputLayout>
 
-    <Spinner
-        android:id="@+id/civil_status_spinner"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/civil_status_label"
-        android:layout_toRightOf="@id/civil_status_label"
-        android:layout_toEndOf="@id/civil_status_label"
-        android:layout_alignLeft="@id/first_name_input"
-        android:layout_alignStart="@id/first_name_input"/>
+                <LinearLayout
+                    android:layout_marginTop="16dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/home_address_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Home Address"
-        android:textSize="30sp"
-        android:layout_below="@id/civil_status_label"
-        android:layout_marginTop="10dp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Birthdate: "
+                        android:padding="8dp"
+                        android:textSize="16sp"
+                        />
 
-    <TextView
-        android:id="@+id/street_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Street: "
-        android:textSize="20sp"
-        android:padding="5dp"
-        android:layout_below="@id/home_address_label"
-        android:layout_marginTop="5dp"/>
+                    <TextView
+                        android:id="@+id/birthdate_display"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="16sp"
+                        android:padding="5dp"
+                        />
 
-    <EditText
-        android:id="@+id/street_input"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/street_label"
-        android:layout_toEndOf="@id/street_label"
-        android:layout_alignBottom="@id/street_label"
-        android:padding="5dp"
-        android:hint="Enter street here"
-        android:ems="15"/>
+                    <Button
+                        android:id="@+id/set_date_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Set Date"
+                        android:textColor="#FFF"
+                        android:background="#1976D2"
+                        />
 
-    <TextView
-        android:id="@+id/barangay_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Barangay: "
-        android:layout_toRightOf="@id/street_input"
-        android:layout_toEndOf="@id/street_input"
-        android:layout_alignBottom="@id/street_input"
-        android:textSize="20sp"
-        android:padding="5dp"/>
+                </LinearLayout>
 
-    <Spinner
-        android:id="@+id/barangay_spinner"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/barangay_label"
-        android:layout_toEndOf="@id/barangay_label"
-        android:layout_alignBottom="@id/barangay_label"/>
+                <TableLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp">
 
-    <TextView
-        android:id="@+id/city_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="City: "
-        android:textSize="20sp"
-        android:padding="5dp"
-        android:layout_toEndOf="@id/barangay_spinner"
-        android:layout_toRightOf="@id/barangay_spinner"
-        android:layout_alignBottom="@id/barangay_label"/>
+                    <TableRow android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
 
-    <Spinner
-        android:id="@+id/city_spinner"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/city_label"
-        android:layout_toEndOf="@id/city_label"
-        android:layout_alignBottom="@id/city_label"/>
 
-    <Button
-        android:id="@+id/add_patient_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Add New Patient"
-        android:textSize="30sp"
-        android:layout_alignParentBottom="true"
-        />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Gender: "
+                            android:textSize="16sp"
+                            />
+
+                        <Spinner
+                            android:id="@+id/gender_spinner"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="8dp"/>
+
+
+                    </TableRow>
+
+                    <TableRow android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Blood Type: "
+                            android:textSize="16sp"
+                            />
+
+                        <Spinner
+                            android:id="@+id/blood_type_spinner"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="8dp"/>
+
+                    </TableRow>
+
+                    <TableRow android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Civil Status: "
+                            android:textSize="16sp"
+                            />
+
+                        <Spinner
+                            android:id="@+id/civil_status_spinner"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="8dp"/>
+
+                    </TableRow>
+
+
+                </TableLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    >
+
+                    <EditText
+                        android:id="@+id/street_input"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="5dp"
+                        android:hint="Street"
+                        android:inputType="textCapWords"
+                        />
+
+                </android.support.design.widget.TextInputLayout>
+
+                <LinearLayout
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+
+
+                    <Spinner
+                        android:id="@+id/barangay_spinner"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        />
+
+                    <Spinner
+                        android:id="@+id/city_spinner"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        />
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/add_patient_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Add New Patient"
+                android:textSize="24sp"
+                android:textColor="#FFF"
+                android:background="@color/greenbtn"
+                android:layout_alignParentBottom="true"
+                />
+
+
+        </RelativeLayout>
+
+
+
+
+    </android.support.v7.widget.CardView>
+
+
+
+
+
+
 
 
 
