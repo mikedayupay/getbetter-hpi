@@ -593,4 +593,12 @@ public class DataAdapter {
             getBetterDb.insert(SYMPTOM_TO_IMPRESSION, null, values);
         }
     }
+
+    public void insertSymptom(String englishSymptom, String tagalogSymptom, String questionEnglish, 
+                              String questionTagalog, String actionNeeded, String answerPhrase, String emotionTag) {
+
+        // TODO: 06/12/2015 finish this database query 
+        ContentValues values = new ContentValues();
+        
+    }
 }
