@@ -60,4 +60,21 @@ public class Impressions {
     public String getRemarks() {
         return remarks;
     }
+
+    public int hashCode() {
+
+        return impressionId;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+
+        boolean similar = false;
+
+        if(object !=null && object instanceof Impressions) {
+            similar = this.impressionId == ((Impressions)object).impressionId;
+        }
+
+        return similar;
+    }
 }
