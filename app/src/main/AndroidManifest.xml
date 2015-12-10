@@ -9,7 +9,7 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name=".MainActivity"
+            android:name=".modules.MainActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -18,66 +18,67 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".PatientListActivity"
+            android:name=".modules.PatientListActivity"
             android:label="@string/title_patient_list"
             android:screenOrientation="landscape"/>
         <activity
-            android:name=".PatientDetailActivity"
+            android:name=".modules.PatientDetailActivity"
             android:label="@string/title_patient_detail"
-            android:parentActivityName=".PatientListActivity"
+            android:parentActivityName=".modules.PatientListActivity"
             android:screenOrientation="landscape">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.dlsu.thesis.getbetter.PatientListActivity" />
+                android:value=".modules.PatientListActivity" />
         </activity>
         <activity
-            android:name=".NewPatientActivity"
+            android:name=".modules.NewPatientActivity"
             android:label="@string/title_activity_new_patient"
-            android:parentActivityName=".PatientListActivity"
+            android:parentActivityName=".modules.PatientListActivity"
             android:screenOrientation="landscape">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.dlsu.thesis.getbetter.PatientListActivity" />
+                android:value=".modules.PatientListActivity" />
         </activity>
         <activity
-            android:name=".CaseListActivity"
+            android:name=".modules.CaseListActivity"
             android:label="@string/title_case_list"
-            android:parentActivityName=".PatientListActivity"
+            android:parentActivityName=".modules.PatientListActivity"
             android:screenOrientation="landscape">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.dlsu.thesis.getbetter.PatientListActivity" />
+                android:value=".modules.PatientListActivity" />
         </activity>
         <activity
-            android:name=".CaseDetailActivity"
+            android:name=".modules.CaseDetailActivity"
             android:label="@string/title_case_detail"
-            android:parentActivityName=".CaseListActivity">
+            android:parentActivityName=".modules.CaseListActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.dlsu.thesis.getbetter.CaseListActivity" />
+                android:value=".modules.CaseListActivity" />
         </activity>
         <activity
-            android:name=".ChiefComplaintActivity"
+            android:name=".modules.ChiefComplaintActivity"
             android:label="@string/title_activity_chief_complaint"
-            android:parentActivityName=".PatientListActivity">
+            android:parentActivityName=".modules.PatientListActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.dlsu.thesis.getbetter.PatientListActivity" />
+                android:value=".modules.PatientListActivity" />
         </activity>
         <activity
-            android:name=".ExpertSystemActivity"
+            android:name=".modules.ExpertSystemActivity"
             android:label="@string/title_activity_expert_system"
-            android:parentActivityName=".PatientListActivity">
+            android:parentActivityName=".modules.PatientListActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.dlsu.thesis.getbetter.PatientListActivity" />
+                android:value=".modules.PatientListActivity" />
         </activity>
         <activity
-            android:name=".ExpertSystemSummaryActivity"
+            android:name=".modules.ExpertSystemSummaryActivity"
             android:label="@string/title_activity_expert_system_summary"/>
         <activity
-            android:name=".AdminActivity"
-            android:label="@string/title_activity_admin"/>
+            android:name=".modules.AdminActivity"
+            android:label="@string/title_activity_admin"
+            android:windowSoftInputMode="adjustPan"/>
     </application>
 
 </manifest>

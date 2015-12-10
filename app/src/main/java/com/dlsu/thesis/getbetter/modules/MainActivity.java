@@ -1,4 +1,4 @@
-package com.dlsu.thesis.getbetter;
+package com.dlsu.thesis.getbetter.modules;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,7 +11,9 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.dlsu.thesis.getbetter.R;
 import com.dlsu.thesis.getbetter.database.DataAdapter;
+import com.dlsu.thesis.getbetter.sessionmanager.UserSessionManager;
 
 import java.sql.SQLException;
 import java.util.ArrayList;

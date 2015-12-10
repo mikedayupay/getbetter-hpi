@@ -1,4 +1,4 @@
-package com.dlsu.thesis.getbetter;
+package com.dlsu.thesis.getbetter.modules;
 
 import android.os.Bundle;
 import android.app.Fragment;
@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 
+import com.dlsu.thesis.getbetter.R;
 import com.dlsu.thesis.getbetter.dummy.DummyContent;
 
 /**

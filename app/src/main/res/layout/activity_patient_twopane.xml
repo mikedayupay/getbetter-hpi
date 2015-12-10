@@ -12,7 +12,7 @@
         android:layout_height="match_parent" android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp" android:baselineAligned="false"
         android:divider="?android:attr/dividerHorizontal" android:orientation="horizontal"
-        android:showDividers="middle" tools:context="com.dlsu.thesis.getbetter.PatientListActivity">
+        android:showDividers="middle" tools:context=".modules.PatientListActivity">
 
         <!--
         This layout is a two-pane layout for the Patients
@@ -27,7 +27,7 @@
         -->
 
         <fragment android:id="@+id/patient_list"
-            android:name="com.dlsu.thesis.getbetter.PatientListFragment" android:layout_width="0dp"
+            android:name="com.dlsu.thesis.getbetter.modules.PatientListFragment" android:layout_width="0dp"
             android:layout_height="match_parent" android:layout_weight="1"
             tools:layout="@android:layout/list_content" />
 

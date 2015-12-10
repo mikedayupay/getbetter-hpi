@@ -1,4 +1,4 @@
-package com.dlsu.thesis.getbetter.AdminNavPages;
+package com.dlsu.thesis.getbetter.adminpages;
 
 
 import android.os.Bundle;
@@ -11,20 +11,17 @@ import com.dlsu.thesis.getbetter.R;
 
 /**
  * A simple {@link Fragment} subclass.
+
+
  */
-public class AddSymptomFragment extends Fragment {
-
-
-    public AddSymptomFragment() {
-        // Required empty public constructor
-    }
+public class AdminHomeFragment extends Fragment {
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_add_symptom, container, false);
+        return inflater.inflate(R.layout.fragment_admin_home, container, false);
     }
 
 }

@@ -1,6 +1,5 @@
-package com.dlsu.thesis.getbetter;
+package com.dlsu.thesis.getbetter.modules;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -8,18 +7,18 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
-import android.view.Window;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.dlsu.thesis.getbetter.R;
 import com.dlsu.thesis.getbetter.database.DataAdapter;
 import com.dlsu.thesis.getbetter.objects.Impressions;
 import com.dlsu.thesis.getbetter.objects.PatientAnswers;
 import com.dlsu.thesis.getbetter.objects.Symptom;
 import com.dlsu.thesis.getbetter.objects.SymptomFamily;
+import com.dlsu.thesis.getbetter.sessionmanager.PatientExpertSessionManager;
 
 import java.sql.SQLException;
 import java.util.ArrayList;

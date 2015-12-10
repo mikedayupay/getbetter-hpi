@@ -1,4 +1,4 @@
-package com.dlsu.thesis.getbetter;
+package com.dlsu.thesis.getbetter.modules;
 
 
 import android.os.Bundle;
@@ -13,9 +13,11 @@ import android.support.v4.widget.DrawerLayout;
 import android.view.View;
 import android.widget.Toast;
 
-import com.dlsu.thesis.getbetter.AdminNavPages.AddImpressionFragment;
-import com.dlsu.thesis.getbetter.AdminNavPages.AddSymptomFragment;
-import com.dlsu.thesis.getbetter.AdminNavPages.AdminHomeFragment;
+import com.dlsu.thesis.getbetter.R;
+import com.dlsu.thesis.getbetter.adminpages.AddImpressionFragment;
+import com.dlsu.thesis.getbetter.adminpages.AddSymptomFragment;
+import com.dlsu.thesis.getbetter.adminpages.AdminHomeFragment;
+import com.dlsu.thesis.getbetter.adminpages.ViewImpressionsFragment;
 
 
 public class AdminActivity extends AppCompatActivity {
@@ -70,6 +72,10 @@ public class AdminActivity extends AppCompatActivity {
 
                     case R.id.impressions:
                         Toast.makeText(getApplicationContext(), "Impressions", Toast.LENGTH_SHORT).show();
+                        ViewImpressionsFragment viewImpressionsFragment = new ViewImpressionsFragment();
+                        FragmentTransaction fragmentTransaction3 = getSupportFragmentManager().beginTransaction();
+                        fragmentTransaction3.replace(R.id.admin_frame_content, viewImpressionsFragment);
+                        fragmentTransaction3.commit();
                         return true;
 
                     case R.id.symptoms:

@@ -1,10 +1,10 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="com.dlsu.thesis.getbetter.NewPatientActivity">
+    tools:context=".modules.NewPatientActivity">
 
     <include
         android:id="@+id/toolbar"
@@ -14,10 +14,10 @@
         android:layout_below="@id/toolbar"
         android:layout_width="600dp"
         android:layout_height="match_parent"
-        android:layout_margin="8dp"
-        app:cardElevation="@dimen/cardview_default_elevation"
+        android:layout_margin="36dp"
+        app:cardElevation="20dp"
         app:cardCornerRadius="20dp"
-        android:layout_centerHorizontal="true">
+        android:layout_gravity="center_horizontal">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -263,4 +263,4 @@
 
 
 
-</RelativeLayout>
+</FrameLayout>

@@ -1,9 +1,11 @@
-package com.dlsu.thesis.getbetter;
+package com.dlsu.thesis.getbetter.sessionmanager;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+
+import com.dlsu.thesis.getbetter.modules.PatientListActivity;
 
 import java.util.HashMap;
 

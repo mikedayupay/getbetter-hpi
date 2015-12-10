@@ -1,4 +1,4 @@
-package com.dlsu.thesis.getbetter;
+package com.dlsu.thesis.getbetter.modules;
 
 import android.app.Fragment;
 import android.content.Intent;
@@ -10,8 +10,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.dlsu.thesis.getbetter.R;
 import com.dlsu.thesis.getbetter.database.DataAdapter;
 import com.dlsu.thesis.getbetter.objects.PatientContent;
+import com.dlsu.thesis.getbetter.sessionmanager.PatientExpertSessionManager;
+import com.dlsu.thesis.getbetter.sessionmanager.UserSessionManager;
 
 import java.sql.SQLException;
 import java.util.ArrayList;

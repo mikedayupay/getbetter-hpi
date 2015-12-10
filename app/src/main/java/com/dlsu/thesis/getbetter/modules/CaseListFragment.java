@@ -1,29 +1,25 @@
-package com.dlsu.thesis.getbetter;
+package com.dlsu.thesis.getbetter.modules;
 
 import android.app.Activity;
-import android.app.ListFragment;
 import android.os.Bundle;
+import android.app.ListFragment;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.dlsu.thesis.getbetter.adapters.PatientsAdapters;
-import com.dlsu.thesis.getbetter.database.DataAdapter;
-import com.dlsu.thesis.getbetter.objects.PatientContent;
 
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
+import com.dlsu.thesis.getbetter.dummy.DummyContent;
 
 /**
- * A list fragment representing a list of Patients. This fragment
+ * A list fragment representing a list of Cases. This fragment
  * also supports tablet devices by allowing list items to be given an
  * 'activated' state upon selection. This helps indicate which item is
- * currently being viewed in a {@link PatientDetailFragment}.
+ * currently being viewed in a {@link CaseDetailFragment}.
  * <p/>
  * Activities containing this fragment MUST implement the {@link Callbacks}
  * interface.
  */
-public class PatientListFragment extends ListFragment {
+public class CaseListFragment extends ListFragment {
 
     /**
      * The serialization (saved instance state) Bundle key representing the
@@ -51,12 +47,8 @@ public class PatientListFragment extends ListFragment {
         /**
          * Callback for when an item has been selected.
          */
-        public void onItemSelected(long id);
+        public void onItemSelected(String id);
     }
-
-    private DataAdapter getBetterDb;
-    private ArrayList<PatientContent.Patient> patients;
-    UserSessionManager session;
 
     /**
      * A dummy implementation of the {@link Callbacks} interface that does
@@ -64,7 +56,7 @@ public class PatientListFragment extends ListFragment {
      */
     private static Callbacks sDummyCallbacks = new Callbacks() {
         @Override
-        public void onItemSelected(long id) {
+        public void onItemSelected(String id) {
         }
     };
 
@@ -72,28 +64,19 @@ public class PatientListFragment extends ListFragment {
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
-    public PatientListFragment() {
+    public CaseListFragment() {
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        session = new UserSessionManager(getActivity());
-        HashMap<String, String> user = session.getUserDetails();
-
-        String healthCenterName = user.get(UserSessionManager.KEY_HEALTH_CENTER);
-        int healthCenterId;
-        initializeDatabase();
-        healthCenterId = getHealthCenterId(healthCenterName);
-            getPatients(healthCenterId);
-
-
-        PatientsAdapters adapter = new PatientsAdapters(getActivity(), patients);
-
-
         // TODO: replace with a real list adapter.
-        setListAdapter(adapter);
+        setListAdapter(new ArrayAdapter<DummyContent.DummyItem>(
+                getActivity(),
+                android.R.layout.simple_list_item_activated_1,
+                android.R.id.text1,
+                DummyContent.ITEMS));
     }
 
     @Override
@@ -133,7 +116,7 @@ public class PatientListFragment extends ListFragment {
 
         // Notify the active callbacks interface (the activity, if the
         // fragment is attached to one) that an item has been selected.
-        mCallbacks.onItemSelected(patients.get(position).getId());
+        mCallbacks.onItemSelected(DummyContent.ITEMS.get(position).id);
     }
 
     @Override
@@ -165,46 +148,5 @@ public class PatientListFragment extends ListFragment {
         }
 
         mActivatedPosition = position;
-    }
-
-    private void initializeDatabase () {
-
-        getBetterDb = new DataAdapter(getActivity());
-
-        try {
-            getBetterDb.createDatabase();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-    }
-
-    private void getPatients (int healthCenterId) {
-
-        try {
-            getBetterDb.openDatabaseForRead();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        patients = getBetterDb.getPatients(healthCenterId);
-
-        getBetterDb.closeDatabase();
-
-    }
-
-    private int getHealthCenterId (String healthCenter) {
-
-        try {
-            getBetterDb.openDatabaseForRead();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        int hCId = getBetterDb.getHealthCenterId(healthCenter);
-
-        getBetterDb.closeDatabase();
-
-        return hCId;
     }
 }

@@ -1,10 +1,9 @@
-package com.dlsu.thesis.getbetter.AdminNavPages;
+package com.dlsu.thesis.getbetter.adminpages;
 
 
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -87,6 +86,7 @@ public class AddImpressionFragment extends Fragment implements CompoundButton.On
         }
 
         addImpressionSubmitBtn.setOnClickListener(this);
+        //getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
 
 
         return rootView;
@@ -119,11 +119,11 @@ public class AddImpressionFragment extends Fragment implements CompoundButton.On
 
         try {
             getBetterDb.openDatabaseForWrite();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
 
-        String medicalTerm = inputMedicalTerm.getText().toString();
+            String medicalTerm = inputMedicalTerm.getText().toString();
         String scientificTerm = inputScientificTerm.getText().toString();
         String localTerm = inputLocalTerm.getText().toString();
         String treatment = inputTreatment.getText().toString();
@@ -131,6 +131,7 @@ public class AddImpressionFragment extends Fragment implements CompoundButton.On
 
         int newImpressionId;
         newImpressionId = getBetterDb.insertImpression(medicalTerm, scientificTerm, localTerm, treatment, remarks);
+        Toast.makeText(getContext(), newImpressionId + "", Toast.LENGTH_SHORT).show();
 
         getBetterDb.matchImpressionToComplaints(newImpressionId, chiefComplaintId);
         getBetterDb.matchImpressionToSymptoms(newImpressionId, symptomIds);

@@ -1,6 +1,5 @@
-package com.dlsu.thesis.getbetter;
+package com.dlsu.thesis.getbetter.modules;
 
-import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Intent;
@@ -21,8 +20,10 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.dlsu.thesis.getbetter.R;
 import com.dlsu.thesis.getbetter.database.DataAdapter;
 import com.dlsu.thesis.getbetter.objects.PatientContent;
+import com.dlsu.thesis.getbetter.sessionmanager.UserSessionManager;
 
 import java.sql.SQLException;
 import java.util.ArrayList;

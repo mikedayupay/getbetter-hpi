@@ -1,6 +1,5 @@
-package com.dlsu.thesis.getbetter;
+package com.dlsu.thesis.getbetter.modules;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -8,15 +7,16 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Switch;
 import android.widget.TextView;
 
+import com.dlsu.thesis.getbetter.R;
 import com.dlsu.thesis.getbetter.database.DataAdapter;
 import com.dlsu.thesis.getbetter.objects.PositiveResults;
+import com.dlsu.thesis.getbetter.sessionmanager.PatientExpertSessionManager;
+import com.dlsu.thesis.getbetter.sessionmanager.UserSessionManager;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.GregorianCalendar;
 import java.util.HashMap;
 
 import simplenlg.framework.NLGFactory;
@@ -262,6 +262,8 @@ public class ExpertSystemSummaryActivity extends AppCompatActivity {
 
         return pronoun;
     }
+
+
 
     private void insertHpiImpressionsToDatabase (ArrayList<String> plausibleImpressions,
                                                  ArrayList<String> chiefComplaints, String hpiContent,

@@ -3,7 +3,7 @@
     android:layout_height="match_parent" android:layout_marginLeft="16dp"
     android:layout_marginRight="16dp" android:baselineAligned="false"
     android:divider="?android:attr/dividerHorizontal" android:orientation="horizontal"
-    android:showDividers="middle" tools:context="com.dlsu.thesis.getbetter.CaseListActivity">
+    android:showDividers="middle" tools:context=".modules.CaseListActivity">
 
     <!--
     This layout is a two-pane layout for the Cases
@@ -11,7 +11,7 @@
     
     -->
 
-    <fragment android:id="@+id/case_list" android:name="com.dlsu.thesis.getbetter.CaseListFragment"
+    <fragment android:id="@+id/case_list" android:name="com.dlsu.thesis.getbetter.modules.CaseListFragment"
         android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1"
         tools:layout="@android:layout/list_content" />
 

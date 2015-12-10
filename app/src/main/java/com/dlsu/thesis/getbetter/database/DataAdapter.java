@@ -14,6 +14,7 @@ import com.dlsu.thesis.getbetter.objects.Symptom;
 import com.dlsu.thesis.getbetter.objects.SymptomFamily;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -35,6 +36,7 @@ public class DataAdapter {
     private static final String IMPRESSION_TABLE = "tbl_case_impression";
     private static final String IMPRESSION_TO_COMPLAINTS = "tbl_impressions_of_complaints";
     private static final String SYMPTOM_TO_IMPRESSION = "tbl_symptom_of_impression";
+    private static final String SYMPTOM_TABLE = "tbl_symptom_list";
 
     public DataAdapter (Context context) {
         this.myContext = context;
@@ -260,6 +262,28 @@ public class DataAdapter {
         ArrayList<Impressions> results = new ArrayList<>();
         String sql = "SELECT * FROM tbl_case_impression AS i, tbl_impressions_of_complaints AS s " +
         "WHERE i._id = s.impression_id AND s.complaint_id = " + complaintId;
+
+        Cursor c = getBetterDb.rawQuery(sql, null);
+
+        while(c.moveToNext()) {
+            Impressions impressions = new Impressions(c.getInt(c.getColumnIndexOrThrow("_id")),
+                    c.getString(c.getColumnIndexOrThrow("medical_term")),
+                    c.getString(c.getColumnIndexOrThrow("scientific_name")),
+                    c.getString(c.getColumnIndexOrThrow("local_name")),
+                    c.getString(c.getColumnIndexOrThrow("treatment_protocol")),
+                    c.getString(c.getColumnIndexOrThrow("remarks")));
+
+            results.add(impressions);
+        }
+
+        c.close();
+        return results;
+    }
+
+    public ArrayList<Impressions> getImpressions () {
+
+        ArrayList<Impressions> results = new ArrayList<>();
+        String sql = "SELECT * FROM tbl_case_impression";
 
         Cursor c = getBetterDb.rawQuery(sql, null);
 
@@ -597,8 +621,17 @@ public class DataAdapter {
     public void insertSymptom(String englishSymptom, String tagalogSymptom, String questionEnglish, 
                               String questionTagalog, String actionNeeded, String answerPhrase, String emotionTag) {
 
-        // TODO: 06/12/2015 finish this database query 
+
         ContentValues values = new ContentValues();
+        values.put("symptom_name_english", englishSymptom);
+        values.put("symptom_name_tagalog", tagalogSymptom);
+        values.put("question_english", questionEnglish);
+        values.put("question_tagalog", questionTagalog);
+        values.put("action_needed", actionNeeded);
+        values.put("answer_phrase", answerPhrase);
+        values.put("emotion", emotionTag);
+
+        getBetterDb.insert(SYMPTOM_TABLE, null, values);
         
     }
 }
